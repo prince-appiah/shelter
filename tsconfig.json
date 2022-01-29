@@ -18,6 +18,7 @@
     "baseUrl": "src",
     "paths": {
       "src/*": ["src/*"],
+      "src/assets/*": ["src/assets/*"],
       "src/components/*": ["src/components/*"],
       "src/pages/*": ["src/pages/*"],
       "src/redux/*": ["src/redux/*"]
