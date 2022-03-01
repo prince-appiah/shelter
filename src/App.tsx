@@ -1,8 +1,7 @@
-import { CircularProgress, Text } from "@chakra-ui/react";
-import React, { lazy, Suspense } from "react";
+import LandingPage from "pages/LandingPage";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import LandingPage from "pages/LandingPage";
 
 function App() {
   return (

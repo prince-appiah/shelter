@@ -12,6 +12,9 @@ export const theme = extendTheme({
     brand: {
       primary: "#219798",
     },
+    text: {
+      primary: "#072448"
+    }
   },
   components: {
     Button: ButtonStyles,

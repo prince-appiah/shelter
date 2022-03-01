@@ -3,9 +3,7 @@ import {
   Grid,
   GridItem,
   Heading,
-  Image,
-  Spacer,
-  Text,
+  Image, Text
 } from "@chakra-ui/react";
 import { RecentListing } from "..";
 
@@ -23,15 +21,14 @@ const RecentListings = ({ data }) => {
               <Image
                 src={item.image}
                 alt={item.name}
-                bgColor="red.400"
-                height={250}
+                height={200}
                 width={330}
                 objectFit="cover"
                 rounded="xl"
               />
               {/* </Box> */}
-              <Box display="flex" alignItems="center" px={1} py={2}>
-                <Box bgColor="teal.300" maxWidth={130} flexGrow={1}>
+              <Box display="flex" alignItems="center" justifyContent='space-between' px={1} py={2}>
+                <Box maxWidth={150} overflow='hidden' flexGrow={1}>
                   <Text fontWeight="semibold" isTruncated>
                     {item.name}
                   </Text>

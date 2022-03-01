@@ -3,6 +3,10 @@ import Header from "./widgets/Header";
 import Hero from "./widgets/Hero";
 import RecentListings from "./widgets/RecentListings";
 import SubHero from "./widgets/SubHero";
+import featuredListing from 'assets/images/featured-listing.png';
+import BeAHost from "./widgets/BeAHost";
+import RentARoom from "./widgets/RentARoom";
+import Footer from "shared/Footer";
 
 export type RecentListing = {
   id: number;
@@ -21,7 +25,7 @@ const recentListings: RecentListing[] = [
     location: "Trassacco Valley Trassacco Valley Trassacco Valley",
     price: 100,
     stayPeriod: "month",
-    image: "http://placehold.jp/330x250.png",
+    image: featuredListing,
     status: "For Hire",
   },
   {
@@ -30,16 +34,16 @@ const recentListings: RecentListing[] = [
     location: "East Legon",
     price: 90,
     stayPeriod: "night",
-    image: "http://placehold.jp/330x250.png",
+    image: featuredListing,
     status: "For Rent",
   },
   {
     id: 3,
-    name: "Chase Villa",
+    name: "Chase Villa Villa Villa Villa",
     location: "West Hills",
     price: 30,
     stayPeriod: "day",
-    image: "http://placehold.jp/330x250.png",
+    image: featuredListing,
     status: "For Lease",
   },
   {
@@ -48,20 +52,26 @@ const recentListings: RecentListing[] = [
     location: "West Hills",
     price: 89,
     stayPeriod: "night",
-    image: "http://placehold.jp/330x250.png",
+    image: featuredListing,
     status: "For Rent",
   },
 ];
 
 const LandingPage = () => {
   return (
-    <Container>
+    <>
+      {/* <Container> */}
       <Header />
       <Hero />
       <SubHero />
       <RecentListings data={recentListings} />
-    </Container>
-  );
+      <BeAHost />
+      <RentARoom />
+      <Footer />
+      {/* </Container> */}
+    </>
+  )
+
 };
 
 export default LandingPage;
