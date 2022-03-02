@@ -39,7 +39,7 @@ const Login = () => {
                             Email Address
                         </FormLabel>
                         <Input
-                            title="Email Address"
+
                             type="email"
                             size="lg"
                             placeholder="user@example.com"

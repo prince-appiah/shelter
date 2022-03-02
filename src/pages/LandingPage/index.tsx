@@ -1,12 +1,11 @@
-import Container from "components/Container";
+import featuredListing from 'assets/images/featured-listing.png';
+import Footer from "shared/Footer";
+import BeAHost from "./widgets/BeAHost";
 import Header from "./widgets/Header";
 import Hero from "./widgets/Hero";
 import RecentListings from "./widgets/RecentListings";
-import SubHero from "./widgets/SubHero";
-import featuredListing from 'assets/images/featured-listing.png';
-import BeAHost from "./widgets/BeAHost";
 import RentARoom from "./widgets/RentARoom";
-import Footer from "shared/Footer";
+import SubHero from "./widgets/SubHero";
 
 export type RecentListing = {
   id: number;
