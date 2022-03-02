@@ -1,5 +1,6 @@
-import { Box, Flex, Heading, Input, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Link, Text } from "@chakra-ui/react";
 import Button from "components/Button";
+import Input from "components/Input";
 
 const footerLinks = [
     {
