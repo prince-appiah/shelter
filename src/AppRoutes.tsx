@@ -1,8 +1,8 @@
 import { HOME_ROUTE, LOGIN_ROUTE, SIGNUP_ROUTE } from "config/constants/routes";
-import LandingPage from "pages/LandingPage";
-import Login from "pages/Login";
-import NotFound from "pages/NotFound";
-import Signup from "pages/Signup";
+import LandingPage from "containers/LandingPage";
+import Login from "containers/Login";
+import NotFound from "containers/NotFound";
+import Signup from "containers/Signup";
 import { Route, Routes } from "react-router-dom";
 
 const AppRoutes = () => {
