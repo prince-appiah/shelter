@@ -15,11 +15,14 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import Input from "components/Input";
+import { SIGNUP_ROUTE } from "config/constants/routes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import OtpModal from "./widgets/OTPModal";
 
 const Login = () => {
   const [otpReady, setOtpReady] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Flex width="100vw" height="100vh">
@@ -49,8 +52,20 @@ const Login = () => {
           <Button onClick={() => setOtpReady(!otpReady)} size="lg" isFullWidth>
             Continue
           </Button>
-
-          <Divider />
+          <Divider my={5} />
+          <Text color="gray.400" fontWeight="medium" textAlign="center">
+            Don't have an account?
+            <Box
+              as="span"
+              onClick={() => navigate(SIGNUP_ROUTE)}
+              _hover={{ cursor: "pointer", color: "blue.500" }}
+              fontWeight="semibold"
+              pl={3}
+              color="blue.600"
+            >
+              Sign up
+            </Box>
+          </Text>
         </Box>
       </Box>
       <OtpModal
