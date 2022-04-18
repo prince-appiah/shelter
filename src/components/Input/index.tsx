@@ -1,9 +1,19 @@
 import { Input as ChakraInput, InputProps } from "@chakra-ui/react";
+import { useField, FieldHookConfig } from "formik";
 
-const Input = (props: InputProps) => {
-  const { ...rest } = props;
+type Props = InputProps;
 
-  return <ChakraInput _focus={{ borderColor: "brand.primary" }} {...rest} />;
+const Input = (props: Props) => {
+  const { name, ...rest } = props;
+  // const [field, meta] = useField(name);
+
+  return (
+    <ChakraInput
+      _focus={{ borderColor: "brand.primary" }}
+      {...rest}
+      // {...field}
+    />
+  );
 };
 
 export default Input;
