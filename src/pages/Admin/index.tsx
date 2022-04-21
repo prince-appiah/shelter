@@ -1,4 +1,4 @@
-import { Box, Grid } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import Container from "components/Container";
 import React from "react";
 import DashboardCard from "./widgets/DashboardCard";

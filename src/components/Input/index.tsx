@@ -1,18 +1,46 @@
-import { Input as ChakraInput, InputProps } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input as ChakraInput,
+  InputProps,
+} from "@chakra-ui/react";
 import { useField, FieldHookConfig } from "formik";
 
-type Props = InputProps;
+// type Props = FieldHookConfig<string> & { label: string,inputProps:InputProps };
+type Props = InputProps & { label?: string; onChange?: any; value?: any };
 
+// const Input = (props: Props) => {
 const Input = (props: Props) => {
-  const { name, ...rest } = props;
-  // const [field, meta] = useField(name);
+  const { name, label, value, onChange, ...rest } = props;
+  const [field, meta] = useField(props.name);
 
   return (
-    <ChakraInput
-      _focus={{ borderColor: "brand.primary" }}
-      {...rest}
-      // {...field}
-    />
+    <FormControl
+      sx={{ width: "100%", mb: 2 }}
+      isInvalid={meta.touched && !!meta.error}
+    >
+      <FormLabel
+        mb={2}
+        htmlFor={name}
+        color="gray.500"
+        id={`${props.id}-${props.name}-label`}
+      >
+        {label}
+      </FormLabel>
+
+      <ChakraInput
+        _focus={{ borderColor: "brand.primary" }}
+        value={value}
+        onChange={onChange}
+        // size="lg"
+        {...field}
+        {...rest}
+      />
+      {meta.touched && meta.error && (
+        <FormErrorMessage>{meta.error}</FormErrorMessage>
+      )}
+    </FormControl>
   );
 };
 

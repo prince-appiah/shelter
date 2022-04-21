@@ -1,10 +1,9 @@
-import featuredListing from "assets/images/featured-listing.png";
-import axios from "axios";
 import Footer from "components/Footer";
-import { useAppDispatch } from "hooks/reduxHooks";
+import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import { useEffect } from "react";
 import { fetchListingsAction } from "redux/global/asyncActions";
-import requests from "shared/requests";
+import { setStatus } from "redux/global/globalSlice";
+import { store } from "redux/store";
 import BeAHost from "./widgets/BeAHost";
 import Header from "./widgets/Header";
 import Hero from "./widgets/Hero";
@@ -22,52 +21,17 @@ export type RecentListing = {
   status: string;
 };
 
-const recentListings: RecentListing[] = [
-  {
-    id: 1,
-    name: "Living Room",
-    location: "Trassacco Valley Trassacco Valley Trassacco Valley",
-    price: 100,
-    stayPeriod: "month",
-    image: featuredListing,
-    status: "For Hire",
-  },
-  {
-    id: 2,
-    name: "Cottage House",
-    location: "East Legon",
-    price: 90,
-    stayPeriod: "night",
-    image: featuredListing,
-    status: "For Rent",
-  },
-  {
-    id: 3,
-    name: "Chase Villa Villa Villa Villa",
-    location: "West Hills",
-    price: 30,
-    stayPeriod: "day",
-    image: featuredListing,
-    status: "For Lease",
-  },
-  {
-    id: 4,
-    name: "Chase Villa",
-    location: "West Hills",
-    price: 89,
-    stayPeriod: "night",
-    image: featuredListing,
-    status: "For Rent",
-  },
-];
-
 const LandingPage = () => {
   const dispatch = useAppDispatch();
+  const { listings } = useGlobalState();
 
   useEffect(() => {
     const fetchListings = () => dispatch(fetchListingsAction());
-
     fetchListings();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
   }, [dispatch]);
 
   return (
@@ -76,7 +40,7 @@ const LandingPage = () => {
       <Header />
       <Hero />
       <SubHero />
-      <RecentListings data={recentListings} />
+      <RecentListings data={listings} />
       <BeAHost />
       <RentARoom />
       <Footer />

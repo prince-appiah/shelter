@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const SubHero = () => {
   return (
     <Box py={10} px={28}>
-      <Box display='flex' justifyContent='space-between' alignItems='center' >
-        <Image src={bgHero2} alt='living-room' />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Image src={bgHero2} alt="living-room" />
         <Box top={7} right={91}>
           <SubHeroCard
             title="Rent a room"
@@ -42,7 +42,10 @@ const SubHeroCard = ({ title, body, link, url }) => {
       borderWidth={1}
       bgColor="white"
       width={400}
-      _hover={{ cursor: "pointer", boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)" }}
+      _hover={{
+        cursor: "pointer",
+        boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)",
+      }}
     >
       <Text fontWeight="semibold" color="brand.primary" mb={4}>
         {title}
@@ -50,12 +53,7 @@ const SubHeroCard = ({ title, body, link, url }) => {
       <Text color="gray.500" noOfLines={3} mb={6}>
         {body}
       </Text>
-      <Box
-
-        display="flex"
-        _hover={{ cursor: "pointer" }}
-        alignItems="center"
-      >
+      <Box display="flex" _hover={{ cursor: "pointer" }} alignItems="center">
         <Text color="brand.primary" fontWeight="medium" pr={6}>
           {link}
         </Text>

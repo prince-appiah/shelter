@@ -2,7 +2,10 @@ import { StyleConfig } from "@chakra-ui/theme-tools";
 
 const ButtonStyles: StyleConfig = {
   // Styles for the base style
-  baseStyle: {},
+  baseStyle: {
+    _focus: { boxShadow: "none" },
+    borderRadius: 3,
+  },
   // Styles for the size variations
   sizes: {},
   // Styles for the visual style variations
