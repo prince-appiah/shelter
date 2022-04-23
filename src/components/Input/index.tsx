@@ -5,7 +5,7 @@ import {
   Input as ChakraInput,
   InputProps,
 } from "@chakra-ui/react";
-import { useField, FieldHookConfig } from "formik";
+import { useField } from "formik";
 
 // type Props = FieldHookConfig<string> & { label: string,inputProps:InputProps };
 type Props = InputProps & { label?: string; onChange?: any; value?: any };

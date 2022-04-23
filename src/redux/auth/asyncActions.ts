@@ -1,10 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import jwtDecode from "jwt-decode";
 import AuthApi, {
   LoginFields,
   OtpFields,
   SignupFields,
 } from "services/auth.api";
+import { IDecodedUser } from "typings";
+import { setCurrentUser } from "./authSlice";
 
 export const signupAction = createAsyncThunk(
   "auth/signup",
@@ -21,9 +23,13 @@ export const signupAction = createAsyncThunk(
 
 export const loginAction = createAsyncThunk(
   "auth/login",
-  async (data: LoginFields, thunk) => {
+  async ({ otp, email }: LoginFields, thunk) => {
     try {
-      const response = await AuthApi.login(data);
+      const response = await AuthApi.login({ email, otp });
+
+      localStorage.setItem("token", response.data.token);
+      const decoded = (await jwtDecode(response.data.token)) as IDecodedUser;
+      thunk.dispatch(setCurrentUser(decoded));
 
       return response.data;
     } catch (error) {
@@ -34,9 +40,9 @@ export const loginAction = createAsyncThunk(
 
 export const getOtpAction = createAsyncThunk(
   "auth/getOtp",
-  async (data: OtpFields, thunk) => {
+  async ({ email }: OtpFields, thunk) => {
     try {
-      const response = await AuthApi.getOTP(data);
+      const response = await AuthApi.getOTP({ email });
 
       return response.data;
     } catch (error) {

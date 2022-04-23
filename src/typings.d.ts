@@ -2,7 +2,7 @@ export interface IProperty {
   readonly _id: string;
   owner: string;
   name: string;
-  refernceNo: string;
+  referenceNo: string;
   roomType: string;
   price: string;
   numOfBedrooms: number;
@@ -22,6 +22,13 @@ export interface IUser {
   email: string;
   userType: string;
   profilePicture: string;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
+}
+
+export interface IDecodedUser extends IUser {
+  iat: number;
+  exp: number;
 }
 
 export interface IAmenity {

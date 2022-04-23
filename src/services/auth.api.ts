@@ -18,54 +18,42 @@ export type OtpFields = {
 
 class AuthApi {
   static async signUp(payload: SignupFields) {
-    try {
-      const response = await api.post("/signup", payload, {
-        headers: { "Content-Type": "application/json" },
-      });
+    const response = await api.post("/signup", payload, {
+      headers: { "Content-Type": "application/json" },
+    });
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
   }
 
-  static async getOTP(payload: OtpFields) {
-    try {
-      const response = await api.post("/otp", payload, {
-        headers: { "Content-Type": "application/json" },
-      });
+  static async getOTP({ email }: OtpFields) {
+    const response = await api.post(
+      "/otp",
+      { email },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
   }
 
-  static async login(payload: LoginFields) {
-    try {
-      const response = await api.post("/login", payload, {
-        headers: { "Content-Type": "application/json" },
-      });
+  static async login({ email, otp }: LoginFields) {
+    const response = await api.post(
+      "/login",
+      { email, otp },
+      { headers: { "Content-Type": "application/json" } }
+    );
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
   }
 
   static async logout(token: string) {
-    try {
-      const response = await api.post("/logout", null, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const response = await api.post("/logout", null, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
   }
 }
 

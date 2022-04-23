@@ -2,26 +2,20 @@ import {
   Box,
   Divider,
   Flex,
-  FormControl,
-  FormLabel,
   Heading,
   Image,
-  ModalBody,
-  ModalCloseButton,
-  ModalHeader,
-  PinInput,
-  PinInputField,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import * as Yup from "yup";
 import Button from "components/Button";
 import Input from "components/Input";
 import { SIGNUP_ROUTE } from "config/constants/routes";
-import { useAppDispatch } from "hooks/reduxHooks";
+import { Form, Formik, FormikHelpers, FormikProps } from "formik";
+import { useAppDispatch, useAuthState } from "hooks/reduxHooks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import OtpModal from "./widgets/OTPModal";
-import { Form, Formik, FormikHelpers, FormikProps } from "formik";
+import { getOtpAction, loginAction } from "redux/auth/asyncActions";
+import * as Yup from "yup";
 
 type LoginForm = {
   email: string;
@@ -30,22 +24,84 @@ type LoginForm = {
 
 const Login = () => {
   const [otpReady, setOtpReady] = useState(false);
+  const [isOtpComplete, setIsOtpComplete] = useState(false);
   const dispatch = useAppDispatch();
+  const toast = useToast();
   const navigate = useNavigate();
+  const { currentUser } = useAuthState();
 
+  const symbolsArr = ["e", "E", "+", "-", "."];
   const initialValues = { email: "", otp: "" };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Enter a valid email")
       .required("Email is required"),
-    otp: Yup.string().required("OTP is required"),
+    otp: Yup.number().required("OTP is required"),
   });
 
+  const handleGetOtp = async (email: string) => {
+    try {
+      const res = await dispatch(getOtpAction({ email })).unwrap();
+      if (res.status === 200) {
+        setOtpReady(true);
+      }
+    } catch (error) {
+      toast({
+        title: "OTP Error",
+        description: error?.msg || "Could not get OTP code",
+        isClosable: true,
+        status: "error",
+        variant: "subtle",
+        position: "top-right",
+        duration: 10000,
+      });
+    }
+  };
+
   const handleLogin = async (
-    values: LoginForm,
-    helpers: FormikHelpers<LoginForm>
-  ) => {};
+    { email, otp }: LoginForm,
+    helpers?: FormikHelpers<LoginForm>
+  ) => {
+    try {
+      setIsOtpComplete(true);
+      const res = await dispatch(
+        loginAction({ email, otp: otp.toString() })
+      ).unwrap();
+      console.log("🚀 ~ res", res);
+
+      if (res && res.status === 200) {
+        setIsOtpComplete(false);
+
+        toast({
+          title: "Login Success",
+          description: "Your OTP has been verified",
+          isClosable: true,
+          status: "success",
+          variant: "subtle",
+          position: "top-right",
+          duration: 10000,
+        });
+
+        // redirect users to their dashboard using their userType
+        if (currentUser && currentUser.userType) {
+          navigate(`/s/${currentUser.userType}/dashboard`, { replace: true });
+        }
+      }
+    } catch (error) {
+      console.log("🚀 ~ error", error);
+      setIsOtpComplete(false);
+      toast({
+        title: "Login Error",
+        description: error?.msg || "Could not log in, please try again",
+        isClosable: true,
+        status: "error",
+        variant: "subtle",
+        position: "top-right",
+        duration: 10000,
+      });
+    }
+  };
 
   return (
     <Flex width="100vw" height="100vh">
@@ -64,74 +120,44 @@ const Login = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleLogin}
+          // onSubmit={isOtpComplete ? handleLogin : null}
         >
           {({
             handleSubmit,
             handleChange,
-            touched,
+            handleBlur,
+
             values,
             dirty,
-            setFieldValue,
             isSubmitting,
-            errors,
           }: FormikProps<LoginForm>) => (
             <Form onSubmit={handleSubmit}>
-              <FormControl
-                sx={{ width: "100%" }}
-                isInvalid={touched && !!errors.email}
-              >
-                <FormLabel mb={3} color="gray.500">
-                  Email Address
-                </FormLabel>
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  value={values.email}
-                  onChange={handleChange}
-                />
-              </FormControl>
+              <Input
+                label="Email Address"
+                name="email"
+                type="email"
+                placeholder="user@example.com"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-              <Button onClick={() => setOtpReady(true)} size="lg" isFullWidth>
-                Continue
-              </Button>
-
-              <OtpModal
-                isOpen={otpReady && values.email.length > 0}
-                onClose={() => setOtpReady(!otpReady)}
-                onOpen={() => setOtpReady(!otpReady)}
-                isCentered
-              >
-                <ModalHeader color="brand.primary">
-                  Enter Verification Code
-                </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody mx="auto" mb={10}>
-                  <Text
-                    textAlign="center"
-                    fontWeight="medium"
-                    fontSize={18}
-                    color="gray.400"
-                    mb={4}
-                  >
-                    We sent a code to {values.email}
-                  </Text>
-                  <PinInput
-                    variant="flushed"
+              {otpReady && (
+                <>
+                  <Input
+                    label="OTP Code"
+                    name="otp"
                     type="number"
+                    placeholder="Verify Your Code"
+                    max={6}
+                    value={values.otp}
                     onChange={handleChange}
-                    onComplete={(val) => setFieldValue("otp", val)}
-                    otp
-                    size="lg"
-                  >
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                  </PinInput>
-                  <Box mt={4} display="flex" justifyContent="center">
+                    onBlur={handleBlur}
+                    onKeyDown={(e) =>
+                      symbolsArr.includes(e.key) && e.preventDefault()
+                    }
+                  />
+                  <Box my={4} display="flex" justifyContent="center">
                     <Text fontWeight="medium">
                       Didn't get the code?
                       <Box
@@ -139,13 +165,31 @@ const Login = () => {
                         pl={3}
                         color="brand.primary"
                         fontWeight="medium"
+                        cursor="pointer"
+                        onClick={() => {
+                          handleGetOtp(values.email);
+                        }}
                       >
                         Resend
                       </Box>
                     </Text>
                   </Box>
-                </ModalBody>
-              </OtpModal>
+                </>
+              )}
+
+              <Button
+                onClick={
+                  otpReady
+                    ? () => handleLogin(values, null)
+                    : () => handleGetOtp(values.email)
+                }
+                disabled={!dirty}
+                isLoading={isSubmitting || isOtpComplete}
+                size="lg"
+                isFullWidth
+              >
+                {otpReady ? "Verify OTP" : "Continue"}
+              </Button>
 
               <Divider my={5} />
               <Text color="gray.400" fontWeight="medium" textAlign="center">
@@ -165,43 +209,6 @@ const Login = () => {
           )}
         </Formik>
       </Box>
-
-      {/* <OtpModal
-        isOpen={otpReady}
-        onClose={() => setOtpReady(!otpReady)}
-        onOpen={() => setOtpReady(!otpReady)}
-        isCentered
-      >
-        <ModalHeader color="brand.primary">Enter Verification Code</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody mx="auto" mb={10}>
-          <Text
-            textAlign="center"
-            fontWeight="medium"
-            fontSize={18}
-            color="gray.400"
-            mb={4}
-          >
-            We sent a code to user@example.com
-          </Text>
-          <PinInput variant="flushed" otp size="lg">
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-            <PinInputField />
-          </PinInput>
-          <Box mt={4} display="flex" justifyContent="center">
-            <Text fontWeight="medium">
-              Didn't get the code?
-              <Box as="span" pl={3} color="brand.primary" fontWeight="medium">
-                Resend
-              </Box>
-            </Text>
-          </Box>
-        </ModalBody>
-      </OtpModal> */}
     </Flex>
   );
 };

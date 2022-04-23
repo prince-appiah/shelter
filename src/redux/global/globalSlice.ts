@@ -1,4 +1,4 @@
-import { ActionCreatorWithPayload, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 import { IProperty } from "typings";
 import { fetchListingsAction } from "./asyncActions";

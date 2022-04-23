@@ -3,12 +3,16 @@ import { Box, Text } from "@chakra-ui/react";
 const DashboardCard = () => {
   return (
     <Box
+      cursor="pointer"
       sx={{
         borderRadius: 6,
-        padding: 3,
+        py: 3,
+        px: 8,
         borderWidth: "0.02em",
-        // borderColor: "gray.400",
         width: "auto",
+        _hover: {
+          bgColor: "gray.50",
+        },
       }}
     >
       <Box

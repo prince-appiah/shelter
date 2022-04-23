@@ -82,7 +82,7 @@ const Signup = () => {
         toast({
           title: "Account Created",
           description:
-            "An OTP code has been sent to your email. Use this to log in to your account",
+            "We have sent you a link to access your account. Please check your email",
           isClosable: true,
           status: "success",
           variant: "subtle",

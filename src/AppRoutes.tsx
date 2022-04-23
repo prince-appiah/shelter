@@ -14,9 +14,9 @@ import Listings from "containers/Listings";
 import Login from "containers/Login";
 import NotFound from "containers/NotFound";
 import Signup from "containers/Signup";
-import Admin from "pages/Admin";
-import Customer from "pages/Customer";
-import Host from "pages/Host";
+import Admin from "pages/admin/dashboard";
+import Customer from "pages/customer";
+import Host from "pages/host";
 import { Route, Routes } from "react-router-dom";
 
 const AppRoutes = () => {
