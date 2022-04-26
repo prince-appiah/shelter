@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Flex, Grid } from "@chakra-ui/react";
 import Container from "components/Container";
 import useTable from "hooks/useTable";
 import React from "react";
@@ -10,7 +10,7 @@ const Admin = () => {
   // const { }=useTable()
 
   return (
-    <Container my={8}>
+    <Flex direction="column" my={6}>
       <Grid
         gap={5}
         templateColumns="repeat(3,1fr)"
@@ -30,7 +30,7 @@ const Admin = () => {
         {/* Approval table */}
         <ApprovalTable />
       </Grid>
-    </Container>
+    </Flex>
   );
 };
 

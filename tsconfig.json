@@ -22,7 +22,12 @@
       "src/components/*": ["src/components/*"],
       "src/pages/*": ["src/pages/*"],
       "src/redux/*": ["src/redux/*"],
-      "src/containers/*":["src/containers/*"]
+      "src/containers/*": ["src/containers/*"],
+      "src/contexts/*": ["src/contexts/*"],
+      "src/shared/*": ["src/shared/*"],
+      "src/hooks/*": ["src/hooks/*"],
+      "src/services/*": ["src/services/*"],
+      "src/config/*": ["src/config/*"]
     }
   },
   "include": ["src"]

@@ -1,6 +1,6 @@
-import { StyleConfig } from "@chakra-ui/theme-tools";
+import { ComponentStyleConfig } from "@chakra-ui/react";
 
-const ButtonStyles: StyleConfig = {
+const ButtonStyles: ComponentStyleConfig = {
   // Styles for the base style
   baseStyle: {
     _focus: { boxShadow: "none" },

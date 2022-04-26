@@ -4,7 +4,9 @@ import ButtonStyles from "./components/Button";
 export const theme = extendTheme({
   styles: {
     global: (props) => ({
-      body: {},
+      body: {
+        bg: "gray.100",
+      },
     }),
   },
   colors: {
@@ -13,8 +15,8 @@ export const theme = extendTheme({
       primary: "#219798",
     },
     text: {
-      primary: "#072448"
-    }
+      primary: "#072448",
+    },
   },
   components: {
     Button: ButtonStyles,

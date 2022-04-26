@@ -7,17 +7,22 @@ import { Provider } from "react-redux";
 import { theme } from "config/theme";
 import "./index.css";
 import { store } from "redux/store";
-// import App from "App";
+
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "AppRoutes";
+import AppRoutes from "App";
+import ModalProvider from "contexts/modalContext";
+import DropdownProvider from "contexts/dropdownContext";
 
 render(
   <ChakraProvider resetCSS theme={theme}>
     <Provider store={store}>
-      <BrowserRouter>
-        {/* <App /> */}
-        <AppRoutes />
-      </BrowserRouter>
+      <ModalProvider>
+        <DropdownProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </DropdownProvider>
+      </ModalProvider>
     </Provider>
   </ChakraProvider>,
   document.getElementById("root")
