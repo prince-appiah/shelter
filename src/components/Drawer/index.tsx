@@ -1,5 +1,5 @@
 import {
-  Drawer,
+  Drawer as ChakraDrawer,
   DrawerBody,
   DrawerContent,
   DrawerOverlay,
@@ -13,11 +13,11 @@ import { BsSpeedometer } from "react-icons/bs";
 
 type Props = {};
 
-const Sidebar = (props: Props) => {
+const Drawer = (props: Props) => {
   const { open, handleOpen } = useContext(ModalContext);
 
   return (
-    <Drawer
+    <ChakraDrawer
       isOpen={open}
       autoFocus={false}
       placement="left"
@@ -43,8 +43,8 @@ const Sidebar = (props: Props) => {
           </Flex>
         </DrawerBody>
       </DrawerContent>
-    </Drawer>
+    </ChakraDrawer>
   );
 };
 
-export default Sidebar;
+export default Drawer;

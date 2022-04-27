@@ -1,5 +1,9 @@
 import {
+  ADMIN_AMENITIES,
   ADMIN_DASHBOARD,
+  ADMIN_LISTINGS,
+  ADMIN_ROOM_TYPES,
+  ADMIN_USERS,
   CUSTOMER_DASHBOARD,
   HOME_ROUTE,
   HOST_DASHBOARD,
@@ -15,9 +19,13 @@ import Listings from "containers/Listings";
 import Login from "containers/Login";
 import NotFound from "containers/NotFound";
 import Signup from "containers/Signup";
-import Admin from "pages/admin/dashboard";
-import Customer from "pages/customer";
-import Host from "pages/host";
+import Amenities from "pages/Admin/amenities";
+import Admin from "pages/Admin/dashboard";
+import AdminListings from "pages/Admin/listings";
+import RoomTypes from "pages/Admin/room-types";
+import Users from "pages/Admin/users";
+import Customer from "pages/Customer";
+import Host from "pages/Host";
 import { Route, Routes } from "react-router-dom";
 
 const AppRoutes = () => {
@@ -40,6 +48,42 @@ const AppRoutes = () => {
           element={
             <Layout>
               <Admin />
+            </Layout>
+          }
+        />
+
+        <Route
+          path={ADMIN_USERS}
+          element={
+            <Layout>
+              <Users />
+            </Layout>
+          }
+        />
+
+        <Route
+          path={ADMIN_LISTINGS}
+          element={
+            <Layout>
+              <AdminListings />
+            </Layout>
+          }
+        />
+
+        <Route
+          path={ADMIN_ROOM_TYPES}
+          element={
+            <Layout>
+              <RoomTypes />
+            </Layout>
+          }
+        />
+
+        <Route
+          path={ADMIN_AMENITIES}
+          element={
+            <Layout>
+              <Amenities />
             </Layout>
           }
         />
