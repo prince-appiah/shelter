@@ -13,25 +13,25 @@ import { ModalContext } from "contexts/modalContext";
 import AmenityModal from "components/Modal";
 import useTable from "hooks/useTable";
 import React, { useContext } from "react";
-import CreateAmenity from "./CreateAmenity";
-import EditAmenity from "./EditAmenity";
+import CreatePropertyTypeModal from "./CreatePropertyType";
+import EditPropertyTypeModal from "./EditPropertyType";
 
 type Props = {};
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
-  { id: "name", title: "Name" },
+  { id: "name", title: "Property Type" },
   { id: "icon", title: "Icon" },
 ];
 
 const records = [
-  { id: 1, name: "Air Conditioner", icon: "" },
-  { id: 2, name: "Barbecue", icon: "" },
-  { id: 3, name: "Swimming Pool", icon: "" },
-  { id: 4, name: "Parking Space", icon: "" },
+  { id: 1, propertyType: "Apartment", icon: "" },
+  { id: 2, propertyType: "Studio", icon: "" },
+  { id: 3, propertyType: "Serviced Apartment", icon: "" },
+  { id: 4, propertyType: "Court House", icon: "" },
 ];
 
-const Amenities = (props: Props) => {
+const PropertyTypes = (props: Props) => {
   const { TContainer, TableHead, results } = useTable(records, headCells);
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
 
@@ -50,11 +50,11 @@ const Amenities = (props: Props) => {
           <Button
             onClick={() => {
               handleOpen(!open);
-              handleView("create-amenity");
+              handleView("add-property-type");
             }}
             leftIcon={<AddIcon />}
           >
-            Create Amenity
+            Create Property Type
           </Button>
         </Flex>
 
@@ -69,11 +69,11 @@ const Amenities = (props: Props) => {
                 sx={{ _hover: { bgColor: "gray.50" } }}
                 onClick={() => {
                   handleOpen(!open);
-                  handleView("edit-amenity");
+                  handleView("edit-property-type");
                 }}
               >
                 <Td>{item.id}</Td>
-                <Td>{item.name}</Td>
+                <Td>{item.propertyType}</Td>
                 <Td>{item.icon}</Td>
               </Tr>
             ))}
@@ -84,11 +84,11 @@ const Amenities = (props: Props) => {
       {/* Create amenity modal */}
       <AmenityModal isOpen={open} onClose={() => handleOpen(!open)}>
         {/* dynamically render content based on view from the global state */}
-        {view === "create-amenity" && <CreateAmenity />}
-        {view === "edit-amenity" && <EditAmenity />}
+        {view === "add-property-type" && <CreatePropertyTypeModal />}
+        {view === "edit-property-type" && <EditPropertyTypeModal />}
       </AmenityModal>
     </Flex>
   );
 };
 
-export default Amenities;
+export default PropertyTypes;

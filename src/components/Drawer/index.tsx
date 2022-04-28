@@ -7,6 +7,7 @@ import {
   Icon,
   Text,
 } from "@chakra-ui/react";
+import { DrawerContext } from "contexts/drawerContext";
 import { ModalContext } from "contexts/modalContext";
 import React, { useContext } from "react";
 import { BsSpeedometer } from "react-icons/bs";
@@ -14,7 +15,7 @@ import { BsSpeedometer } from "react-icons/bs";
 type Props = {};
 
 const Drawer = (props: Props) => {
-  const { open, handleOpen } = useContext(ModalContext);
+  const { open, handleOpen } = useContext(DrawerContext);
 
   return (
     <ChakraDrawer

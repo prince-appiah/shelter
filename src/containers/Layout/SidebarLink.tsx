@@ -26,7 +26,7 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
         color: "white",
         svg: { color: "white" },
       }}
-      _focus={{ bg: "brand.primary" }}
+      _focus={{ bg: "brand.primary", color: "white" }}
     >
       <Icon as={icon} fontSize={20} mr={{ lg: 4 }} />
       <Text fontWeight={600} display={{ base: "none", lg: "inline-flex" }}>

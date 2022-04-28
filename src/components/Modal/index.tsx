@@ -6,12 +6,12 @@ import {
 } from "@chakra-ui/react";
 
 type IOtpModalProps = {
-  onOpen: () => void;
+  onOpen?: () => void;
   isOpen: boolean;
   onClose: () => void;
 } & ModalProps;
 
-const OtpModal = (props: IOtpModalProps) => {
+const Modal = (props: IOtpModalProps) => {
   const { isOpen, onClose, onOpen, children, ...rest } = props;
 
   return (
@@ -24,4 +24,4 @@ const OtpModal = (props: IOtpModalProps) => {
   );
 };
 
-export default OtpModal;
+export default Modal;

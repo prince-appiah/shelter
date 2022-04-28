@@ -8,7 +8,7 @@ export const LISTING_DETAILS_ROUTE = "/s/listings/:id";
 export const ADMIN_DASHBOARD = "/s/admin/dashboard";
 export const ADMIN_USERS = "/s/admin/users";
 export const ADMIN_LISTINGS = "/s/admin/listings";
-export const ADMIN_ROOM_TYPES = "/s/admin/room-types";
+export const ADMIN_ROOM_TYPES = "/s/admin/property-types";
 export const ADMIN_AMENITIES = "/s/admin/amenities";
 // host routes
 export const HOST_DASHBOARD = "/s/host/dashboard";

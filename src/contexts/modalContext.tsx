@@ -2,7 +2,14 @@ import { createContext, useState } from "react";
 
 interface ModalProviderProps {
   open: boolean;
-  view: "login" | "signup";
+  view:
+    | "login"
+    | "signup"
+    | "create-amenity"
+    | "edit-amenity"
+    | "add-property-type"
+    | "edit-property-type"
+    | null;
   handleView: (view: ModalProviderProps["view"]) => void;
   handleOpen: (open: ModalProviderProps["open"]) => void;
 }
@@ -10,7 +17,7 @@ interface ModalProviderProps {
 export const ModalContext = createContext<ModalProviderProps>({
   handleView: () => {},
   handleOpen: () => {},
-  view: "login",
+  view: null,
   open: false,
 });
 

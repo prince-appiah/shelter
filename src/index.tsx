@@ -12,16 +12,19 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "App";
 import ModalProvider from "contexts/modalContext";
 import DropdownProvider from "contexts/dropdownContext";
+import DrawerProvider from "contexts/drawerContext";
 
 render(
   <ChakraProvider resetCSS theme={theme}>
     <Provider store={store}>
       <ModalProvider>
-        <DropdownProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </DropdownProvider>
+        <DrawerProvider>
+          <DropdownProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </DropdownProvider>
+        </DrawerProvider>
       </ModalProvider>
     </Provider>
   </ChakraProvider>,
