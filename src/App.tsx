@@ -24,8 +24,8 @@ import Admin from "pages/Admin/dashboard";
 import AdminListings from "pages/Admin/listings";
 import RoomTypes from "pages/Admin/property-types";
 import Users from "pages/Admin/users";
-import Customer from "pages/Customer";
-import Host from "pages/Host";
+import Customer from "pages/customer";
+import Host from "pages/host";
 import { Route, Routes } from "react-router-dom";
 
 const AppRoutes = () => {
