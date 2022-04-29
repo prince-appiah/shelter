@@ -10,6 +10,7 @@ const DashboardCard = () => {
         px: 8,
         borderWidth: "0.02em",
         width: "auto",
+        bgColor: "white",
         _hover: {
           bgColor: "gray.50",
         },

@@ -2,6 +2,7 @@ import { Box, Heading, TableHeadProps, Tbody, Td, Tr } from "@chakra-ui/react";
 import useTable from "hooks/useTable";
 
 const headCells: TableHeadProps[] = [
+  { id: "id", title: "S/N" },
   { id: "name", title: "Name" },
   { id: "type", title: "Property Type" },
 ];
@@ -18,7 +19,13 @@ const ApprovalTable = () => {
   const { TContainer, TableHead, results } = useTable(records, headCells);
 
   return (
-    <Box p={4} borderWidth="thin" borderColor="gray.100" rounded="md">
+    <Box
+      p={4}
+      borderWidth="thin"
+      bg="white"
+      borderColor="gray.100"
+      rounded="md"
+    >
       <Heading fontSize={20} mb={4}>
         Pending Approvals
       </Heading>
@@ -33,7 +40,7 @@ const ApprovalTable = () => {
               textColor="gray.500"
               sx={{ _hover: { bgColor: "gray.50" } }}
             >
-              {/* <Td>{item.id}</Td> */}
+              <Td>{item.id}</Td>
               <Td>{item.name}</Td>
               <Td>{item.type}</Td>
             </Tr>

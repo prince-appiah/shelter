@@ -9,10 +9,10 @@ const headCells: TableHeadProps[] = [
 ];
 
 const records = [
-  { id: 1, owner: "John Snow", type: "House", date: "23/02/22" },
-  { id: 2, owner: "John Snow", type: "House", date: "23/02/22" },
-  { id: 3, owner: "John Snow", type: "House", date: "23/02/22" },
-  { id: 4, owner: "John Snow", type: "House", date: "23/02/22" },
+  { id: 1, owner: "John Snow", type: "Studio", date: "23/02/22" },
+  { id: 2, owner: "John Snow", type: "Cottage", date: "23/02/22" },
+  { id: 3, owner: "John Snow", type: "Apartment", date: "23/02/22" },
+  { id: 4, owner: "John Snow", type: "Courthouse", date: "23/02/22" },
   { id: 5, owner: "John Snow", type: "House", date: "23/02/22" },
 ];
 
@@ -20,7 +20,13 @@ const ListingsTable = () => {
   const { TContainer, TableHead, results } = useTable(records, headCells);
 
   return (
-    <Box p={4} borderWidth="thin" borderColor="gray.100" rounded="md">
+    <Box
+      p={4}
+      borderWidth="thin"
+      bg="white"
+      borderColor="gray.100"
+      rounded="md"
+    >
       <Heading fontSize={20} mb={4}>
         Listings
       </Heading>
