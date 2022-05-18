@@ -1,4 +1,5 @@
 import api from "services";
+import { IPropertyType } from "typings";
 
 export type PropertyFields = {
   readonly _id: string;
@@ -206,8 +207,10 @@ class AdminApi {
     }
   }
 
-  static async addRoomType(token: string, data: HostFields) {
+  static async addPropertyType(data: Omit<IPropertyType, "_id">) {
     try {
+      const token = localStorage.getItem("token");
+
       const response = await api.post("/room-types", data, {
         headers: {
           "Content-Type": "application/json",
@@ -221,19 +224,17 @@ class AdminApi {
     }
   }
 
-  static async editRoomType(token: string, id: string, data: HostFields) {
-    try {
-      const response = await api.patch(`/room-types/${id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  static async editPropertyType(_id: string, data: IPropertyType) {
+    const token = localStorage.getItem("token");
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    const response = await api.patch(`/room-types/${_id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
   }
 
   static async deleteRoomType(token: string, id: string) {

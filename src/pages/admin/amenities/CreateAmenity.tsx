@@ -18,13 +18,13 @@ const CreateAmenity = (props: Props) => {
 
   const initialValues: Omit<IAmenity, "_id"> = { name: "", icon: "" };
 
-  const handleCreateAmenity = (
+  const handleCreateAmenity = async (
     values: Omit<IAmenity, "_id">,
     helper: FormikHelpers<Omit<IAmenity, "_id">>
   ) => {
     try {
       helper.setSubmitting(true);
-      dispatch(addAmenitiesAction(values));
+      await dispatch(addAmenitiesAction(values));
 
       helper.setSubmitting(false);
       formRef.current.reset();

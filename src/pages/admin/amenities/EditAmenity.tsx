@@ -29,13 +29,13 @@ const EditAmenity = ({ amenity }: Props) => {
     icon: Yup.string().notRequired(),
   });
 
-  const handleEditAmenity = (
+  const handleEditAmenity = async (
     values: IAmenity,
     helper: FormikHelpers<IAmenity>
   ) => {
     try {
       helper.setSubmitting(true);
-      dispatch(editAmenitiesAction(values));
+      await dispatch(editAmenitiesAction(values));
 
       helper.setSubmitting(false);
       formRef.current.reset();

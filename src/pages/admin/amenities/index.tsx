@@ -17,6 +17,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { fetchAmenitiesAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
+import { IAmenity } from "typings";
 import CreateAmenity from "./CreateAmenity";
 import EditAmenity from "./EditAmenity";
 
@@ -71,7 +72,7 @@ const Amenities = (props: Props) => {
           <TableHead />
           <Tbody>
             {results?.length > 0 &&
-              results?.map((item, index) => (
+              results?.map((item: IAmenity, idx: number) => (
                 <Tr
                   key={item._id}
                   cursor="pointer"
@@ -83,7 +84,7 @@ const Amenities = (props: Props) => {
                     setSelectedAmenity(item);
                   }}
                 >
-                  <Td>{index + 1}</Td>
+                  <Td>{idx + 1}</Td>
                   <Td>{item.name}</Td>
                   <Td>{item.icon}</Td>
                 </Tr>
