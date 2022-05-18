@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 interface DropdownProviderProps {
   open: boolean;
-  dropdownView: "profile" | "signup";
+  dropdownView: "profile" | "signup" | null;
   handleDropdownView: (
     dropdownView: DropdownProviderProps["dropdownView"]
   ) => void;
@@ -12,7 +12,7 @@ interface DropdownProviderProps {
 export const DropdownContext = createContext<DropdownProviderProps>({
   handleDropdownView: () => {},
   handleDropdownOpen: () => {},
-  dropdownView: "profile",
+  dropdownView: null,
   open: false,
 });
 

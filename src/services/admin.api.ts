@@ -251,20 +251,6 @@ class AdminApi {
     }
   }
 
-  static async getAllAmenities() {
-    try {
-      const response = await api.get("/amenities", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
   static async getAmenity(id: string) {
     try {
       const response = await api.get(`/amenities/${id}`, {
@@ -277,8 +263,10 @@ class AdminApi {
     }
   }
 
-  static async addAmenity(token: string, data: AmenityFields) {
+  static async addAmenity(data: Omit<AmenityFields, "_id">) {
     try {
+      const token = localStorage.getItem("token");
+
       const response = await api.post("/amenities", data, {
         headers: {
           "Content-Type": "application/json",
@@ -292,9 +280,11 @@ class AdminApi {
     }
   }
 
-  static async editAmenity(token: string, id: string, data: AmenityFields) {
+  static async editAmenity(_id: string, data: AmenityFields) {
     try {
-      const response = await api.patch(`/amenities/${id}`, data, {
+      const token = localStorage.getItem("token");
+
+      const response = await api.patch(`/amenities/${_id}`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

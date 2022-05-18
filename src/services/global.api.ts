@@ -12,6 +12,20 @@ class GlobalApi {
       return error;
     }
   }
+
+  static async getAllAmenities() {
+    try {
+      const response = await api.get("/amenities", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default GlobalApi;

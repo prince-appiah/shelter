@@ -1,14 +1,16 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Box, Flex, Icon, MenuButton, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, MenuButton, Text } from "@chakra-ui/react";
 import Button from "components/Button";
 import { HOME_ROUTE } from "config/constants/routes";
 import { DropdownContext } from "contexts/dropdownContext";
 import { ModalContext } from "contexts/modalContext";
+import { useAuthState } from "hooks/reduxHooks";
 import React, { useContext } from "react";
 import { BsFillHouseFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TiUser } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+import { capitalizeFirstLetter } from "shared/strings";
 import ProfileDropdown from "./ProfileDropdown";
 
 type Props = {};
@@ -16,6 +18,7 @@ type Props = {};
 const Header = (props: Props) => {
   const navigate = useNavigate();
   const { handleOpen, open } = useContext(ModalContext);
+  const { currentUser } = useAuthState();
   const {
     handleDropdownOpen,
     handleDropdownView,
@@ -61,17 +64,32 @@ const Header = (props: Props) => {
           >
             <ProfileDropdown view={dropdownView} isOpen={dropdownOpen} />
           </Box>
-          <Icon as={TiUser} fontSize={30} mr={{ base: 1, md: 3 }} />
+
+          {currentUser?.profilePicture ? (
+            <Image
+              src={currentUser?.profilePicture}
+              width={38}
+              height={38}
+              rounded="full"
+              mr={{ base: 1, md: 3 }}
+            />
+          ) : (
+            <Icon as={TiUser} fontSize={30} mr={{ base: 1, md: 3 }} />
+          )}
           <Flex
             direction="column"
             mr={3}
             display={{ base: "none", md: "block" }}
           >
             <Text fontSize={15} fontWeight={700}>
-              Prince Appiah
+              {currentUser
+                ? `${currentUser?.firstname} ${currentUser?.lastname}`
+                : "Regular User"}
             </Text>
             <Text fontSize={14} fontWeight={500} color="gray.500">
-              Host
+              {currentUser
+                ? `${capitalizeFirstLetter(currentUser?.userType)}`
+                : "Guest"}
             </Text>
           </Flex>
           <Icon as={ChevronDownIcon} fontSize={20} />
