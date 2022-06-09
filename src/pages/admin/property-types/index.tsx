@@ -29,13 +29,6 @@ const headCells: TableHeadProps[] = [
   { id: "icon", title: "Icon" },
 ];
 
-const records = [
-  { id: 1, propertyType: "Apartment", icon: "" },
-  { id: 2, propertyType: "Studio", icon: "" },
-  { id: 3, propertyType: "Serviced Apartment", icon: "" },
-  { id: 4, propertyType: "Court House", icon: "" },
-];
-
 const PropertyTypes = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const [selectedType, setSelectedType] = useState(null);

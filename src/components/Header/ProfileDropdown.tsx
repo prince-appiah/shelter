@@ -1,7 +1,5 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react";
-import { DropdownContext } from "contexts/dropdownContext";
-import React, { useContext } from "react";
+import { Menu, MenuItem, MenuList } from "@chakra-ui/react";
+import React from "react";
 import { AiTwotoneSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 
@@ -11,8 +9,6 @@ type Props = {
 };
 
 const ProfileDropdown = ({ view, isOpen }: Props) => {
-  const { handleDropdownOpen, open } = useContext(DropdownContext);
-
   return (
     <Menu isOpen={isOpen} isLazy closeOnBlur>
       <MenuList>

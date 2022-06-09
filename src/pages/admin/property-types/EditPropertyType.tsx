@@ -1,5 +1,4 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { AxiosError } from "axios";
 import Button from "components/Button";
 import Input from "components/Input";
 import { ModalContext } from "contexts/modalContext";
@@ -7,10 +6,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch } from "hooks/reduxHooks";
 import { useApiError } from "hooks/useApiError";
 import React, { useContext, useRef } from "react";
-import {
-  editAmenitiesAction,
-  editPropertyTypeAction,
-} from "redux/global/asyncActions";
+import { editPropertyTypeAction } from "redux/global/asyncActions";
 import { IPropertyType } from "typings";
 import * as Yup from "yup";
 
