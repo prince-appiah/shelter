@@ -53,7 +53,7 @@ const Listings = () => {
         </Button>
       </Flex>
 
-      {listings.length > 0 ? (
+      {listings?.length > 0 ? (
         <Grid mt={4} templateColumns="repeat(4,1fr)" gap={4}>
           {listings.map((item: IProperty) => (
             <GridItem

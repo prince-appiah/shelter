@@ -5,13 +5,13 @@ import {
   ModalProps,
 } from "@chakra-ui/react";
 
-type IOtpModalProps = {
+type ICustomModalProps = {
   onOpen?: () => void;
   isOpen: boolean;
   onClose: () => void;
 } & ModalProps;
 
-const Modal = (props: IOtpModalProps) => {
+const Modal = (props: ICustomModalProps) => {
   const { isOpen, onClose, onOpen, children, ...rest } = props;
 
   return (

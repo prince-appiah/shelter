@@ -1,4 +1,4 @@
-import { AddIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -9,10 +9,15 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import Button from "components/Button";
-import { ModalContext } from "contexts/modalContext";
 import AmenityModal from "components/Modal";
+import { ModalContext } from "contexts/modalContext";
+import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { fetchAmenitiesAction } from "redux/global/asyncActions";
+import { setStatus } from "redux/global/globalSlice";
+import { store } from "redux/store";
+import { IAmenity } from "typings";
 import CreateAmenity from "./CreateAmenity";
 import EditAmenity from "./EditAmenity";
 
@@ -24,16 +29,21 @@ const headCells: TableHeadProps[] = [
   { id: "icon", title: "Icon" },
 ];
 
-const records = [
-  { id: 1, name: "Air Conditioner", icon: "" },
-  { id: 2, name: "Barbecue", icon: "" },
-  { id: 3, name: "Swimming Pool", icon: "" },
-  { id: 4, name: "Parking Space", icon: "" },
-];
-
 const Amenities = (props: Props) => {
-  const { TContainer, TableHead, results } = useTable(records, headCells);
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
+  const { amenities } = useGlobalState();
+  const { TContainer, TableHead, results } = useTable(amenities, headCells);
+  const [selectedAmenity, setSelectedAmenity] = useState(null);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const fetchAmenities = () => dispatch(fetchAmenitiesAction());
+    fetchAmenities();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
+  }, [dispatch]);
 
   return (
     <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
@@ -61,22 +71,24 @@ const Amenities = (props: Props) => {
         <TContainer>
           <TableHead />
           <Tbody>
-            {results?.map((item) => (
-              <Tr
-                key={item.id}
-                cursor="pointer"
-                textColor="gray.500"
-                sx={{ _hover: { bgColor: "gray.50" } }}
-                onClick={() => {
-                  handleOpen(!open);
-                  handleView("edit-amenity");
-                }}
-              >
-                <Td>{item.id}</Td>
-                <Td>{item.name}</Td>
-                <Td>{item.icon}</Td>
-              </Tr>
-            ))}
+            {results?.length > 0 &&
+              results?.map((item: IAmenity, idx: number) => (
+                <Tr
+                  key={item._id}
+                  cursor="pointer"
+                  textColor="gray.500"
+                  sx={{ _hover: { bgColor: "gray.50" } }}
+                  onClick={() => {
+                    handleOpen(!open);
+                    handleView("edit-amenity");
+                    setSelectedAmenity(item);
+                  }}
+                >
+                  <Td>{idx + 1}</Td>
+                  <Td>{item.name}</Td>
+                  <Td>{item.icon}</Td>
+                </Tr>
+              ))}
           </Tbody>
         </TContainer>
       </Box>
@@ -85,7 +97,7 @@ const Amenities = (props: Props) => {
       <AmenityModal isOpen={open} onClose={() => handleOpen(!open)}>
         {/* dynamically render content based on view from the global state */}
         {view === "create-amenity" && <CreateAmenity />}
-        {view === "edit-amenity" && <EditAmenity />}
+        {view === "edit-amenity" && <EditAmenity amenity={selectedAmenity} />}
       </AmenityModal>
     </Flex>
   );

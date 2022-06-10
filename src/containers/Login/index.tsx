@@ -82,6 +82,7 @@ const Login = () => {
           position: "top-right",
           duration: 10000,
         });
+        console.log("🚀 ~ currentUser", currentUser);
 
         // redirect users to their dashboard using their userType
         if (currentUser && currentUser.userType) {

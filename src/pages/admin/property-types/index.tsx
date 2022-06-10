@@ -1,4 +1,4 @@
-import { AddIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -9,10 +9,15 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import Button from "components/Button";
-import { ModalContext } from "contexts/modalContext";
 import AmenityModal from "components/Modal";
+import { ModalContext } from "contexts/modalContext";
+import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { fetchPropertyTypesAction } from "redux/global/asyncActions";
+import { setStatus } from "redux/global/globalSlice";
+import { store } from "redux/store";
+import { IPropertyType } from "typings";
 import CreatePropertyTypeModal from "./CreatePropertyType";
 import EditPropertyTypeModal from "./EditPropertyType";
 
@@ -24,16 +29,21 @@ const headCells: TableHeadProps[] = [
   { id: "icon", title: "Icon" },
 ];
 
-const records = [
-  { id: 1, propertyType: "Apartment", icon: "" },
-  { id: 2, propertyType: "Studio", icon: "" },
-  { id: 3, propertyType: "Serviced Apartment", icon: "" },
-  { id: 4, propertyType: "Court House", icon: "" },
-];
-
 const PropertyTypes = (props: Props) => {
-  const { TContainer, TableHead, results } = useTable(records, headCells);
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
+  const [selectedType, setSelectedType] = useState(null);
+  const { propertyTypes } = useGlobalState();
+  const dispatch = useAppDispatch();
+  const { TContainer, TableHead, results } = useTable(propertyTypes, headCells);
+
+  useEffect(() => {
+    const fetchPropertyTypes = () => dispatch(fetchPropertyTypesAction());
+    fetchPropertyTypes();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
+  }, [dispatch]);
 
   return (
     <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
@@ -45,7 +55,7 @@ const PropertyTypes = (props: Props) => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>Amenities</Heading>
+          <Heading fontSize={20}>Property Types</Heading>
 
           <Button
             onClick={() => {
@@ -61,22 +71,24 @@ const PropertyTypes = (props: Props) => {
         <TContainer>
           <TableHead />
           <Tbody>
-            {results?.map((item) => (
-              <Tr
-                key={item.id}
-                cursor="pointer"
-                textColor="gray.500"
-                sx={{ _hover: { bgColor: "gray.50" } }}
-                onClick={() => {
-                  handleOpen(!open);
-                  handleView("edit-property-type");
-                }}
-              >
-                <Td>{item.id}</Td>
-                <Td>{item.propertyType}</Td>
-                <Td>{item.icon}</Td>
-              </Tr>
-            ))}
+            {results?.length > 0 &&
+              results?.map((item: IPropertyType, idx: number) => (
+                <Tr
+                  key={item._id}
+                  cursor="pointer"
+                  textColor="gray.500"
+                  sx={{ _hover: { bgColor: "gray.50" } }}
+                  onClick={() => {
+                    handleOpen(!open);
+                    handleView("edit-property-type");
+                    setSelectedType(item);
+                  }}
+                >
+                  <Td>{idx + 1}</Td>
+                  <Td>{item.name}</Td>
+                  <Td>{item.icon}</Td>
+                </Tr>
+              ))}
           </Tbody>
         </TContainer>
       </Box>
@@ -85,7 +97,9 @@ const PropertyTypes = (props: Props) => {
       <AmenityModal isOpen={open} onClose={() => handleOpen(!open)}>
         {/* dynamically render content based on view from the global state */}
         {view === "add-property-type" && <CreatePropertyTypeModal />}
-        {view === "edit-property-type" && <EditPropertyTypeModal />}
+        {view === "edit-property-type" && (
+          <EditPropertyTypeModal propertyType={selectedType} />
+        )}
       </AmenityModal>
     </Flex>
   );

@@ -16,4 +16,6 @@ export const HOST_DASHBOARD = "/s/host/dashboard";
 export const CUSTOMER_DASHBOARD = "/s/customer/dashboard";
 
 // routes with parameters
-export const getListingDetailsRoute = (id: string) => `/s/listings/${id}`;
+export const getListingDetailsRoute = (id: string) =>
+  `${LISTING_DETAILS_ROUTE.replace(":id", id)}`;
+// export const getListingDetailsRoute = (id: string) => `/s/listings/${id}`;

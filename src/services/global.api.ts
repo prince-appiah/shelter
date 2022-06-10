@@ -12,6 +12,33 @@ class GlobalApi {
       return error;
     }
   }
+
+  static async getAllAmenities() {
+    try {
+      const response = await api.get("/amenities", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async getAllPropertyTypes() {
+    try {
+      const response = await api.get("/room-types", {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default GlobalApi;

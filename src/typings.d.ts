@@ -37,7 +37,7 @@ export interface IAmenity {
   icon: string;
 }
 
-export interface IRoomType {
+export interface IPropertyType {
   readonly _id: string;
   name: string;
   icon: string;
