@@ -1,4 +1,8 @@
-import { ComponentStyleConfig } from "@chakra-ui/react";
+import {
+  ComponentStyleConfig,
+  StyleObjectOrFn,
+  StyleProps,
+} from "@chakra-ui/react";
 
 const ButtonStyles: ComponentStyleConfig = {
   // Styles for the base style
@@ -23,6 +27,15 @@ const ButtonStyles: ComponentStyleConfig = {
       color: "white",
       _hover: {
         bgColor: "brand.primary",
+      },
+    }),
+    ghost: (props) => ({
+      color: "blue",
+      bgColor: "transparent",
+      fontSize: 14,
+      _hover: {
+        textDecoration: "none",
+        bgColor: "transparent",
       },
     }),
   },

@@ -1,3 +1,4 @@
+import Loadable from "components/Loadable";
 import {
   ADMIN_AMENITIES,
   ADMIN_DASHBOARD,
@@ -12,21 +13,37 @@ import {
   LOGIN_ROUTE,
   SIGNUP_ROUTE,
 } from "config/constants/routes";
-import LandingPage from "containers/LandingPage";
+// import LandingPage from "containers/LandingPage";
 import Layout from "containers/Layout";
-import ListingDetails from "containers/ListingDetails";
-import Listings from "containers/Listings";
+// import ListingDetails from "containers/ListingDetails";
+// import Listings from "containers/Listings";
 import Login from "containers/Login";
 import NotFound from "containers/NotFound";
 import Signup from "containers/Signup";
-import Amenities from "pages/Admin/amenities";
-import Admin from "pages/Admin/dashboard";
-import AdminListings from "pages/Admin/listings";
-import RoomTypes from "pages/Admin/property-types";
-import Users from "pages/Admin/users";
-import Customer from "pages/customer";
-import Host from "pages/host";
+
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+
+const LandingPage = Loadable(lazy(() => import("containers/LandingPage")));
+
+// ADMIN IMPORTS
+const Admin = Loadable(lazy(() => import("pages/admin/dashboard")));
+const AdminListings = Loadable(lazy(() => import("pages/admin/listings")));
+const Amenities = Loadable(lazy(() => import("pages/admin/amenities")));
+const Users = Loadable(lazy(() => import("pages/admin/users")));
+const RoomTypes = Loadable(lazy(() => import("pages/admin/property-types")));
+
+// CUSTOMER IMPORTS
+const Customer = Loadable(lazy(() => import("pages/customer")));
+
+// HOST IMPORTS
+const Host = Loadable(lazy(() => import("pages/host")));
+
+// OTHER COMPONENT IMPORTS
+const ListingDetails = Loadable(
+  lazy(() => import("containers/ListingDetails"))
+);
+const Listings = Loadable(lazy(() => import("containers/Listings")));
 
 const AppRoutes = () => {
   return (

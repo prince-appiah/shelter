@@ -12,6 +12,17 @@ class GlobalApi {
       return error;
     }
   }
+  static async getListingDetails(property_id: string) {
+    try {
+      const response = await api.get(`/property/${property_id}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 
   static async getAllAmenities() {
     try {
