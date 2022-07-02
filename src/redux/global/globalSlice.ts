@@ -9,18 +9,21 @@ import {
   fetchAmenitiesAction,
   fetchListingsAction,
   fetchPropertyTypesAction,
+  getPropertyDetails,
 } from "./asyncActions";
 
 export interface IGlobalState {
   status: "idle" | "loading" | "success" | "error";
   error: any;
   listings: IProperty[];
+  selectedListing: IProperty;
   amenities: IAmenity[];
   propertyTypes: IPropertyType[];
 }
 
 const initialState: IGlobalState = {
   listings: [],
+  selectedListing: null,
   amenities: [],
   propertyTypes: [],
   status: "idle",
@@ -45,6 +48,18 @@ export const globalSlice = createSlice({
       state.listings = action.payload.data;
     });
     builder.addCase(fetchListingsAction.rejected, (state, _action) => {
+      state.status = "error";
+    });
+
+    //  get property/property details
+    builder.addCase(getPropertyDetails.pending, (state, _action) => {
+      state.status = "loading";
+    });
+    builder.addCase(getPropertyDetails.fulfilled, (state, action) => {
+      state.status = "success";
+      state.selectedListing = action.payload.data.data;
+    });
+    builder.addCase(getPropertyDetails.rejected, (state, _action) => {
       state.status = "error";
     });
 

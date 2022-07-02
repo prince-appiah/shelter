@@ -18,8 +18,8 @@ import { fetchAmenitiesAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { IAmenity } from "typings";
-import CreateAmenity from "./CreateAmenity";
-import EditAmenity from "./EditAmenity";
+import CreateAmenity from "./components/CreateAmenity";
+import EditAmenity from "./components/EditAmenity";
 
 type Props = {};
 
