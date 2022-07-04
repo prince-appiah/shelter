@@ -114,11 +114,26 @@ const Signup = () => {
   };
 
   return (
-    <Flex width="100vw" height="100vh">
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      width="100vw"
+      height="100vh"
+    >
       {/* Left Image */}
-      <Image src="http://placehold.jp/1000x1024.png" />
+      <Image
+        src="http://placehold.jp/1000x1024.png"
+        objectFit="cover"
+        width={{ md: 500, lg: "50%" }}
+        display={{ base: "none", lg: "unset" }}
+      />
       {/* Form */}
-      <Box mx="auto" my="auto" width="35%" py={8} px={16}>
+      <Box
+        mx="auto"
+        my="auto"
+        width={{ base: "100%", md: "75%", lg: "40%" }}
+        py={8}
+        px={16}
+      >
         <Heading fontSize={24} pb={5} textAlign="center">
           Join Shelter
         </Heading>
