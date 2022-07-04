@@ -2,26 +2,19 @@ import api from "services";
 
 class GlobalApi {
   static async fetchListings() {
-    try {
-      const response = await api.get("/property", {
-        headers: { "Content-Type": "application/json" },
-      });
+    const response = await api.get("/property", {
+      headers: { "Content-Type": "application/json" },
+    });
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
   }
-  static async getListingDetails(property_id: string) {
-    try {
-      const response = await api.get(`/property/${property_id}`, {
-        headers: { "Content-Type": "application/json" },
-      });
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+  static async getListingDetails(property_id: string) {
+    const response = await api.get(`/property/${property_id}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return response;
   }
 
   static async getAllAmenities() {

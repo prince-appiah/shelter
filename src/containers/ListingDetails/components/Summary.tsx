@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Text, VStack } from "@chakra-ui/react";
+import { Divider, Flex, Text, VStack } from "@chakra-ui/react";
 import Button from "components/Button";
 import { IProperty } from "typings";
 import ListingContact from "./Contact";
@@ -46,7 +46,7 @@ const Summary = ({ listing }: SummaryProps) => {
         </Button>
       </VStack>
       {/* Property Owner */}
-      <ListingContact />
+      <ListingContact listing={listing} />
     </Flex>
   );
 };

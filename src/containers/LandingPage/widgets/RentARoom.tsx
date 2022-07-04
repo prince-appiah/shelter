@@ -13,15 +13,26 @@ import {
 
 const RentARoom = () => {
   return (
-    <Box py={10} px={28}>
-      <Heading fontWeight="semibold" textAlign="center" fontSize={24} mb={6}>
+    <Box py={10}>
+      <Heading
+        fontWeight="semibold"
+        textAlign="center"
+        fontSize={{ base: 22, md: 24 }}
+        mb={6}
+      >
         Want to rent a room/house?
       </Heading>
 
-      <Flex px="40" width="100%">
-        {/* Left Side  */}
-        <Tabs orientation="vertical" width="100%" isFitted size="lg">
-          <TabList width="70%">
+      <Flex width="100%">
+        <Tabs
+          orientation="vertical"
+          width={{ base: "100%", lg: "80%" }}
+          mx="auto"
+          isFitted
+          size="lg"
+        >
+          {/* Left Side  */}
+          <TabList width={{ base: "full", md: "60%" }}>
             <Tab display="flex" flexDirection="column">
               <Heading fontSize={18} textAlign="left" mb={2}>
                 Create An Account
@@ -51,14 +62,29 @@ const RentARoom = () => {
             </Tab>
           </TabList>
           {/* Right Side  */}
-          <TabPanels>
-            <TabPanel width="100%" height="100%">
+          <TabPanels width="full" display={{ base: "none", md: "unset" }}>
+            <TabPanel
+              width="100%"
+              height="100%"
+              align="center"
+              justify="center"
+            >
               <Image src="http://placehold.jp/400x400.png" />
             </TabPanel>
-            <TabPanel width="100%" height="100%">
+            <TabPanel
+              width="100%"
+              height="100%"
+              align="center"
+              justify="center"
+            >
               <Image src="http://placehold.jp/400x400.png" />
             </TabPanel>
-            <TabPanel width="100%" height="100%">
+            <TabPanel
+              width="100%"
+              height="100%"
+              align="center"
+              justify="center"
+            >
               <Image src="http://placehold.jp/400x400.png" />
             </TabPanel>
           </TabPanels>

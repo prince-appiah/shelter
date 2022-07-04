@@ -27,6 +27,7 @@ export const getPropertyDetails = createAsyncThunk(
 
       return response;
     } catch (error) {
+      console.log("🚀 ~ error", error);
       return thunk.rejectWithValue(error.response.data);
     }
   }

@@ -1,14 +1,21 @@
 import { Avatar, Divider, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import Button from "components/Button";
+import { IProperty } from "typings";
 
-const ListingContact = () => {
+type IListingContactProps = {
+  listing: IProperty;
+};
+
+const ListingContact = ({ listing }: IListingContactProps) => {
   return (
     <VStack align="start" mt={6}>
       {/* Avatar and name/role */}
       <Flex>
         <Avatar mr={4} />
         <Flex direction="column">
-          <Text fontWeight={600}>John Snow</Text>
+          <Text fontWeight={600}>
+            {listing?.owner?.firstname} {listing?.owner?.lastname}
+          </Text>
           <Text color="gray">Property Owner</Text>
         </Flex>
       </Flex>

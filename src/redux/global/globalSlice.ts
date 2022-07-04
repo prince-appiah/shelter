@@ -41,26 +41,32 @@ export const globalSlice = createSlice({
   extraReducers: (builder) => {
     //  fetch listings
     builder.addCase(fetchListingsAction.pending, (state, _action) => {
-      state.status = "loading";
+      return { ...state, status: "loading" };
     });
     builder.addCase(fetchListingsAction.fulfilled, (state, action) => {
-      state.status = "success";
-      state.listings = action.payload.data;
+      return {
+        ...state,
+        status: "success",
+        listings: action.payload.data,
+      };
     });
     builder.addCase(fetchListingsAction.rejected, (state, _action) => {
-      state.status = "error";
+      return { ...state, status: "error" };
     });
 
     //  get property/property details
     builder.addCase(getPropertyDetails.pending, (state, _action) => {
-      state.status = "loading";
+      return { ...state, status: "loading" };
     });
     builder.addCase(getPropertyDetails.fulfilled, (state, action) => {
-      state.status = "success";
-      state.selectedListing = action.payload.data.data;
+      return {
+        ...state,
+        status: "success",
+        selectedListing: action.payload.data.data,
+      };
     });
-    builder.addCase(getPropertyDetails.rejected, (state, _action) => {
-      state.status = "error";
+    builder.addCase(getPropertyDetails.rejected, (state, action) => {
+      return { ...state, status: "error" };
     });
 
     //  fetch property types

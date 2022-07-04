@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 
 import bgHero2 from "assets/images/bg-hero-2.png";
 import { LISTINGS_ROUTE, SIGNUP_ROUTE } from "config/constants/routes";
@@ -7,10 +7,21 @@ import { useNavigate } from "react-router-dom";
 
 const SubHero = () => {
   return (
-    <Box py={10} px={28}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Image src={bgHero2} alt="living-room" />
-        <Box top={7} right={91}>
+    <Flex py={10} direction={{ base: "column", md: "row" }}>
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        spacing={5}
+        justifyContent="center"
+        align="center"
+      >
+        <Image
+          src={bgHero2}
+          alt="living-room"
+          objectFit="contain"
+          display={{ base: "none", lg: "unset" }}
+          height={{ base: 300, md: 440 }}
+        />
+        <Stack width={{ base: "full", lg: "50%" }}>
           <SubHeroCard
             title="Rent a room"
             body="Vulputate purus, facilisi eu eget eget. Justo diam condimentum fusce mi enim. Nunc, arcu purus amet, augue hendrerit dapibus feugiat. Eget aliquam"
@@ -23,9 +34,9 @@ const SubHero = () => {
             link="Get Started"
             url={SIGNUP_ROUTE}
           />
-        </Box>
-      </Box>
-    </Box>
+        </Stack>
+      </Stack>
+    </Flex>
   );
 };
 
@@ -35,13 +46,12 @@ const SubHeroCard = ({ title, body, link, url }) => {
   return (
     <Box
       onClick={() => navigate(url)}
-      my={5}
       p={7}
-      borderRadius={8}
+      borderRadius={10}
       borderColor="gray.300"
       borderWidth={1}
       bgColor="white"
-      width={400}
+      width={{ base: "full" }}
       _hover={{
         cursor: "pointer",
         boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.1)",

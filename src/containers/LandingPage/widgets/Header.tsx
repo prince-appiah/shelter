@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <Flex py={4} px={28}>
+    <Flex py={4}>
       <Image src="http://placehold.jp/50x50.png" />
       <Spacer />
       <Button onClick={() => navigate(LOGIN_ROUTE)} variant="outline">

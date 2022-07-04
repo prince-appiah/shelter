@@ -16,7 +16,7 @@ const ImageSlider = ({ listing }: ImageSliderProps) => {
       mb={6}
     >
       <Image
-        src={listing.images[0]}
+        src={listing?.images[0]}
         rounded="2xl"
         height={480}
         width="full"
