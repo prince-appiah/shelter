@@ -33,7 +33,7 @@ const KeyDetails = ({ listing }: KeyDetailsProps) => {
       <Text fontSize={24} fontWeight={600} mb={4}>
         Key Details
       </Text>
-      <SimpleGrid spacing={4} columns={3}>
+      <SimpleGrid spacing={4} columns={{ base: 2, xl: 3 }}>
         {details.map((item, idx) => (
           <KeyDetailItem key={idx} item={item} />
         ))}

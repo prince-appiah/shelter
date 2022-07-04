@@ -8,9 +8,9 @@ type IListingContactProps = {
 
 const ListingContact = ({ listing }: IListingContactProps) => {
   return (
-    <VStack align="start" mt={6}>
+    <VStack align="start" mt={6} width="full">
       {/* Avatar and name/role */}
-      <Flex>
+      <Flex width="full">
         <Avatar mr={4} />
         <Flex direction="column">
           <Text fontWeight={600}>
@@ -22,7 +22,7 @@ const ListingContact = ({ listing }: IListingContactProps) => {
       {/* divider */}
       <Divider my={4} />
       {/* flex with divider in the middle */}
-      <HStack spacing={4} mx="auto" px={2}>
+      <HStack spacing={4} mx="auto" px={2} width="full">
         <Button variant="ghost" isFullWidth>
           Ask a question
         </Button>

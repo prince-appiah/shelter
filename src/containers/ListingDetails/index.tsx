@@ -34,7 +34,13 @@ const ListingDetails = () => {
   }
 
   return (
-    <Flex gridGap={3} py={8} justify="center">
+    <Flex
+      direction={{ base: "column", lg: "row" }}
+      gridGap={3}
+      py={8}
+      px={{ base: 4, md: 6 }}
+      justify="center"
+    >
       {/* Left side  */}
       <Details listing={listing} />
       {/* Right side  */}

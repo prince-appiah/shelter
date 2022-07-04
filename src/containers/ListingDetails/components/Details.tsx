@@ -10,14 +10,7 @@ type DetailsProps = {
 
 const Details = ({ listing }: DetailsProps) => {
   return (
-    <Flex
-      direction="column"
-      //   borderRadius={6}
-      //   borderWidth="thin"
-      //   borderColor="rgba(69, 77, 102, 0.2)"
-      px={6}
-      width={{ md: "60%" }}
-    >
+    <Flex direction="column" width={{ base: "full", lg: "55%" }}>
       {/* Images carousel */}
       <ImageSlider listing={listing} />
       {/* Key Details */}

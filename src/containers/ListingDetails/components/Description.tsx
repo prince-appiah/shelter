@@ -20,7 +20,7 @@ const Description = ({ listing }: DescriptionProps) => {
       <Text fontSize={24} fontWeight={600} mb={4}>
         Description
       </Text>
-      <Text color="gray">
+      <Text color="gray" noOfLines={6}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita sequi
         ex blanditiis est tempore odit molestias alias id, quam suscipit
         similique, dolorem at corporis, vero eum architecto cupiditate doloribus
