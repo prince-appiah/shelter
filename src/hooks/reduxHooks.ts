@@ -3,9 +3,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authSelector } from "redux/auth/authSlice";
 import { globalSelector } from "redux/global/globalSlice";
 import { AppDispatch, RootState } from "redux/store";
+import { usersSelector } from "redux/users/usersSlice";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const useUsersState = () => {
+  const userState = useAppSelector(usersSelector);
+  return useMemo(() => userState, [userState]);
+};
 
 export const useGlobalState = () => {
   const globalState = useAppSelector(globalSelector);

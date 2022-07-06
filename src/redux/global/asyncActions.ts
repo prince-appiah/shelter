@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import AdminApi from "services/admin.api";
 import GlobalApi from "services/global.api";
 import { IAmenity, IPropertyType } from "typings";
-import { setStatus } from "./globalSlice";
 
 export const fetchListingsAction = createAsyncThunk(
   "global/fetchListings",
