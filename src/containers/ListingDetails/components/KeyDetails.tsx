@@ -5,16 +5,20 @@ type KeyDetailsProps = {
   listing: IProperty;
 };
 
-const details = [
-  { title: "Days on market", body: "7 days ago", icon: "" },
-  { title: "Estimated Payment", body: "$451", icon: "" },
-  { title: "Location", body: "Accra", icon: "" },
-  { title: "Number of bathrooms", body: 3, icon: "" },
-  { title: "Number of bedrooms", body: 6, icon: "" },
-  { title: "Stay Period", body: "Per night", icon: "" },
-];
-
 const KeyDetails = ({ listing }: KeyDetailsProps) => {
+  const details = [
+    { title: "Days on market", body: "7 days ago", icon: "" },
+    { title: "Estimated Payment", body: "$451", icon: "" },
+    {
+      title: "Property Type",
+      body: listing?.roomType?.name || "Studio",
+      icon: "",
+    },
+    { title: "Number of bathrooms", body: 3, icon: "" },
+    { title: "Number of bedrooms", body: 6, icon: "" },
+    { title: "Stay Period", body: "Per night", icon: "" },
+  ];
+
   return (
     <Flex
       direction="column"
@@ -29,9 +33,9 @@ const KeyDetails = ({ listing }: KeyDetailsProps) => {
       <Text fontSize={24} fontWeight={600} mb={4}>
         Key Details
       </Text>
-      <SimpleGrid spacing={4} columns={3}>
+      <SimpleGrid spacing={4} columns={{ base: 2, xl: 3 }}>
         {details.map((item, idx) => (
-          <KeyDetailItem item={item} />
+          <KeyDetailItem key={idx} item={item} />
         ))}
       </SimpleGrid>
     </Flex>
@@ -49,9 +53,9 @@ const KeyDetailItem = ({ item }) => {
       p={3}
     >
       <Text fontSize={14} color="gray">
-        {item.title}
+        {item?.title}
       </Text>
-      <Text fontWeight={600}>{item.body}</Text>
+      <Text fontWeight={600}>{item?.body}</Text>
     </Flex>
   );
 };

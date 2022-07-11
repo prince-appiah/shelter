@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import Footer from "components/Footer";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import { useEffect } from "react";
@@ -36,15 +37,18 @@ const LandingPage = () => {
 
   return (
     <>
-      {/* <Container> */}
-      <Header />
-      <Hero />
-      <SubHero />
-      <RecentListings data={listings} />
-      <BeAHost />
-      <RentARoom />
+      <Flex direction="column" px={{ base: 4, lg: 8, xl: 28 }}>
+        {/* <Container> */}
+        <Header />
+        <Hero />
+        <SubHero />
+        {/* todo: fix this later */}
+        <RecentListings data={listings} />
+        <BeAHost />
+        <RentARoom />
+        {/* </Container> */}
+      </Flex>
       <Footer />
-      {/* </Container> */}
     </>
   );
 };

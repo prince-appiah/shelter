@@ -7,25 +7,58 @@ type ImageSliderProps = {
 
 const ImageSlider = ({ listing }: ImageSliderProps) => {
   return (
-    <Flex
-      direction="column"
-      //   borderRadius={6}
-      //   borderWidth="thin"
-      //   borderColor="rgba(69, 77, 102, 0.2)"
-      width="full"
-      mb={6}
-    >
+    <Flex direction="column" width="full" mb={6}>
       <Image
-        src={listing.images[0]}
+        src={listing?.images[0]}
         rounded="2xl"
         height={480}
+        cursor="pointer"
         width="full"
         mb={4}
       />
-      <HStack spacing={3}>
-        <Image src={listing?.images[1]} rounded="xl" height={100} width={128} />
-        <Image src={listing?.images[2]} rounded="xl" height={100} width={128} />
-        <Image src="" rounded="xl" height={100} width={128} />
+      <HStack spacing={3} overflowX="scroll">
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
+        <Image
+          src={listing?.images[1]}
+          cursor="pointer"
+          rounded="xl"
+          height={100}
+          width={128}
+        />
       </HStack>
     </Flex>
   );

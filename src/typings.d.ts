@@ -1,9 +1,9 @@
 export interface IProperty {
   readonly _id: string;
-  owner: string;
+  owner: IHost;
   name: string;
   referenceNo: string;
-  roomType: string;
+  roomType: IPropertyType | null;
   price: string;
   numOfBedrooms: number;
   numOfBathrooms: number;
@@ -24,6 +24,14 @@ export interface IUser {
   profilePicture: string;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+}
+
+export interface IHost extends IUser {
+  readonly _id: string;
+  user_id: string;
+  isVerified: boolean;
+  phone: string;
+  properties: IProperty[];
 }
 
 export interface IDecodedUser extends IUser {

@@ -15,14 +15,17 @@ const RecentListings = ({ data }) => {
   const navigate = useNavigate();
 
   return (
-    <Box py={10} px={28}>
-      <Heading fontWeight="semibold" fontSize={24} mb={6}>
+    <Box py={6}>
+      <Heading fontWeight="semibold" fontSize={{ base: 22, md: 24 }} mb={6}>
         Recent Listings
       </Heading>
       {/* Grid */}
 
       {data?.length > 0 ? (
-        <Grid templateColumns="repeat(4,1fr)" gap={4}>
+        <Grid
+          templateColumns={{ base: "repeat(2,1fr)", md: "repeat(4,1fr)" }}
+          gap={4}
+        >
           {data?.map((item: IProperty) => (
             <GridItem
               onClick={() => navigate(getListingDetailsRoute(item?._id))}

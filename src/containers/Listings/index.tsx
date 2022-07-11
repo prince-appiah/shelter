@@ -1,6 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
 import {
-  Box,
   Center,
   Flex,
   Grid,
@@ -43,7 +42,7 @@ const Listings = () => {
   }
 
   return (
-    <Box px={28}>
+    <Flex direction="column" py={6} px={{ base: 4, md: 6 }}>
       <Flex alignItems="center" justifyContent="space-between">
         <Heading as="h4" size="md">
           Browse Listings
@@ -54,7 +53,11 @@ const Listings = () => {
       </Flex>
 
       {listings?.length > 0 ? (
-        <Grid mt={4} templateColumns="repeat(4,1fr)" gap={4}>
+        <Grid
+          mt={4}
+          templateColumns={{ base: "repeat(2,1fr)", lg: "repeat(4,1fr)" }}
+          gap={4}
+        >
           {listings.map((item: IProperty) => (
             <GridItem
               onClick={() => navigate(getListingDetailsRoute(item._id))}
@@ -92,7 +95,7 @@ const Listings = () => {
           <Text>Sorry, no listings were found</Text>
         </Center>
       )}
-    </Box>
+    </Flex>
   );
 };
 

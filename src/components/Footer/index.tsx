@@ -23,7 +23,7 @@ const footerLinks = [
 
 const Footer = () => {
   return (
-    <Box py={16} px={28} bgColor="text.primary" color="white">
+    <Box py={14} px={{ base: 4, md: 28 }} bgColor="text.primary" color="white">
       {/* Subscribe Section */}
       <Flex direction="column" alignItems="center">
         <Heading fontSize={24} fontWeight="semibold" mb={2}>
@@ -48,7 +48,7 @@ const Footer = () => {
       {/* Links section */}
       <Flex py={10}>
         {footerLinks.map((item) => (
-          <Box px={8} py={5} key={item.id}>
+          <Box px={{ base: 4, md: 8 }} py={5} key={item.id}>
             <Heading mb={3} fontWeight="semibold" fontSize={20}>
               {item.title}
             </Heading>
