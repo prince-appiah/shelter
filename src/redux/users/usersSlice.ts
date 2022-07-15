@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 import { IUser } from "typings";
-import { fetchUsersAction } from "./asyncActions";
+import { createUserAction, fetchUsersAction } from "./asyncActions";
 
 export interface IUsersState {
   status: "idle" | "loading" | "success" | "error";
@@ -32,6 +32,21 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(fetchUsersAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
+    });
+
+    //   create user
+    builder.addCase(createUserAction.pending, (state, action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(createUserAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        users: [state.users, ...action.payload.data],
+      };
+    });
+    builder.addCase(createUserAction.rejected, (state, _action) => {
       return { ...state, status: "error" };
     });
   },

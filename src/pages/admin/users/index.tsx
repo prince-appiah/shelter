@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import Loader from "components/Loader";
+import UserModal from "components/Modal";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
@@ -20,6 +21,8 @@ import { store } from "redux/store";
 import { fetchUsersAction } from "redux/users/asyncActions";
 import { capitalizeFirstLetter } from "shared/strings";
 import { IUser } from "typings";
+import CreateListingModal from "../listings/components/CreateListingModal";
+import CreateUserModal from "./components/CreateUserModal";
 
 type Props = {};
 
@@ -32,7 +35,7 @@ const headCells: TableHeadProps[] = [
 ];
 
 const Users = (props: Props) => {
-  const { open, handleOpen, handleView } = useContext(ModalContext);
+  const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const { users, status } = useUsersState();
   const dispatch = useAppDispatch();
   const { TContainer, TableHead, results } = useTable(users, headCells);
@@ -69,7 +72,7 @@ const Users = (props: Props) => {
           <Button
             onClick={() => {
               handleOpen(!open);
-              handleView("add-property-type");
+              handleView("create-user");
             }}
             leftIcon={<AddIcon />}
           >
@@ -103,6 +106,11 @@ const Users = (props: Props) => {
           </Tbody>
         </TContainer>
       </Box>
+
+      {/* Create/Edit User Modal */}
+      <UserModal isOpen={open} onClose={() => handleOpen(!open)}>
+        {view === "create-user" && <CreateUserModal />}
+      </UserModal>
     </Flex>
   );
 };

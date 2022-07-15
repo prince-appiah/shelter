@@ -46,11 +46,6 @@ const Signup = () => {
       icon: "https://randomuser.me/api/portraits/men/29.jpg",
     },
   ];
-  // const { getRootProps } = useRadioGroup({
-  //   name: "userType",
-  //   defaultValue: "user",
-  // });
-  // const group = getRootProps();
 
   const initialValues = {
     firstname: "",

@@ -5,6 +5,10 @@ interface ModalProviderProps {
   view:
     | "login"
     | "signup"
+    | "create-user"
+    | "edit-user"
+    | "create-listing"
+    | "edit-listing"
     | "create-amenity"
     | "edit-amenity"
     | "add-property-type"

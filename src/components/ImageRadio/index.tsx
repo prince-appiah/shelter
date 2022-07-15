@@ -34,6 +34,7 @@ const ImageRadio = React.forwardRef((props: Props, ref) => {
       isChecked,
       ...field,
     });
+  console.log("🚀 ~ state", state);
 
   return (
     <chakra.label {...htmlProps} cursor="pointer">

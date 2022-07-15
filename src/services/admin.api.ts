@@ -39,6 +39,16 @@ export type AmenityFields = {
 };
 
 class AdminApi {
+  static async getDashboardReport() {
+    const response = await api.get("/dashboard-reports", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  }
+
   static async getAllProperties() {
     try {
       const response = await api.get("/property", {

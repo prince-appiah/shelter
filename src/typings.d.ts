@@ -9,10 +9,12 @@ export interface IProperty {
   numOfBathrooms: number;
   description: string;
   location: string;
-  stayPeriod: string;
+  stayPeriod: "night" | "week" | "month" | "year" | string;
   images: string[];
   amenities: IAmenity<Pick<"_id">>[];
   isApproved: boolean;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
 }
 
 export interface IUser {
@@ -21,9 +23,9 @@ export interface IUser {
   lastname: string;
   email: string;
   userType: string;
-  profilePicture: string;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
+  profilePicture?: string;
+  readonly createdAt?: Date;
+  readonly updatedAt?: Date;
 }
 
 export interface IHost extends IUser {

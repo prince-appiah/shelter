@@ -1,31 +1,39 @@
 import { Box, Text } from "@chakra-ui/react";
+import LoadingSkeleton from "./LoadingSkeleton";
 
-const DashboardCard = () => {
+interface DashboardCardProps {
+  loading: boolean;
+  data: { title: string; value: number };
+}
+
+const DashboardCard = ({ loading, data }: DashboardCardProps) => {
   return (
-    <Box
-      cursor="pointer"
-      sx={{
-        borderRadius: 6,
-        py: 3,
-        px: 8,
-        borderWidth: "0.02em",
-        width: "auto",
-        bgColor: "white",
-        _hover: {
-          bgColor: "gray.50",
-        },
-      }}
-    >
+    <LoadingSkeleton isLoading={loading}>
       <Box
-        sx={{ width: 12, height: 12, borderRadius: 100, bgColor: "gray.500" }}
-      ></Box>
-      <Text py={1} color="gray.600">
-        Registered Users
-      </Text>
-      <Text fontSize={24} fontWeight="semibold" color="brand.primary">
-        235
-      </Text>
-    </Box>
+        cursor="pointer"
+        sx={{
+          borderRadius: 6,
+          py: 3,
+          px: 8,
+          borderWidth: "0.02em",
+          width: "auto",
+          bgColor: "white",
+          _hover: {
+            bgColor: "gray.50",
+          },
+        }}
+      >
+        <Box
+          sx={{ width: 12, height: 12, borderRadius: 100, bgColor: "gray.500" }}
+        ></Box>
+        <Text py={1} color="gray.600">
+          {data?.title}
+        </Text>
+        <Text fontSize={24} fontWeight="semibold" color="brand.primary">
+          {data?.value}
+        </Text>
+      </Box>
+    </LoadingSkeleton>
   );
 };
 

@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import Loader from "components/Loader";
+import ListingModal from "components/Modal";
 import { getListingDetailsRoute } from "config/constants/routes";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
@@ -24,6 +25,7 @@ import { fetchListingsAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { IProperty } from "typings";
+import CreateListingModal from "./components/CreateListingModal";
 
 type Props = {};
 
@@ -36,12 +38,13 @@ const headCells: TableHeadProps[] = [
 ];
 
 const AdminListings = (props: Props) => {
-  const { open, handleOpen, handleView } = useContext(ModalContext);
+  const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const { listings, status } = useGlobalState();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { TContainer, TableHead, results } = useTable(listings, headCells);
 
+  // todo load all hosts to be used in create listing modal
   useEffect(() => {
     const fetchListings = () => dispatch(fetchListingsAction());
     fetchListings();
@@ -74,7 +77,7 @@ const AdminListings = (props: Props) => {
           <Button
             onClick={() => {
               handleOpen(!open);
-              handleView("add-property-type");
+              handleView("create-listing");
             }}
             leftIcon={<AddIcon />}
           >
@@ -115,6 +118,11 @@ const AdminListings = (props: Props) => {
           </Tbody>
         </TContainer>
       </Box>
+
+      {/* Create/Edit Listing Modal */}
+      <ListingModal size="xl" isOpen={open} onClose={() => handleOpen(!open)}>
+        {view === "create-listing" && <CreateListingModal />}
+      </ListingModal>
     </Flex>
   );
 };
