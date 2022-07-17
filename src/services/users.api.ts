@@ -17,6 +17,22 @@ class UsersApi {
 
     return response;
   }
+
+  static async updateUser(_id: string, data: Omit<IUser, "_id">) {
+    const response = await api.patch(`/users/${_id}`, data, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return response;
+  }
+
+  static async deleteUser(_id: string) {
+    const response = await api.delete(`/users/${_id}`, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return response;
+  }
 }
 
 export default UsersApi;

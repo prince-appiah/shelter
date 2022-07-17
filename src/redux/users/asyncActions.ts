@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import AdminApi from "services/admin.api";
 import UsersApi from "services/users.api";
 import { IUser } from "typings";
 
@@ -22,6 +21,33 @@ export const createUserAction = createAsyncThunk(
   async (data: Omit<IUser, "_id">, thunk) => {
     try {
       const response = await UsersApi.createUser(data);
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateUserAction = createAsyncThunk(
+  "global/updateUser",
+  async (data: IUser, thunk) => {
+    try {
+      const response = await UsersApi.updateUser(data._id, data);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteUserAction = createAsyncThunk(
+  "global/deleteUser",
+  async ({ id }: { id: string }, thunk) => {
+    try {
+      const response = await UsersApi.deleteUser(id);
       console.log("🚀 ~ response", response);
 
       return response;

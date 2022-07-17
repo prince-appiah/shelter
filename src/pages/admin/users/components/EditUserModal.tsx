@@ -2,7 +2,6 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
-  AlertTitle,
   Box,
   Flex,
   FormControl,
@@ -10,7 +9,6 @@ import {
   FormLabel,
   Heading,
   HStack,
-  Text,
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import ImageRadio from "components/ImageRadio";
@@ -20,13 +18,13 @@ import { ModalContext } from "contexts/modalContext";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import { useContext, useRef, useState } from "react";
-import { createUserAction } from "redux/users/asyncActions";
+import { createUserAction, updateUserAction } from "redux/users/asyncActions";
 import { IUser } from "typings";
 import * as Yup from "yup";
 
-type Props = {};
+type Props = { user: IUser };
 
-const CreateUserModal = (props: Props) => {
+const EditUserModal = ({ user }: Props) => {
   const { handleOpen, handleView } = useContext(ModalContext);
   const [errorMsg, setErrorMsg] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -47,23 +45,23 @@ const CreateUserModal = (props: Props) => {
   ];
 
   const initialValues: Omit<IUser, "_id"> = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    userType: "",
+    firstname: user.firstname ?? "",
+    lastname: user.lastname ?? "",
+    email: user.email ?? "",
+    userType: user.userType ?? "",
   };
 
-  const handleCreateUser = async (
-    values: Omit<IUser, "_id">,
+  const handleUpdateUser = async (
+    values: IUser,
     helper: FormikHelpers<Omit<IUser, "_id">>
   ) => {
     try {
       helper.setSubmitting(true);
-      await dispatch(createUserAction(values));
+      await dispatch(updateUserAction({ ...values, _id: user._id }));
       helper.setSubmitting(false);
 
       if (status === "error") {
-        setErrorMsg("An error occurred while creating user");
+        setErrorMsg("An error occurred while updating user");
         return;
       }
       formRef.current.reset();
@@ -76,23 +74,19 @@ const CreateUserModal = (props: Props) => {
   };
 
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string().required("First name is required"),
-    lastname: Yup.string().required("Last name is required"),
-    email: Yup.string()
-      .email("Enter a valid email")
-      .required("Email is required"),
-    userType: Yup.string()
-      .oneOf(["customer", "host", "admin"])
-      .required("User type is required"),
+    firstname: Yup.string().notRequired(),
+    lastname: Yup.string().notRequired(),
+    email: Yup.string().email("Enter a valid email").notRequired(),
+    userType: Yup.string().oneOf(["customer", "host", "admin"]).notRequired(),
   });
 
   return (
     <Flex direction="column" p={8}>
-      <Heading fontSize={18}>Create User</Heading>
+      <Heading fontSize={18}>Edit User</Heading>
 
       <Flex direction="column">
         <Formik
-          onSubmit={handleCreateUser}
+          onSubmit={handleUpdateUser}
           initialValues={initialValues}
           validationSchema={validationSchema}
         >
@@ -135,6 +129,8 @@ const CreateUserModal = (props: Props) => {
                 <Input
                   name="email"
                   label="Email Address"
+                  isDisabled
+                  //   isReadOnly
                   placeholder="Eg. user@example.com"
                   value={values.email}
                   onChange={handleChange}
@@ -186,7 +182,7 @@ const CreateUserModal = (props: Props) => {
                   width="full"
                   mt={3}
                 >
-                  Create User
+                  Edit User
                 </Button>
               </Box>
             </Form>
@@ -197,4 +193,4 @@ const CreateUserModal = (props: Props) => {
   );
 };
 
-export default CreateUserModal;
+export default EditUserModal;

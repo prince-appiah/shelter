@@ -1,28 +1,35 @@
 import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Center,
   Flex,
   Heading,
+  HStack,
+  IconButton,
   TableHeadProps,
   Tbody,
   Td,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import Button from "components/Button";
-import Loader from "components/Loader";
 import UserModal from "components/Modal";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import {
+  AiFillCodepenCircle,
+  AiOutlineDelete,
+  AiOutlineEdit,
+} from "react-icons/ai";
+import { FaAddressBook } from "react-icons/fa";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
-import { fetchUsersAction } from "redux/users/asyncActions";
+import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";
 import { capitalizeFirstLetter } from "shared/strings";
 import { IUser } from "typings";
-import CreateListingModal from "../listings/components/CreateListingModal";
 import CreateUserModal from "./components/CreateUserModal";
+import EditUserModal from "./components/EditUserModal";
 
 type Props = {};
 
@@ -37,6 +44,8 @@ const headCells: TableHeadProps[] = [
 const Users = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const { users, status } = useUsersState();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const toast = useToast();
   const dispatch = useAppDispatch();
   const { TContainer, TableHead, results } = useTable(users, headCells);
 
@@ -49,14 +58,6 @@ const Users = (props: Props) => {
     };
   }, [dispatch]);
 
-  if (status === "loading") {
-    return (
-      <Center height="100vh">
-        <Loader />
-      </Center>
-    );
-  }
-
   return (
     <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
       <Box
@@ -67,7 +68,7 @@ const Users = (props: Props) => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>Users</Heading>
+          <Heading fontSize={20}>Users ({users.length})</Heading>
 
           <Button
             onClick={() => {
@@ -90,17 +91,48 @@ const Users = (props: Props) => {
                   cursor="pointer"
                   textColor="gray.500"
                   sx={{ _hover: { bgColor: "gray.50" } }}
-                  onClick={() => {
-                    handleOpen(!open);
-                    handleView("edit-property-type");
-                    // setSelectedType(item);
-                  }}
+                  // onClick={() => {
+                  //   handleOpen(!open);
+                  //   handleView("edit-user");
+                  //   setSelectedUser(item);
+                  // }}
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item.firstname}</Td>
                   <Td>{item.lastname}</Td>
                   <Td>{item.email}</Td>
                   <Td>{capitalizeFirstLetter(item.userType)}</Td>
+                  <Td>
+                    <HStack spacing={3}>
+                      <IconButton
+                        variant="outline"
+                        aria-label="Edit User"
+                        icon={<AiOutlineEdit />}
+                        onClick={() => {
+                          handleOpen(!open);
+                          handleView("edit-user");
+                          setSelectedUser(item);
+                        }}
+                        zIndex={999}
+                      />
+                      <IconButton
+                        variant="outline"
+                        aria-label="Delete User"
+                        color="red"
+                        icon={<AiOutlineDelete />}
+                        onClick={() => {
+                          dispatch(deleteUserAction({ id: item._id }));
+                          toast({
+                            status: "success",
+                            position: "top-right",
+                            variant: "left-accent",
+                            description: "User has been deleted",
+                          });
+                        }}
+                        zIndex={999}
+                      />
+                    </HStack>
+                  </Td>
                 </Tr>
               ))}
           </Tbody>
@@ -110,6 +142,7 @@ const Users = (props: Props) => {
       {/* Create/Edit User Modal */}
       <UserModal isOpen={open} onClose={() => handleOpen(!open)}>
         {view === "create-user" && <CreateUserModal />}
+        {view === "edit-user" && <EditUserModal user={selectedUser} />}
       </UserModal>
     </Flex>
   );

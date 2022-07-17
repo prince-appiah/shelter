@@ -22,7 +22,7 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
-  userType: string;
+  userType: "admin" | "customer" | "host" | string;
   profilePicture?: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
