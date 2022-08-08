@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import { IAmenity, IProperty, IPropertyType } from "typings";
+import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 import {
   addAmenitiesAction,
   addPropertyTypeAction,
+  createListingAction,
   editAmenitiesAction,
   editPropertyTypeAction,
   fetchAmenitiesAction,
+  fetchHostsAction,
   fetchListingsAction,
   fetchPropertyTypesAction,
   getPropertyDetails,
@@ -19,6 +21,7 @@ export interface IGlobalState {
   selectedListing: IProperty;
   amenities: IAmenity[];
   propertyTypes: IPropertyType[];
+  hosts: IHost[];
 }
 
 const initialState: IGlobalState = {
@@ -26,6 +29,7 @@ const initialState: IGlobalState = {
   selectedListing: null,
   amenities: [],
   propertyTypes: [],
+  hosts: [],
   status: "idle",
   error: null,
 };
@@ -144,6 +148,33 @@ export const globalSlice = createSlice({
     });
     builder.addCase(editAmenitiesAction.rejected, (state, _action) => {
       state.status = "error";
+    });
+
+    //  create listing/property
+    builder.addCase(createListingAction.pending, (state, _action) => {
+      state.status = "loading";
+    });
+    builder.addCase(createListingAction.fulfilled, (state, action) => {
+      state.status = "success";
+      state.listings = [...state.listings, action.payload.data];
+    });
+    builder.addCase(createListingAction.rejected, (state, _action) => {
+      state.status = "error";
+    });
+
+    //  fetch hosts
+    builder.addCase(fetchHostsAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(fetchHostsAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        hosts: action.payload.data,
+      };
+    });
+    builder.addCase(fetchHostsAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
     });
   },
 });

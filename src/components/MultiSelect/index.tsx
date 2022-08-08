@@ -11,6 +11,7 @@ type Props = FieldProps & {
   [key: string]: any;
   options: any[];
   name: string;
+  multi?: boolean;
   label?: string;
   onChange?: any;
   onBlur?: any;
@@ -35,19 +36,24 @@ const MultiSelect = (props: Props) => {
         {label}
       </FormLabel>
 
-      <Select
-        // _focus={{ borderColor: "brand.primary" }}
-        name={field.name}
-        // value={value}
-        // onChange={onChange}
-        onChange={(val) => {
-          console.log("reactselectvalue>> ", val);
-        }}
-        // onBlur={onBlur}
+      {/* <Select
+        name={props.name}
         options={options}
-        // {...field}s
+        isMulti={props.multi}
+        value={props.value ? props.value : null}
+        onChange={(selected) => { 
+          props.multi &&
+          selected.length &&
+          selected.find((option) => option.value === "all")
+            ? props.handleChange(options.slice(1))
+            : !props.multi
+            ? props.handleChange((selected && selected.value) || null)
+            : props.handleChange(selected);
+        }}
         // {...rest}
-      />
+        {...props}
+      /> */}
+
       {meta.touched && meta.error && (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
       )}

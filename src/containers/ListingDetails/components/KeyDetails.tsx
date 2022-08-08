@@ -1,4 +1,5 @@
 import { Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import { calculateMomentAgo, capitalizeFirstLetter } from "shared/strings";
 import { IProperty } from "typings";
 
 type KeyDetailsProps = {
@@ -7,16 +8,24 @@ type KeyDetailsProps = {
 
 const KeyDetails = ({ listing }: KeyDetailsProps) => {
   const details = [
-    { title: "Days on market", body: "7 days ago", icon: "" },
-    { title: "Estimated Payment", body: "$451", icon: "" },
     {
-      title: "Property Type",
-      body: listing?.roomType?.name || "Studio",
+      title: "Days on market",
+      body: calculateMomentAgo(listing?.createdAt),
       icon: "",
     },
-    { title: "Number of bathrooms", body: 3, icon: "" },
-    { title: "Number of bedrooms", body: 6, icon: "" },
-    { title: "Stay Period", body: "Per night", icon: "" },
+    { title: "Estimated Payment", body: `$ ${listing?.price}`, icon: "" },
+    {
+      title: "Property Type",
+      body: listing?.roomType?.name,
+      icon: "",
+    },
+    { title: "Number of bathrooms", body: listing?.numOfBathrooms, icon: "" },
+    { title: "Number of bedrooms", body: listing?.numOfBedrooms, icon: "" },
+    {
+      title: "Stay Period",
+      body: capitalizeFirstLetter(listing?.stayPeriod),
+      icon: "",
+    },
   ];
 
   return (

@@ -1,35 +1,24 @@
 import {
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
-  Select as ChakraSelect,
   SelectProps,
 } from "@chakra-ui/react";
 import { useField } from "formik";
+import React, { useState } from "react";
 
 type Props = SelectProps & {
   children: any;
-  isMulti?: boolean;
   label?: string;
-  helperText?: string;
   onChange?: any;
   onBlur?: any;
   value?: any;
 };
 
-const Select = (props: Props) => {
-  const {
-    name,
-    label,
-    value,
-    onChange,
-    onBlur,
-    children,
-    isMulti,
-    helperText,
-    ...rest
-  } = props;
+const AmenitiesSelect = (props: Props) => {
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const { name, label, value, onChange, onBlur, children, ...rest } = props;
+
   const [field, meta] = useField(props.name);
 
   return (
@@ -45,18 +34,6 @@ const Select = (props: Props) => {
         {label}
       </FormLabel>
 
-      <ChakraSelect
-        _focus={{ borderColor: "brand.primary" }}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        multiple={isMulti}
-        {...field}
-        {...rest}
-      >
-        {children}
-      </ChakraSelect>
-      <FormHelperText>{helperText}</FormHelperText>
       {meta.touched && meta.error && (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
       )}
@@ -64,4 +41,4 @@ const Select = (props: Props) => {
   );
 };
 
-export default Select;
+export default AmenitiesSelect;

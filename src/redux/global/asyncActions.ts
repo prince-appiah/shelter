@@ -1,7 +1,36 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AdminApi from "services/admin.api";
 import GlobalApi from "services/global.api";
-import { IAmenity, IPropertyType } from "typings";
+import UsersApi from "services/users.api";
+import { IAmenity, IProperty, IPropertyType } from "typings";
+
+export const createListingAction = createAsyncThunk(
+  "global/createListing",
+  async (data: Omit<IProperty, "_id">, thunk) => {
+    try {
+      const response = await AdminApi.createListing(data);
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchHostsAction = createAsyncThunk(
+  "global/fetchHosts",
+  async (data, thunk) => {
+    try {
+      const response = await UsersApi.fetchHosts();
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const fetchListingsAction = createAsyncThunk(
   "global/fetchListings",

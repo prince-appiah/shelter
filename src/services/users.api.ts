@@ -2,6 +2,13 @@ import api from "services";
 import { IUser } from "typings";
 
 class UsersApi {
+  static async fetchHosts() {
+    const response = await api.get("/hosts", {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return response;
+  }
   static async fetchUsers() {
     const response = await api.get("/users", {
       headers: { "Content-Type": "application/json" },

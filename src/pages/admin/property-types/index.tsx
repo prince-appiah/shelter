@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import AmenityModal from "components/Modal";
+import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
@@ -17,9 +18,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { fetchPropertyTypesAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
+import { withProtected } from "shared/routes";
 import { IPropertyType } from "typings";
-import CreatePropertyTypeModal from "./CreatePropertyType";
-import EditPropertyTypeModal from "./EditPropertyType";
+import CreatePropertyTypeModal from "./widgets/CreatePropertyType";
+import EditPropertyTypeModal from "./widgets/EditPropertyType";
 
 type Props = {};
 

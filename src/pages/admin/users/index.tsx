@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
+import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
@@ -26,10 +27,11 @@ import { FaAddressBook } from "react-icons/fa";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";
+import { withProtected } from "shared/routes";
 import { capitalizeFirstLetter } from "shared/strings";
 import { IUser } from "typings";
-import CreateUserModal from "./components/CreateUserModal";
-import EditUserModal from "./components/EditUserModal";
+import CreateUserModal from "./widgets/CreateUserModal";
+import EditUserModal from "./widgets/EditUserModal";
 
 type Props = {};
 

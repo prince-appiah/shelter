@@ -71,7 +71,7 @@ const Listings = () => {
               key={item._id}
             >
               <Image
-                src={item.images[0]}
+                src={item.images[0]["url"]}
                 alt={item.name}
                 height={225}
                 width={330}

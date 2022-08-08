@@ -16,16 +16,23 @@ import Button from "components/Button";
 import Loader from "components/Loader";
 import ListingModal from "components/Modal";
 import { getListingDetailsRoute } from "config/constants/routes";
+import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchListingsAction } from "redux/global/asyncActions";
+import {
+  fetchAmenitiesAction,
+  fetchHostsAction,
+  fetchListingsAction,
+  fetchPropertyTypesAction,
+} from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
-import { IProperty } from "typings";
-import CreateListingModal from "./components/CreateListingModal";
+import { withProtected } from "shared/routes";
+import { IHost, IProperty } from "typings";
+import CreateListingModal from "./widgets/CreateListingModal";
 
 type Props = {};
 
@@ -39,7 +46,8 @@ const headCells: TableHeadProps[] = [
 
 const AdminListings = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
-  const { listings, status } = useGlobalState();
+  const { listings, status, hosts, amenities, propertyTypes } =
+    useGlobalState();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { TContainer, TableHead, results } = useTable(listings, headCells);
@@ -48,6 +56,33 @@ const AdminListings = (props: Props) => {
   useEffect(() => {
     const fetchListings = () => dispatch(fetchListingsAction());
     fetchListings();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchUsers = () => dispatch(fetchHostsAction());
+    fetchUsers();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchAmenities = () => dispatch(fetchAmenitiesAction());
+    fetchAmenities();
+
+    return () => {
+      store.dispatch(setStatus("idle"));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchRoomTypes = () => dispatch(fetchPropertyTypesAction());
+    fetchRoomTypes();
 
     return () => {
       store.dispatch(setStatus("idle"));
@@ -72,7 +107,7 @@ const AdminListings = (props: Props) => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>Listings</Heading>
+          <Heading fontSize={20}>Listings ({listings.length})</Heading>
 
           <Button
             onClick={() => {
@@ -121,7 +156,13 @@ const AdminListings = (props: Props) => {
 
       {/* Create/Edit Listing Modal */}
       <ListingModal size="xl" isOpen={open} onClose={() => handleOpen(!open)}>
-        {view === "create-listing" && <CreateListingModal />}
+        {view === "create-listing" && (
+          <CreateListingModal
+            hosts={hosts}
+            amenities={amenities}
+            roomTypes={propertyTypes}
+          />
+        )}
       </ListingModal>
     </Flex>
   );

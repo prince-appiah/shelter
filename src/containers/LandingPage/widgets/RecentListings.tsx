@@ -33,7 +33,7 @@ const RecentListings = ({ data }) => {
               key={item?._id}
             >
               <Image
-                src={item?.images[0]}
+                src={item?.images[0]["url"]}
                 alt={item?.name}
                 height={200}
                 width={330}

@@ -1,16 +1,19 @@
 import api from "services";
-import { IPropertyType } from "typings";
+import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 
 export type PropertyFields = {
   readonly _id: string;
   owner: string;
   name: string;
+  referenceNo: string;
   roomType: string;
-  price: number;
+  price: string;
+  numOfBedrooms: number;
+  numOfBathrooms: number;
   description: string;
   location: string;
-  stayPeriod: string;
-  images: string[];
+  stayPeriod: "night" | "week" | "month" | "year" | string;
+  images: any;
   amenities: string[];
 };
 
@@ -67,21 +70,6 @@ class AdminApi {
     try {
       const response = await api.get(`/property/${id}`, {
         headers: { "Content-Type": "application/json" },
-      });
-
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async addProperty(token: string, data: PropertyFields) {
-    try {
-      const response = await api.post("/property", data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
       });
 
       return response;
@@ -274,21 +262,49 @@ class AdminApi {
     }
   }
 
-  static async addAmenity(data: Omit<AmenityFields, "_id">) {
-    try {
-      const token = localStorage.getItem("token");
+  static async createListing(data: Omit<PropertyFields, "_id">) {
+    const token = localStorage.getItem("token");
 
-      const response = await api.post("/amenities", data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("location", data.location);
+    formData.append("price", data.price);
+    formData.append("stayPeriod", data.stayPeriod);
+    formData.append("roomType", data.roomType);
+    formData.append("owner", data.owner);
+    formData.append("numOfBathrooms", data.numOfBathrooms.toString());
+    formData.append("numOfBedrooms", data.numOfBedrooms.toString());
+    formData.append("referenceNo", data.referenceNo);
 
-      return response;
-    } catch (error) {
-      return error;
+    for (const amenity of data.amenities) {
+      formData.append("amenities", amenity);
     }
+
+    for (const img of data.images) {
+      formData.append("images", img);
+    }
+
+    const response = await api.post("/property", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
+  static async addAmenity(data: Omit<AmenityFields, "_id">) {
+    const token = localStorage.getItem("token");
+    const response = await api.post("/amenities", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
   }
 
   static async editAmenity(_id: string, data: AmenityFields) {

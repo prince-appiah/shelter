@@ -21,16 +21,7 @@ const Description = ({ listing }: DescriptionProps) => {
         Description
       </Text>
       <Text color="gray" noOfLines={6}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita sequi
-        ex blanditiis est tempore odit molestias alias id, quam suscipit
-        similique, dolorem at corporis, vero eum architecto cupiditate doloribus
-        ipsum? Temporibus nesciunt exercitationem a deserunt illo voluptate
-        inventore et nostrum rem odio non tempora, architecto iusto quis
-        perferendis fugiat consectetur? Fugiat accusantium rerum, odio expedita
-        accusamus ut natus aliquid ab. Corporis optio cum in facere, corrupti
-        aperiam quaerat esse natus mollitia obcaecati voluptas voluptatibus
-        labore iusto beatae quisquam at. Quod nostrum pariatur maiores
-        voluptatem dolore laborum nisi esse consectetur debitis!
+        {listing?.description}{" "}
       </Text>
     </Flex>
   );

@@ -1,11 +1,13 @@
 import { Center, Flex, Grid } from "@chakra-ui/react";
 import Loader from "components/Loader";
+import { roles } from "config/constants/vars";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchListingsAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
+import { withProtected } from "shared/routes";
 import { getDashboardReport } from "./helpers";
 import ApprovalTable from "./widgets/ApprovalTable";
 import DashboardCard from "./widgets/DashboardCard";
@@ -95,4 +97,5 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+// export default Admin;
+export default withProtected(Admin, [roles.admin]);
