@@ -15,6 +15,7 @@ export type PropertyFields = {
   stayPeriod: "night" | "week" | "month" | "year" | string;
   images: any;
   amenities: string[];
+  isApproved?: boolean;
 };
 
 export type HostFields = {
@@ -81,21 +82,6 @@ class AdminApi {
   static async editProperty(token: string, id: string, data: PropertyFields) {
     try {
       const response = await api.patch(`/property/${id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async deleteProperty(token: string, id: string) {
-    try {
-      const response = await api.delete(`/property/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -291,6 +277,29 @@ class AdminApi {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    return response;
+  }
+
+  static async approveListing({
+    property_id,
+    isApproved,
+  }: {
+    property_id: string;
+    isApproved: string;
+  }) {
+    const token = localStorage.getItem("token");
+
+    const response = await api.patch(
+      `/approve?property_id=${property_id}`,
+      { isApproved },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response;
   }

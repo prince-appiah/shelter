@@ -1,4 +1,6 @@
 import { Flex, HStack, Image } from "@chakra-ui/react";
+import Listings from "containers/Listings";
+import { useState } from "react";
 import { IProperty } from "typings";
 
 type ImageSliderProps = {
@@ -6,10 +8,13 @@ type ImageSliderProps = {
 };
 
 const ImageSlider = ({ listing }: ImageSliderProps) => {
+  const [selectedImage, setSelectedImage] = useState(listing?.images[0]);
+  // const isSelected= selectedImage._id===listing
+
   return (
     <Flex direction="column" width="full" mb={6}>
       <Image
-        src={listing?.images[0]["url"]}
+        src={selectedImage?.url}
         rounded="2xl"
         height={480}
         cursor="pointer"
@@ -18,48 +23,19 @@ const ImageSlider = ({ listing }: ImageSliderProps) => {
         mb={4}
       />
       <HStack spacing={3} overflowX="scroll">
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
-        <Image
-          src={listing?.images[1]["url"]}
-          cursor="pointer"
-          rounded="xl"
-          height={100}
-          width={128}
-        />
+        {listing?.images?.map((img) => (
+          <Image
+            key={img._id}
+            src={img?.url}
+            border={selectedImage._id === img._id ? "2px solid green" : "unset"}
+            cursor="pointer"
+            objectFit="cover"
+            rounded="xl"
+            height={100}
+            width={128}
+            onClick={() => setSelectedImage(img)}
+          />
+        ))}
       </HStack>
     </Flex>
   );

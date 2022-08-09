@@ -6,13 +6,14 @@ import {
   ADMIN_AMENITIES,
   ADMIN_DASHBOARD,
   ADMIN_LISTINGS,
+  ADMIN_LISTING_DETAILS,
   ADMIN_ROOM_TYPES,
   ADMIN_USERS,
   CUSTOMER_DASHBOARD,
   HOME_ROUTE,
   HOST_DASHBOARD,
   LISTINGS_ROUTE,
-  LISTING_DETAILS_ROUTE,
+  LISTING_DETAILS,
   LOGIN_ROUTE,
   SIGNUP_ROUTE,
 } from "config/constants/routes";
@@ -54,7 +55,7 @@ const AppRoutes = () => {
         <Route path={SIGNUP_ROUTE} element={<Signup />} />
 
         {/* Public routes */}
-        <Route path={LISTING_DETAILS_ROUTE} element={<ListingDetails />} />
+        <Route path={LISTING_DETAILS} element={<ListingDetails />} />
         <Route path={LISTINGS_ROUTE} element={<Listings />} />
 
         {/* Admin routes */}
@@ -79,6 +80,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <AdminListings />
+            </Layout>
+          }
+        />
+        <Route
+          path={ADMIN_LISTING_DETAILS}
+          element={
+            <Layout>
+              <ListingDetails />
             </Layout>
           }
         />

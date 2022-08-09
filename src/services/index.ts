@@ -41,7 +41,7 @@ export const onRejectedResponse = (error: any): any => {
   if (status === 401 || status === 403) {
     const { location } = window;
     store.dispatch(logoutUser());
-    location.pathname = `${LOGIN_ROUTE}?redirect=${location.pathname}${location.search}`;
+    location.pathname = LOGIN_ROUTE;
   }
 
   return Promise.reject({ message: error || "Server error", code: 500 });

@@ -35,6 +35,7 @@ const KeyDetails = ({ listing }: KeyDetailsProps) => {
       borderWidth="thin"
       borderColor="rgba(69, 77, 102, 0.2)"
       width="full"
+      bg="white"
       py={8}
       mb={6}
       px={6}

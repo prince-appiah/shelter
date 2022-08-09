@@ -13,21 +13,14 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
-import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import { useContext, useEffect, useState } from "react";
-import {
-  AiFillCodepenCircle,
-  AiOutlineDelete,
-  AiOutlineEdit,
-} from "react-icons/ai";
-import { FaAddressBook } from "react-icons/fa";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";
-import { withProtected } from "shared/routes";
 import { capitalizeFirstLetter } from "shared/strings";
 import { IUser } from "typings";
 import CreateUserModal from "./widgets/CreateUserModal";
@@ -41,6 +34,7 @@ const headCells: TableHeadProps[] = [
   { id: "firstname", title: "First Name" },
   { id: "email", title: "Email Address" },
   { id: "role", title: "Role" },
+  { id: "actions", title: "Actions" },
 ];
 
 const Users = (props: Props) => {

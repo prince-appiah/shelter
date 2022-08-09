@@ -5,24 +5,28 @@ import {
   Center,
   Flex,
   Heading,
+  HStack,
+  IconButton,
   TableHeadProps,
   Tag,
   Tbody,
   Td,
   Text,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import Loader from "components/Loader";
 import ListingModal from "components/Modal";
-import { getListingDetailsRoute } from "config/constants/routes";
-import { roles } from "config/constants/vars";
+import { getAdminListingDetailsRoute } from "config/constants/routes";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import { useContext, useEffect } from "react";
+import { AiFillEye, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import {
+  deleteListingAction,
   fetchAmenitiesAction,
   fetchHostsAction,
   fetchListingsAction,
@@ -30,8 +34,7 @@ import {
 } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
-import { withProtected } from "shared/routes";
-import { IHost, IProperty } from "typings";
+import { IProperty } from "typings";
 import CreateListingModal from "./widgets/CreateListingModal";
 
 type Props = {};
@@ -42,6 +45,7 @@ const headCells: TableHeadProps[] = [
   { id: "host", title: "Host" },
   { id: "location", title: "Location" },
   { id: "isApproved", title: "Status" },
+  { id: "actions", title: "Actions" },
 ];
 
 const AdminListings = (props: Props) => {
@@ -50,44 +54,77 @@ const AdminListings = (props: Props) => {
     useGlobalState();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
+
   const { TContainer, TableHead, results } = useTable(listings, headCells);
 
   // todo load all hosts to be used in create listing modal
   useEffect(() => {
     const fetchListings = () => dispatch(fetchListingsAction());
+    const ac = new AbortController();
     fetchListings();
 
     return () => {
       store.dispatch(setStatus("idle"));
+      ac.abort();
     };
   }, [dispatch]);
 
   useEffect(() => {
     const fetchUsers = () => dispatch(fetchHostsAction());
+    const ac = new AbortController();
     fetchUsers();
 
     return () => {
       store.dispatch(setStatus("idle"));
+      ac.abort();
     };
   }, [dispatch]);
 
   useEffect(() => {
     const fetchAmenities = () => dispatch(fetchAmenitiesAction());
+    const ac = new AbortController();
     fetchAmenities();
 
     return () => {
       store.dispatch(setStatus("idle"));
+      ac.abort();
     };
   }, [dispatch]);
 
   useEffect(() => {
     const fetchRoomTypes = () => dispatch(fetchPropertyTypesAction());
+    const ac = new AbortController();
     fetchRoomTypes();
 
     return () => {
       store.dispatch(setStatus("idle"));
+      ac.abort();
     };
   }, [dispatch]);
+
+  const handleDeleteListing = async (id) => {
+    const res = await dispatch(
+      deleteListingAction({ property_id: id })
+    ).unwrap();
+
+    if (res.status === 200) {
+      toast({
+        status: "success",
+        position: "top-right",
+        variant: "left-accent",
+        description: "Listing has been deleted",
+      });
+      return;
+    }
+    toast({
+      status: "error",
+      position: "top-right",
+      variant: "left-accent",
+      description: "Could not delete listing",
+    });
+    return;
+  };
 
   if (status === "loading") {
     return (
@@ -130,7 +167,9 @@ const AdminListings = (props: Props) => {
                   cursor="pointer"
                   textColor="gray.500"
                   sx={{ _hover: { bgColor: "gray.50" } }}
-                  onClick={() => navigate(getListingDetailsRoute(item._id))}
+                  // onClick={() =>
+                  //   navigate(getAdminListingDetailsRoute(item._id))
+                  // }
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item?.name}</Td>
@@ -147,6 +186,36 @@ const AdminListings = (props: Props) => {
                     <Tag colorScheme={item?.isApproved ? "green" : "red"}>
                       {item?.isApproved ? "Approved" : "Pending"}
                     </Tag>
+                  </Td>
+                  <Td>
+                    <HStack spacing={3}>
+                      <IconButton
+                        variant="outline"
+                        aria-label="View Listing"
+                        icon={<AiFillEye />}
+                        onClick={() =>
+                          navigate(getAdminListingDetailsRoute(item._id))
+                        }
+                      />
+                      <IconButton
+                        variant="outline"
+                        aria-label="Edit Listing"
+                        icon={<AiOutlineEdit />}
+                        onClick={() => {
+                          console.log("clicked");
+                          // handleOpen(!open);
+                          // handleView("edit-user");
+                          // setSelectedUser(item);
+                        }}
+                      />
+                      <IconButton
+                        variant="outline"
+                        aria-label="Delete Listing"
+                        color="red"
+                        icon={<AiOutlineDelete />}
+                        onClick={() => handleDeleteListing(item._id)}
+                      />
+                    </HStack>
                   </Td>
                 </Tr>
               ))}

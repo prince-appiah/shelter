@@ -8,10 +8,10 @@ type IListingContactProps = {
 
 const ListingContact = ({ listing }: IListingContactProps) => {
   return (
-    <VStack align="start" mt={6} width="full">
+    <VStack align="start" mt={6} width="full" bg="white">
       {/* Avatar and name/role */}
       <Flex width="full">
-        <Avatar mr={4} />
+        <Avatar src={listing?.owner?.profilePicture} mr={4} />
         <Flex direction="column">
           <Text fontWeight={600}>
             {listing?.owner?.firstname} {listing?.owner?.lastname}

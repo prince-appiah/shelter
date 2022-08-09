@@ -1,48 +1,16 @@
-import {
-  Avatar,
-  Box,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  HStack,
-  InputGroup,
-  InputLeftElement,
-  MenuItem,
-  MenuItemOption,
-  Tag,
-  TagCloseButton,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, useToast } from "@chakra-ui/react";
 import Button from "components/Button";
 import Input from "components/Input";
-import MultiSelect from "components/MultiSelect";
 import Select from "components/Select";
 import Textarea from "components/Textarea";
 import { ModalContext } from "contexts/modalContext";
-import {
-  Field,
-  FieldArray,
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikProps,
-} from "formik";
-import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
+import { Form, Formik, FormikHelpers, FormikProps } from "formik";
+import { useAppDispatch } from "hooks/reduxHooks";
 import { nanoid } from "nanoid";
-import { useContext, useEffect, useRef, useState } from "react";
-import ReactSelect from "react-select";
-import {
-  createListingAction,
-  fetchHostsAction,
-} from "redux/global/asyncActions";
-import { setStatus } from "redux/global/globalSlice";
-import { store } from "redux/store";
-import { fetchUsersAction } from "redux/users/asyncActions";
+import { useContext, useRef, useState } from "react";
+import { createListingAction } from "redux/global/asyncActions";
 import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 import * as Yup from "yup";
-import AmenitiesSelect from "./AmenitiesSelect";
 import Uploader from "./Uploader";
 
 type Props = {
@@ -52,19 +20,12 @@ type Props = {
 };
 
 const CreateListingModal = ({ hosts, amenities, roomTypes }: Props) => {
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const { handleOpen, handleView } = useContext(ModalContext);
-  const formRef = useRef<HTMLFormElement>(null);
+  // const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
-
-  const options = amenities.map((item) => ({
-    label: item.name,
-    value: item._id,
-  }));
-
-  const finalOptions = [
-    { label: "Choose amenities", value: "all" },
-    ...options,
-  ];
+  const inputRef = useRef(null);
+  const toast = useToast();
 
   const initialValues: Omit<IProperty, "_id"> = {
     name: "",
@@ -81,18 +42,40 @@ const CreateListingModal = ({ hosts, amenities, roomTypes }: Props) => {
     numOfBathrooms: 0,
   };
 
+  const handleImageUpload = (ev, setFieldValue) => {
+    setUploadedFiles(new Array(...ev.target.files));
+    setFieldValue("images", new Array(...ev.target.files));
+  };
+
   const handleCreateListing = async (
     values: Omit<IProperty, "_id">,
     helper: FormikHelpers<Omit<IProperty, "_id">>
   ) => {
     try {
       helper.setSubmitting(true);
-      await dispatch(createListingAction({ ...values, referenceNo: nanoid() }));
+      const res = await dispatch(
+        createListingAction({ ...values, referenceNo: nanoid() })
+      ).unwrap();
+      if (res.status === 201) {
+        helper.setSubmitting(false);
+        handleView(null);
+        handleOpen(false);
+        toast({
+          status: "success",
+          position: "top-right",
+          variant: "left-accent",
+          description: "Listing created",
+        });
+        return;
+      }
 
-      helper.setSubmitting(false);
-      formRef.current.reset();
-      handleView(null);
-      handleOpen(false);
+      toast({
+        status: "error",
+        position: "top-right",
+        variant: "left-accent",
+        description: "Could not create listing",
+      });
+      return;
     } catch (error) {
       console.log("🚀 ~ error", error);
       helper.setSubmitting(false);
@@ -138,7 +121,7 @@ const CreateListingModal = ({ hosts, amenities, roomTypes }: Props) => {
             setFieldValue,
             isSubmitting,
           }: FormikProps<Omit<IProperty, "_id">>) => (
-            <Form ref={formRef}>
+            <Form>
               <Box w="full" py={6}>
                 <Input
                   name="name"
@@ -249,7 +232,13 @@ const CreateListingModal = ({ hosts, amenities, roomTypes }: Props) => {
                   onBlur={handleBlur}
                 />
 
-                <Uploader setFieldValue={setFieldValue} />
+                <Uploader
+                  handleImageUpload={(ev) =>
+                    handleImageUpload(ev, setFieldValue)
+                  }
+                  inputRef={inputRef}
+                  uploadedFiles={uploadedFiles}
+                />
 
                 {/* Owner */}
                 <Select

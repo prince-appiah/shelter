@@ -18,6 +18,40 @@ export const createListingAction = createAsyncThunk(
   }
 );
 
+export const approveListingAction = createAsyncThunk(
+  "global/approveListing",
+  async (
+    { property_id, isApproved }: { property_id: string; isApproved: string },
+    thunk
+  ) => {
+    try {
+      const response = await AdminApi.approveListing({
+        property_id,
+        isApproved,
+      });
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteListingAction = createAsyncThunk(
+  "global/deleteListing",
+  async ({ property_id }: { property_id: string }, thunk) => {
+    try {
+      const response = await GlobalApi.deleteProperty(property_id);
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const fetchHostsAction = createAsyncThunk(
   "global/fetchHosts",
   async (data, thunk) => {
@@ -46,7 +80,7 @@ export const fetchListingsAction = createAsyncThunk(
   }
 );
 
-export const getPropertyDetails = createAsyncThunk(
+export const getPropertyDetailsAction = createAsyncThunk(
   "global/propertyDetails",
   async ({ id }: { id: string }, thunk) => {
     try {

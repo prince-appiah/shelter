@@ -43,6 +43,19 @@ class GlobalApi {
       return error;
     }
   }
+
+  static async deleteProperty(id: string) {
+    const token = localStorage.getItem("token");
+
+    const response = await api.delete(`/property/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
 }
 
 export default GlobalApi;

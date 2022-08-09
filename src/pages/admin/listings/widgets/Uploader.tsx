@@ -8,23 +8,26 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { MutableRefObject, useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
 type Props = {
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  // setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  handleImageUpload: (event) => void;
+  inputRef: MutableRefObject<any>;
+  uploadedFiles: any[];
 };
 
-const Uploader = ({ setFieldValue }: Props) => {
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+const Uploader = ({ inputRef, handleImageUpload, uploadedFiles }: Props) => {
+  // const [uploadedFiles, setUploadedFiles] = useState([]);
   console.log("🚀 ~ uploadedFiles", uploadedFiles);
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
 
-  const handleImageUpload = (ev) => {
-    console.log("🚀 ~ ev", new Array(...ev.target.files));
-    setUploadedFiles(new Array(...ev.target.files));
-    setFieldValue("images", new Array(...ev.target.files));
-  };
+  // const handleImageUpload = (ev) => {
+  //   console.log("🚀 ~ ev", new Array(...ev.target.files));
+  //   setUploadedFiles(new Array(...ev.target.files));
+  //   setFieldValue("images", new Array(...ev.target.files));
+  // };
 
   return (
     <VStack width="full" align="start" mb={2}>

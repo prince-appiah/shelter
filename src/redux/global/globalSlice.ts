@@ -4,14 +4,16 @@ import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 import {
   addAmenitiesAction,
   addPropertyTypeAction,
+  approveListingAction,
   createListingAction,
+  deleteListingAction,
   editAmenitiesAction,
   editPropertyTypeAction,
   fetchAmenitiesAction,
   fetchHostsAction,
   fetchListingsAction,
   fetchPropertyTypesAction,
-  getPropertyDetails,
+  getPropertyDetailsAction,
 } from "./asyncActions";
 
 export interface IGlobalState {
@@ -59,17 +61,17 @@ export const globalSlice = createSlice({
     });
 
     //  get property/property details
-    builder.addCase(getPropertyDetails.pending, (state, _action) => {
+    builder.addCase(getPropertyDetailsAction.pending, (state, _action) => {
       return { ...state, status: "loading" };
     });
-    builder.addCase(getPropertyDetails.fulfilled, (state, action) => {
+    builder.addCase(getPropertyDetailsAction.fulfilled, (state, action) => {
       return {
         ...state,
         status: "success",
         selectedListing: action.payload.data.data,
       };
     });
-    builder.addCase(getPropertyDetails.rejected, (state, action) => {
+    builder.addCase(getPropertyDetailsAction.rejected, (state, action) => {
       return { ...state, status: "error" };
     });
 
@@ -148,6 +150,42 @@ export const globalSlice = createSlice({
     });
     builder.addCase(editAmenitiesAction.rejected, (state, _action) => {
       state.status = "error";
+    });
+
+    //  approve listing
+    builder.addCase(approveListingAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(approveListingAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        listings: state.listings.map((item) =>
+          item._id === action.payload.data.data._id
+            ? action.payload.data.data
+            : item
+        ),
+      };
+    });
+    builder.addCase(approveListingAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
+    });
+
+    //  delete user
+    builder.addCase(deleteListingAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(deleteListingAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        listings: state.listings.filter(
+          (item) => item._id !== action.payload.data.deleted_property_id
+        ),
+      };
+    });
+    builder.addCase(deleteListingAction.rejected, (state, action) => {
+      return { ...state, status: "error" };
     });
 
     //  create listing/property

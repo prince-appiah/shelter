@@ -19,7 +19,6 @@ export interface IProperty {
   description: string;
   location: string;
   stayPeriod: "night" | "week" | "month" | "year" | string;
-  // images: any;
   images: IPropertyImage[];
   amenities: IAmenity<Pick<"_id">>[];
   isApproved?: boolean;
