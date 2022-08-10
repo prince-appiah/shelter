@@ -26,7 +26,7 @@ type SignupForm = {
   email: string;
   firstname: string;
   lastname: string;
-  userType: "user" | "host";
+  userType: "customer" | "host";
 };
 
 const Signup = () => {
@@ -37,7 +37,7 @@ const Signup = () => {
   const accountOptions = [
     {
       title: "Customer",
-      value: "user",
+      value: "customer",
       icon: "https://randomuser.me/api/portraits/women/44.jpg",
     },
     {
@@ -46,11 +46,6 @@ const Signup = () => {
       icon: "https://randomuser.me/api/portraits/men/29.jpg",
     },
   ];
-  // const { getRootProps } = useRadioGroup({
-  //   name: "userType",
-  //   defaultValue: "user",
-  // });
-  // const group = getRootProps();
 
   const initialValues = {
     firstname: "",

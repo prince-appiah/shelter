@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import AmenityModal from "components/Modal";
+import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/modalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
@@ -17,9 +18,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { fetchAmenitiesAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
+import { withProtected } from "shared/routes";
 import { IAmenity } from "typings";
-import CreateAmenity from "./components/CreateAmenity";
-import EditAmenity from "./components/EditAmenity";
+import CreateAmenity from "./widgets/CreateAmenity";
+import EditAmenity from "./widgets/EditAmenity";
 
 type Props = {};
 
@@ -85,8 +87,8 @@ const Amenities = (props: Props) => {
                   }}
                 >
                   <Td>{idx + 1}</Td>
-                  <Td>{item.name}</Td>
-                  <Td>{item.icon}</Td>
+                  <Td>{item?.name}</Td>
+                  <Td>{item?.icon}</Td>
                 </Tr>
               ))}
           </Tbody>

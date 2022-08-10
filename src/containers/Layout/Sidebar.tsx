@@ -12,6 +12,10 @@ const Sidebar = (props: Props) => {
       display={{ base: "none", md: "block" }}
       width={{ md: 78, lg: 260 }}
       height="100vh"
+      position="sticky"
+      left={0}
+      top={0}
+      bottom={0}
       bg="white"
       boxShadow="sm"
     >

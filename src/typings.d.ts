@@ -1,18 +1,29 @@
+export interface IPropertyImage {
+  readonly _id: string;
+  folder: string;
+  url: string;
+  secure_url: string;
+  type: string;
+  format: string;
+}
+
 export interface IProperty {
   readonly _id: string;
-  owner: IHost;
+  owner: IHost<Pick<"_id">>;
   name: string;
   referenceNo: string;
-  roomType: IPropertyType | null;
+  roomType: IPropertyType<Pick<"_id">>;
   price: string;
   numOfBedrooms: number;
   numOfBathrooms: number;
   description: string;
   location: string;
-  stayPeriod: string;
-  images: string[];
+  stayPeriod: "night" | "week" | "month" | "year" | string;
+  images: IPropertyImage[];
   amenities: IAmenity<Pick<"_id">>[];
-  isApproved: boolean;
+  isApproved?: boolean;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
 }
 
 export interface IUser {
@@ -20,10 +31,10 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
-  userType: string;
-  profilePicture: string;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
+  userType: "admin" | "customer" | "host" | string;
+  profilePicture?: string;
+  readonly createdAt?: Date;
+  readonly updatedAt?: Date;
 }
 
 export interface IHost extends IUser {

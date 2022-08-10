@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import { IAmenity, IProperty, IPropertyType } from "typings";
+import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 import {
   addAmenitiesAction,
   addPropertyTypeAction,
+  approveListingAction,
+  createListingAction,
+  deleteListingAction,
   editAmenitiesAction,
   editPropertyTypeAction,
   fetchAmenitiesAction,
+  fetchHostsAction,
   fetchListingsAction,
   fetchPropertyTypesAction,
-  getPropertyDetails,
+  getPropertyDetailsAction,
 } from "./asyncActions";
 
 export interface IGlobalState {
@@ -19,6 +23,7 @@ export interface IGlobalState {
   selectedListing: IProperty;
   amenities: IAmenity[];
   propertyTypes: IPropertyType[];
+  hosts: IHost[];
 }
 
 const initialState: IGlobalState = {
@@ -26,6 +31,7 @@ const initialState: IGlobalState = {
   selectedListing: null,
   amenities: [],
   propertyTypes: [],
+  hosts: [],
   status: "idle",
   error: null,
 };
@@ -55,17 +61,17 @@ export const globalSlice = createSlice({
     });
 
     //  get property/property details
-    builder.addCase(getPropertyDetails.pending, (state, _action) => {
+    builder.addCase(getPropertyDetailsAction.pending, (state, _action) => {
       return { ...state, status: "loading" };
     });
-    builder.addCase(getPropertyDetails.fulfilled, (state, action) => {
+    builder.addCase(getPropertyDetailsAction.fulfilled, (state, action) => {
       return {
         ...state,
         status: "success",
         selectedListing: action.payload.data.data,
       };
     });
-    builder.addCase(getPropertyDetails.rejected, (state, action) => {
+    builder.addCase(getPropertyDetailsAction.rejected, (state, action) => {
       return { ...state, status: "error" };
     });
 
@@ -144,6 +150,69 @@ export const globalSlice = createSlice({
     });
     builder.addCase(editAmenitiesAction.rejected, (state, _action) => {
       state.status = "error";
+    });
+
+    //  approve listing
+    builder.addCase(approveListingAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(approveListingAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        listings: state.listings.map((item) =>
+          item._id === action.payload.data.data._id
+            ? action.payload.data.data
+            : item
+        ),
+      };
+    });
+    builder.addCase(approveListingAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
+    });
+
+    //  delete user
+    builder.addCase(deleteListingAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(deleteListingAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        listings: state.listings.filter(
+          (item) => item._id !== action.payload.data.deleted_property_id
+        ),
+      };
+    });
+    builder.addCase(deleteListingAction.rejected, (state, action) => {
+      return { ...state, status: "error" };
+    });
+
+    //  create listing/property
+    builder.addCase(createListingAction.pending, (state, _action) => {
+      state.status = "loading";
+    });
+    builder.addCase(createListingAction.fulfilled, (state, action) => {
+      state.status = "success";
+      state.listings = [...state.listings, action.payload.data];
+    });
+    builder.addCase(createListingAction.rejected, (state, _action) => {
+      state.status = "error";
+    });
+
+    //  fetch hosts
+    builder.addCase(fetchHostsAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(fetchHostsAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        hosts: action.payload.data,
+      };
+    });
+    builder.addCase(fetchHostsAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
     });
   },
 });

@@ -1,5 +1,8 @@
 import { Box, Heading, TableHeadProps, Tbody, Td, Tr } from "@chakra-ui/react";
+import { getAdminListingDetailsRoute } from "config/constants/routes";
 import useTable from "hooks/useTable";
+import { useNavigate } from "react-router-dom";
+import { IProperty } from "typings";
 
 const headCells: TableHeadProps[] = [
   { id: "id", title: "S/N" },
@@ -7,16 +10,13 @@ const headCells: TableHeadProps[] = [
   { id: "type", title: "Property Type" },
 ];
 
-const records = [
-  { id: 1, name: "Listing 1", type: "House" },
-  { id: 2, name: "Listing 2", type: "Apartment" },
-  { id: 3, name: "Listing 3", type: "Studio" },
-  { id: 4, name: "Listing 4", type: "Condo" },
-  { id: 5, name: "Listing 5", type: "House" },
-];
+interface ApprovalTableProps {
+  listings: IProperty[];
+}
 
-const ApprovalTable = () => {
-  const { TContainer, TableHead, results } = useTable(records, headCells);
+const ApprovalTable = ({ listings }: ApprovalTableProps) => {
+  const { TContainer, TableHead, results } = useTable(listings, headCells);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -33,16 +33,17 @@ const ApprovalTable = () => {
       <TContainer>
         <TableHead />
         <Tbody>
-          {results?.map((item) => (
+          {results?.map((item, idx) => (
             <Tr
-              key={item.id}
+              key={item._id}
               cursor="pointer"
               textColor="gray.500"
               sx={{ _hover: { bgColor: "gray.50" } }}
+              onClick={() => navigate(getAdminListingDetailsRoute(item._id))}
             >
-              <Td>{item.id}</Td>
-              <Td>{item.name}</Td>
-              <Td>{item.type}</Td>
+              <Td>{idx + 1}</Td>
+              <Td>{item?.name}</Td>
+              <Td>{item?.roomType?.name}</Td>
             </Tr>
           ))}
         </Tbody>

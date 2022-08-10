@@ -18,7 +18,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
+      return { ...state, currentUser: action.payload };
+    },
+    logoutUser: (state) => {
+      return { ...state, status: "idle", currentUser: null };
     },
   },
   extraReducers: (builder) => {
@@ -58,6 +61,6 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setCurrentUser } = authSlice.actions;
+export const { setCurrentUser, logoutUser } = authSlice.actions;
 export const authSelector = (state: RootState) => state.auth;
 export default authSlice.reducer;

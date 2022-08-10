@@ -1,7 +1,8 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { IProperty } from "typings";
 import Description from "./Description";
 import ImageSlider from "./ImageSlider";
+import KeyAmenities from "./KeyAmenities";
 import KeyDetails from "./KeyDetails";
 
 type DetailsProps = {
@@ -15,6 +16,8 @@ const Details = ({ listing }: DetailsProps) => {
       <ImageSlider listing={listing} />
       {/* Key Details */}
       <KeyDetails listing={listing} />
+      {/* Amenities */}
+      <KeyAmenities listing={listing} />
       {/* Description */}
       <Description listing={listing} />
     </Flex>

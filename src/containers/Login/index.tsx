@@ -37,7 +37,7 @@ const Login = () => {
     email: Yup.string()
       .email("Enter a valid email")
       .required("Email is required"),
-    otp: Yup.number().required("OTP is required"),
+    otp: Yup.string().required("OTP is required"),
   });
 
   const handleGetOtp = async (email: string) => {
@@ -73,15 +73,15 @@ const Login = () => {
       if (res && res.status === 200) {
         setIsOtpComplete(false);
 
-        toast({
-          title: "Login Success",
-          description: "Your OTP has been verified",
-          isClosable: true,
-          status: "success",
-          variant: "subtle",
-          position: "top-right",
-          duration: 10000,
-        });
+        // toast({
+        //   title: "Login Success",
+        //   description: "Your OTP has been verified",
+        //   isClosable: true,
+        //   status: "success",
+        //   variant: "subtle",
+        //   position: "top-right",
+        //   duration: 10000,
+        // });
         console.log("🚀 ~ currentUser", currentUser);
 
         // redirect users to their dashboard using their userType
@@ -162,7 +162,7 @@ const Login = () => {
                   <Input
                     label="OTP Code"
                     name="otp"
-                    type="number"
+                    type="password"
                     placeholder="Verify Your Code"
                     max={6}
                     value={values.otp}

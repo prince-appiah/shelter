@@ -22,7 +22,12 @@ const Layout = (props: Props) => {
           {/* Sidebar - use global auth state to render sidebar based on user role */}
           <Sidebar />
           {/* Main content */}
-          <Flex direction="column" width="100%">
+          <Flex
+            direction="column"
+            width="100%"
+            overflowY="scroll"
+            height="100%"
+          >
             {children}
           </Flex>
         </Flex>

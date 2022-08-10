@@ -1,5 +1,8 @@
 import { Box, Heading, TableHeadProps, Tbody, Td, Tr } from "@chakra-ui/react";
+import { getAdminListingDetailsRoute } from "config/constants/routes";
 import useTable from "hooks/useTable";
+import { useNavigate } from "react-router-dom";
+import { IProperty } from "typings";
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
@@ -8,16 +11,13 @@ const headCells: TableHeadProps[] = [
   { id: "date", title: "Created On" },
 ];
 
-const records = [
-  { id: 1, owner: "John Snow", type: "Studio", date: "23/02/22" },
-  { id: 2, owner: "John Snow", type: "Cottage", date: "23/02/22" },
-  { id: 3, owner: "John Snow", type: "Apartment", date: "23/02/22" },
-  { id: 4, owner: "John Snow", type: "Courthouse", date: "23/02/22" },
-  { id: 5, owner: "John Snow", type: "House", date: "23/02/22" },
-];
+interface ListingsTableProps {
+  listings: IProperty[];
+}
 
-const ListingsTable = () => {
-  const { TContainer, TableHead, results } = useTable(records, headCells);
+const ListingsTable = ({ listings }: ListingsTableProps) => {
+  const { TContainer, TableHead, results } = useTable(listings, headCells);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -34,17 +34,20 @@ const ListingsTable = () => {
       <TContainer>
         <TableHead />
         <Tbody>
-          {results?.map((item) => (
+          {results?.map((item: IProperty, idx: string) => (
             <Tr
-              key={item.id}
+              key={item._id}
               cursor="pointer"
               textColor="gray.500"
               sx={{ _hover: { bgColor: "gray.50" } }}
+              onClick={() => navigate(getAdminListingDetailsRoute(item._id))}
             >
-              <Td>{item.id}</Td>
-              <Td>{item.owner}</Td>
-              <Td>{item.type}</Td>
-              <Td>{item.date}</Td>
+              <Td>{idx + 1}</Td>
+              <Td>
+                {item?.owner?.firstname} {item?.owner?.lastname}
+              </Td>
+              <Td>{item?.roomType?.name}</Td>
+              <Td>{item?.createdAt.split("T")[0]}</Td>
             </Tr>
           ))}
         </Tbody>

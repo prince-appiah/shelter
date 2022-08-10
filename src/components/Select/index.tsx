@@ -1,18 +1,35 @@
 import {
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
-  Input as ChakraInput,
-  InputProps,
+  Select as ChakraSelect,
+  SelectProps,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 
-// type Props = FieldHookConfig<string> & { label: string,inputProps:InputProps };
-type Props = InputProps & { label?: string; onChange?: any; value?: any };
+type Props = SelectProps & {
+  children: any;
+  isMulti?: boolean;
+  label?: string;
+  helperText?: string;
+  onChange?: any;
+  onBlur?: any;
+  value?: any;
+};
 
-// const Input = (props: Props) => {
-const Input = (props: Props) => {
-  const { name, label, value, onChange, ...rest } = props;
+const Select = (props: Props) => {
+  const {
+    name,
+    label,
+    value,
+    onChange,
+    onBlur,
+    children,
+    isMulti,
+    helperText,
+    ...rest
+  } = props;
   const [field, meta] = useField(props.name);
 
   return (
@@ -28,14 +45,18 @@ const Input = (props: Props) => {
         {label}
       </FormLabel>
 
-      <ChakraInput
+      <ChakraSelect
         _focus={{ borderColor: "brand.primary" }}
         value={value}
         onChange={onChange}
-        // size="lg"
+        onBlur={onBlur}
+        multiple={isMulti}
         {...field}
         {...rest}
-      />
+      >
+        {children}
+      </ChakraSelect>
+      <FormHelperText>{helperText}</FormHelperText>
       {meta.touched && meta.error && (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
       )}
@@ -43,4 +64,4 @@ const Input = (props: Props) => {
   );
 };
 
-export default Input;
+export default Select;

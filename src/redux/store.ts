@@ -1,14 +1,49 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import {
+  Action,
+  configureStore,
+  getDefaultMiddleware,
+  ThunkAction,
+} from "@reduxjs/toolkit";
+import { routerMiddleware } from "connected-react-router";
 import logger from "redux-logger";
-import rootReducer from "./rootReducer";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+import rootReducer, { history } from "./rootReducer";
+
+const persistConfig = {
+  key: "shelter",
+  version: 1,
+  storage,
+  blacklist: ["router"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer(history));
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   preloadedState: {},
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({ serializableCheck: false }).concat(logger),
+  middleware: getDefaultMiddleware({
+    // serializableCheck: {
+    //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    // },
+    serializableCheck: false,
+  }).concat(logger, routerMiddleware(history)),
 });
+
+export const persistor = persistStore(store, {});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

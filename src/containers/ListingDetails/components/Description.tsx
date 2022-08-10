@@ -13,6 +13,7 @@ const Description = ({ listing }: DescriptionProps) => {
       borderWidth="thin"
       borderColor="rgba(69, 77, 102, 0.2)"
       width="full"
+      bg="white"
       py={8}
       px={6}
       mb={6}
@@ -20,17 +21,12 @@ const Description = ({ listing }: DescriptionProps) => {
       <Text fontSize={24} fontWeight={600} mb={4}>
         Description
       </Text>
-      <Text color="gray" noOfLines={6}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita sequi
-        ex blanditiis est tempore odit molestias alias id, quam suscipit
-        similique, dolorem at corporis, vero eum architecto cupiditate doloribus
-        ipsum? Temporibus nesciunt exercitationem a deserunt illo voluptate
-        inventore et nostrum rem odio non tempora, architecto iusto quis
-        perferendis fugiat consectetur? Fugiat accusantium rerum, odio expedita
-        accusamus ut natus aliquid ab. Corporis optio cum in facere, corrupti
-        aperiam quaerat esse natus mollitia obcaecati voluptas voluptatibus
-        labore iusto beatae quisquam at. Quod nostrum pariatur maiores
-        voluptatem dolore laborum nisi esse consectetur debitis!
+      <Text color="gray" noOfLines={6} mb={6}>
+        {listing?.description}{" "}
+      </Text>
+
+      <Text fontWeight={600} color="gray" fontSize={14}>
+        Ref: {listing?.referenceNo}
       </Text>
     </Flex>
   );

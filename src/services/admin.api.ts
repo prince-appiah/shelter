@@ -1,17 +1,21 @@
 import api from "services";
-import { IPropertyType } from "typings";
+import { IAmenity, IHost, IProperty, IPropertyType } from "typings";
 
 export type PropertyFields = {
   readonly _id: string;
   owner: string;
   name: string;
+  referenceNo: string;
   roomType: string;
-  price: number;
+  price: string;
+  numOfBedrooms: number;
+  numOfBathrooms: number;
   description: string;
   location: string;
-  stayPeriod: string;
-  images: string[];
+  stayPeriod: "night" | "week" | "month" | "year" | string;
+  images: any;
   amenities: string[];
+  isApproved?: boolean;
 };
 
 export type HostFields = {
@@ -39,6 +43,16 @@ export type AmenityFields = {
 };
 
 class AdminApi {
+  static async getDashboardReport() {
+    const response = await api.get("/dashboard-reports", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  }
+
   static async getAllProperties() {
     try {
       const response = await api.get("/property", {
@@ -65,39 +79,9 @@ class AdminApi {
     }
   }
 
-  static async addProperty(token: string, data: PropertyFields) {
-    try {
-      const response = await api.post("/property", data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
   static async editProperty(token: string, id: string, data: PropertyFields) {
     try {
       const response = await api.patch(`/property/${id}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-
-  static async deleteProperty(token: string, id: string) {
-    try {
-      const response = await api.delete(`/property/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -264,21 +248,72 @@ class AdminApi {
     }
   }
 
-  static async addAmenity(data: Omit<AmenityFields, "_id">) {
-    try {
-      const token = localStorage.getItem("token");
+  static async createListing(data: Omit<PropertyFields, "_id">) {
+    const token = localStorage.getItem("token");
 
-      const response = await api.post("/amenities", data, {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("location", data.location);
+    formData.append("price", data.price);
+    formData.append("stayPeriod", data.stayPeriod);
+    formData.append("roomType", data.roomType);
+    formData.append("owner", data.owner);
+    formData.append("numOfBathrooms", data.numOfBathrooms.toString());
+    formData.append("numOfBedrooms", data.numOfBedrooms.toString());
+    formData.append("referenceNo", data.referenceNo);
+
+    for (const amenity of data.amenities) {
+      formData.append("amenities", amenity);
+    }
+
+    for (const img of data.images) {
+      formData.append("images", img);
+    }
+
+    const response = await api.post("/property", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
+  static async approveListing({
+    property_id,
+    isApproved,
+  }: {
+    property_id: string;
+    isApproved: string;
+  }) {
+    const token = localStorage.getItem("token");
+
+    const response = await api.patch(
+      `/approve?property_id=${property_id}`,
+      { isApproved },
+      {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      });
+      }
+    );
 
-      return response;
-    } catch (error) {
-      return error;
-    }
+    return response;
+  }
+
+  static async addAmenity(data: Omit<AmenityFields, "_id">) {
+    const token = localStorage.getItem("token");
+    const response = await api.post("/amenities", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
   }
 
   static async editAmenity(_id: string, data: AmenityFields) {

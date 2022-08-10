@@ -50,7 +50,7 @@ const Header = (props: Props) => {
           }}
           borderRadius={6}
           // as={MenuButton}
-          isActive={dropdownOpen}
+          isactive={dropdownOpen.toString()}
           onClick={() => {
             handleDropdownOpen(!dropdownOpen);
             handleDropdownView("profile");

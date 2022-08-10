@@ -2,17 +2,23 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
-  InputProps,
+  SelectProps,
 } from "@chakra-ui/react";
 import { useField } from "formik";
+import React, { useState } from "react";
 
-// type Props = FieldHookConfig<string> & { label: string,inputProps:InputProps };
-type Props = InputProps & { label?: string; onChange?: any; value?: any };
+type Props = SelectProps & {
+  children: any;
+  label?: string;
+  onChange?: any;
+  onBlur?: any;
+  value?: any;
+};
 
-// const Input = (props: Props) => {
-const Input = (props: Props) => {
-  const { name, label, value, onChange, ...rest } = props;
+const AmenitiesSelect = (props: Props) => {
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const { name, label, value, onChange, onBlur, children, ...rest } = props;
+
   const [field, meta] = useField(props.name);
 
   return (
@@ -28,14 +34,6 @@ const Input = (props: Props) => {
         {label}
       </FormLabel>
 
-      <ChakraInput
-        _focus={{ borderColor: "brand.primary" }}
-        value={value}
-        onChange={onChange}
-        // size="lg"
-        {...field}
-        {...rest}
-      />
       {meta.touched && meta.error && (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
       )}
@@ -43,4 +41,4 @@ const Input = (props: Props) => {
   );
 };
 
-export default Input;
+export default AmenitiesSelect;

@@ -1,30 +1,28 @@
+import { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+
 import Loadable from "components/Loadable";
 import {
   ADMIN_AMENITIES,
   ADMIN_DASHBOARD,
   ADMIN_LISTINGS,
+  ADMIN_LISTING_DETAILS,
   ADMIN_ROOM_TYPES,
   ADMIN_USERS,
   CUSTOMER_DASHBOARD,
   HOME_ROUTE,
   HOST_DASHBOARD,
   LISTINGS_ROUTE,
-  LISTING_DETAILS_ROUTE,
+  LISTING_DETAILS,
   LOGIN_ROUTE,
   SIGNUP_ROUTE,
 } from "config/constants/routes";
-// import LandingPage from "containers/LandingPage";
 import Layout from "containers/Layout";
-// import ListingDetails from "containers/ListingDetails";
-// import Listings from "containers/Listings";
 import Login from "containers/Login";
 import NotFound from "containers/NotFound";
 import Signup from "containers/Signup";
-
-import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
-
-const LandingPage = Loadable(lazy(() => import("containers/LandingPage")));
+import { ProtectedRoute } from "shared/routes";
+import { roles } from "config/constants/vars";
 
 // ADMIN IMPORTS
 const Admin = Loadable(lazy(() => import("pages/admin/dashboard")));
@@ -40,6 +38,7 @@ const Customer = Loadable(lazy(() => import("pages/customer")));
 const Host = Loadable(lazy(() => import("pages/host")));
 
 // OTHER COMPONENT IMPORTS
+const LandingPage = Loadable(lazy(() => import("containers/LandingPage")));
 const ListingDetails = Loadable(
   lazy(() => import("containers/ListingDetails"))
 );
@@ -56,7 +55,7 @@ const AppRoutes = () => {
         <Route path={SIGNUP_ROUTE} element={<Signup />} />
 
         {/* Public routes */}
-        <Route path={LISTING_DETAILS_ROUTE} element={<ListingDetails />} />
+        <Route path={LISTING_DETAILS} element={<ListingDetails />} />
         <Route path={LISTINGS_ROUTE} element={<Listings />} />
 
         {/* Admin routes */}
@@ -68,7 +67,6 @@ const AppRoutes = () => {
             </Layout>
           }
         />
-
         <Route
           path={ADMIN_USERS}
           element={
@@ -77,7 +75,6 @@ const AppRoutes = () => {
             </Layout>
           }
         />
-
         <Route
           path={ADMIN_LISTINGS}
           element={
@@ -86,7 +83,14 @@ const AppRoutes = () => {
             </Layout>
           }
         />
-
+        <Route
+          path={ADMIN_LISTING_DETAILS}
+          element={
+            <Layout>
+              <ListingDetails />
+            </Layout>
+          }
+        />
         <Route
           path={ADMIN_ROOM_TYPES}
           element={
@@ -95,7 +99,6 @@ const AppRoutes = () => {
             </Layout>
           }
         />
-
         <Route
           path={ADMIN_AMENITIES}
           element={
@@ -106,9 +109,11 @@ const AppRoutes = () => {
         />
 
         {/* Host routes */}
+
         <Route path={HOST_DASHBOARD} element={<Host />} />
 
         {/* Customer routes */}
+
         <Route path={CUSTOMER_DASHBOARD} element={<Customer />} />
 
         <Route path="*" element={<NotFound />} />
