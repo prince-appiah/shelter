@@ -31,7 +31,10 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
-  userType: "admin" | "customer" | "host" | string;
+  userType?: "admin" | "customer" | "host" | string;
+  phone?: string;
+  location?: string;
+  isVerified?: boolean;
   profilePicture?: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;

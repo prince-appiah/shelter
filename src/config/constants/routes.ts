@@ -11,10 +11,16 @@ export const ADMIN_LISTINGS = "/s/admin/listings";
 export const ADMIN_LISTING_DETAILS = "/s/admin/listings/:id";
 export const ADMIN_ROOM_TYPES = "/s/admin/property-types";
 export const ADMIN_AMENITIES = "/s/admin/amenities";
+export const ADMIN_SETTINGS = "/s/admin/settings";
+
 // host routes
 export const HOST_DASHBOARD = "/s/host/dashboard";
+export const HOST_LISTINGS = "/s/host/listings";
+
 // customer routes
 export const CUSTOMER_DASHBOARD = "/s/customer/dashboard";
+export const CUSTOMER_BOOKINGS = "/s/customer/bookings";
+export const CUSTOMER_SETTINGS = "/s/customer/settings";
 
 // routes with parameters
 export const getListingDetailsRoute = (id: string) =>

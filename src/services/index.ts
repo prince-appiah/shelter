@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import { LOGIN_ROUTE } from "config/constants/routes";
-import { BASE_URL, LOCAL_BACKEND } from "config/constants/vars";
 import { logoutUser } from "redux/auth/authSlice";
 import { store } from "redux/store";
+import { LOGIN_ROUTE } from "config/constants/routes";
+import { BASE_URL, LOCAL_BACKEND } from "config/constants/vars";
+import { logoutAction } from "redux/auth/asyncActions";
 
 const token = localStorage.getItem("item");
 const baseURL =
@@ -26,27 +27,28 @@ export type ApiData<T = any> = {
   data?: T;
 };
 
+const signal = new AbortController().signal;
+
 const api = axios.create({
   baseURL: baseURL,
   headers: {
     Authorization: token ? `Bearer ${token}` : "",
   },
+  signal,
 });
 
 export const onFulfilledRequest = (response: AxiosResponse) => response;
 export const onRejectedResponse = (error: any): any => {
   const { status } = error.response;
-  console.log("🚀 ~ status", status);
 
   if (status === 401 || status === 403) {
     const { location } = window;
-    store.dispatch(logoutUser());
+    // store.dispatch(logoutUser());
     location.pathname = LOGIN_ROUTE;
+    return;
   }
 
   return Promise.reject({ message: error || "Server error", code: 500 });
-
-  // return Promise.reject({ message: error || "Server error", code: 500 });
 };
 
 api.interceptors.response.use(onFulfilledRequest, onRejectedResponse);

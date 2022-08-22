@@ -19,7 +19,7 @@ import Button from "components/Button";
 import Loader from "components/Loader";
 import ListingModal from "components/Modal";
 import { getAdminListingDetailsRoute } from "config/constants/routes";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import { useContext, useEffect } from "react";
@@ -55,7 +55,6 @@ const AdminListings = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const toast = useToast();
-
   const { TContainer, TableHead, results } = useTable(listings, headCells);
 
   // todo load all hosts to be used in create listing modal

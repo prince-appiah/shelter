@@ -61,7 +61,7 @@ const Signup = () => {
       .required("Email is required")
       .email("Enter a valid email"),
     userType: Yup.string()
-      .oneOf(["user", "host"])
+      .oneOf(["customer", "host"])
       .required("User type is required"),
   });
 

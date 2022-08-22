@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { LOGIN_ROUTE } from "config/constants/routes";
 import jwtDecode from "jwt-decode";
 import AuthApi, {
   LoginFields,
@@ -6,7 +7,7 @@ import AuthApi, {
   SignupFields,
 } from "services/auth.api";
 import { IDecodedUser } from "typings";
-import { setCurrentUser } from "./authSlice";
+import { logoutUser, setCurrentUser } from "./authSlice";
 
 export const signupAction = createAsyncThunk(
   "auth/signup",
@@ -45,6 +46,26 @@ export const getOtpAction = createAsyncThunk(
       const response = await AuthApi.getOTP({ email });
 
       return response.data;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const logoutAction = createAsyncThunk(
+  "auth/logout",
+  async (data, thunk) => {
+    try {
+      const response = await AuthApi.logout();
+      console.log("🚀 ~ response", response);
+
+      // if (response.status === 200) {
+      //   logoutUser();
+      //   window.location.pathname = LOGIN_ROUTE;
+      //   return;
+      // }
+
+      return response;
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }

@@ -32,7 +32,6 @@ const Input = (props: Props) => {
         _focus={{ borderColor: "brand.primary" }}
         value={value}
         onChange={onChange}
-        // size="lg"
         {...field}
         {...rest}
       />

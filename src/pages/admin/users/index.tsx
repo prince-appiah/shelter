@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import { useContext, useEffect, useState } from "react";

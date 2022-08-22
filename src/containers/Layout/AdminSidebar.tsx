@@ -5,10 +5,11 @@ import {
   ADMIN_LISTINGS,
   ADMIN_ROOM_TYPES,
   ADMIN_USERS,
+  ADMIN_SETTINGS,
 } from "config/constants/routes";
 import React from "react";
 import { AiOutlineApartment } from "react-icons/ai";
-import { FaBuilding, FaToolbox, FaUsers } from "react-icons/fa";
+import { FaBuilding, FaCog, FaToolbox, FaUsers } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import SidebarLink, { SidebarLinkProps } from "./SidebarLink";
 
@@ -20,6 +21,7 @@ const routes: SidebarLinkProps[] = [
   { text: "Listings", link: ADMIN_LISTINGS, icon: FaBuilding },
   { text: "Room Types", link: ADMIN_ROOM_TYPES, icon: AiOutlineApartment },
   { text: "Amenities", link: ADMIN_AMENITIES, icon: FaToolbox },
+  { text: "Settings", link: ADMIN_SETTINGS, icon: FaCog },
 ];
 
 const AdminSidebar = (props: Props) => {

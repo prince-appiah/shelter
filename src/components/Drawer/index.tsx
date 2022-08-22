@@ -7,7 +7,7 @@ import {
   Icon,
   Text,
 } from "@chakra-ui/react";
-import { DrawerContext } from "contexts/drawerContext";
+import { DrawerContext } from "contexts/DrawerContext";
 import React, { useContext } from "react";
 import { BsSpeedometer } from "react-icons/bs";
 

@@ -16,7 +16,7 @@ import Button from "components/Button";
 import ImageRadio from "components/ImageRadio";
 import Input from "components/Input";
 import RadioGroup from "components/RadioGroup";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import { useContext, useRef, useState } from "react";
