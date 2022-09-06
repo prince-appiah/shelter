@@ -1,11 +1,8 @@
 import { Box, Divider, Flex, Text, VStack } from "@chakra-ui/react";
 import Button from "components/Button";
 import { roles } from "config/constants/vars";
-import { useAppDispatch } from "hooks/reduxHooks";
-import { Dispatch, SetStateAction, useState } from "react";
 import { BsCheckLg, BsPencilFill } from "react-icons/bs";
 import { MdCancel, MdDelete } from "react-icons/md";
-import { approveListingAction } from "redux/global/asyncActions";
 import { IProperty, IUser } from "typings";
 import ListingContact from "./Contact";
 
@@ -142,14 +139,17 @@ const Summary = ({
           </Button>
         )}
 
-        {currentUser.userType === roles.host && (
+        {currentUser.userType === roles.customer && (
           <>
-            {" "}
             <Text fontSize={14} fontWeight={600} color="gray">
               Tour this property - it's free, with no obligation
             </Text>
-            <Button isFullWidth sx={{ fontSize: 14 }}>
-              Schedule a Tour
+            <Button
+              isFullWidth
+              sx={{ fontSize: 14 }}
+              onClick={() => alert("send book POST request to the server")}
+            >
+              Book this space
             </Button>
           </>
         )}

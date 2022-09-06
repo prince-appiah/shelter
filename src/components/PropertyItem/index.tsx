@@ -8,11 +8,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Button from "components/Button";
-import { getListingDetailsRoute } from "config/constants/routes";
-import React from "react";
-import { FaBath, FaBed, FaCalendar } from "react-icons/fa";
+import {
+  getAdminListingDetailsRoute,
+  getCustomerListingDetailsRoute,
+  getListingDetailsRoute,
+} from "config/constants/routes";
+import { roles } from "config/constants/vars";
+import { useAuthState } from "hooks/reduxHooks";
+import { FaBath, FaBed } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { calculateMomentAgo } from "shared/strings";
 import { IProperty } from "typings";
 
 type Props = {
@@ -21,10 +25,24 @@ type Props = {
 
 const PropertyItem = ({ property }: Props) => {
   const navigate = useNavigate();
+  const { currentUser: user } = useAuthState();
+
+  const handleNavigation = () => {
+    switch (user.userType) {
+      case roles.admin:
+        return navigate(getAdminListingDetailsRoute(property._id));
+
+      case roles.customer:
+        return navigate(getCustomerListingDetailsRoute(property._id));
+
+      default:
+        return getListingDetailsRoute(property._id);
+    }
+  };
 
   return (
     <GridItem
-      onClick={() => navigate(getListingDetailsRoute(property._id))}
+      onClick={handleNavigation}
       borderWidth={1}
       rounded="md"
       bg="white"

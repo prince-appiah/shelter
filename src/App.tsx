@@ -12,6 +12,7 @@ import {
   ADMIN_USERS,
   CUSTOMER_BOOKINGS,
   CUSTOMER_DASHBOARD,
+  CUSTOMER_LISTING_DETAILS,
   CUSTOMER_SETTINGS,
   HOME_ROUTE,
   HOST_DASHBOARD,
@@ -173,6 +174,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <Customer />
+            </Layout>
+          }
+        />
+        <Route
+          path={CUSTOMER_LISTING_DETAILS}
+          element={
+            <Layout>
+              <ListingDetails />
             </Layout>
           }
         />

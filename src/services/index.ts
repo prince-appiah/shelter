@@ -5,7 +5,7 @@ import { LOGIN_ROUTE } from "config/constants/routes";
 import { BASE_URL, LOCAL_BACKEND } from "config/constants/vars";
 import { logoutAction } from "redux/auth/asyncActions";
 
-const token = localStorage.getItem("item");
+const token = localStorage.getItem("token");
 const baseURL =
   process.env.NODE_ENV === "development" ? LOCAL_BACKEND : BASE_URL;
 
@@ -44,6 +44,7 @@ export const onRejectedResponse = (error: any): any => {
   if (status === 401 || status === 403) {
     const { location } = window;
     // store.dispatch(logoutUser());
+    // localStorage.removeItem("token");
     location.pathname = LOGIN_ROUTE;
     return;
   }

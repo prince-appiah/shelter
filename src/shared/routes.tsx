@@ -20,8 +20,8 @@ export function withPublic(Component) {
 export function withProtected(Component?: any, roles?: string[]) {
   return function WithProtected(props) {
     const { currentUser } = useAuthState();
+    console.log("🚀 ~ currentUser", currentUser);
     const navigate = useNavigate();
-    // const location = useLocation();
 
     useEffect(() => {
       if (!currentUser) {

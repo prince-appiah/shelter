@@ -1,9 +1,11 @@
 import { Center, Flex, Grid, Text } from "@chakra-ui/react";
 import Loader from "components/Loader";
 import PropertyItem from "components/PropertyItem";
+import { getCustomerListingDetailsRoute } from "config/constants/routes";
 import { roles } from "config/constants/vars";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   fetchListingsAction,
   fetchPropertyTypesAction,
@@ -14,8 +16,9 @@ import { withProtected } from "shared/routes";
 import { IProperty } from "typings";
 
 const CustomerDashboard = () => {
-  const { listings, status, propertyTypes } = useGlobalState();
+  const { listings, status } = useGlobalState();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchListings = () => dispatch(fetchListingsAction());

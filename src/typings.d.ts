@@ -7,6 +7,15 @@ export interface IPropertyImage {
   format: string;
 }
 
+export interface IBooking {
+  readonly _id: string;
+  customer: string;
+  property: IProperty;
+  status: "pending" | "completed" | "cancelled";
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+}
+
 export interface IProperty {
   readonly _id: string;
   owner: IHost<Pick<"_id">>;
