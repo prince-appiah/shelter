@@ -2,13 +2,13 @@ import { Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export type SidebarLinkProps = {
+export type DrawerItemProps = {
   link: string;
   icon: any;
   text: string;
 };
 
-const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
+const DrawerItem = ({ link, icon, text }: DrawerItemProps) => {
   const { pathname } = useLocation();
 
   return (
@@ -17,7 +17,7 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
       to={link}
       borderRadius={6}
       align="center"
-      justify={{ base: "center", md: "center", lg: "left" }}
+      //   justify={{ base: "space-between" }}
       bg={
         pathname === link || pathname.includes(link)
           ? "brand.primary"
@@ -27,8 +27,8 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
         pathname === link || pathname.includes(link) ? "white" : "gray.600"
       }
       cursor="pointer"
-      py={{ base: 3, md: 4, lg: 3 }}
-      px={{ base: 0, md: 0, lg: 3 }}
+      py={3}
+      px={6}
       _hover={{
         bg:
           pathname === link || pathname.includes(link)
@@ -37,12 +37,10 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
       }}
       _focus={{ bg: "brand.primary", color: "white" }}
     >
-      <Icon as={icon} fontSize={20} mr={{ lg: 4 }} />
-      <Text fontWeight={600} display={{ base: "none", lg: "inline-flex" }}>
-        {text}
-      </Text>
+      <Icon as={icon} fontSize={20} mr={6} />
+      <Text fontWeight={600}>{text}</Text>
     </Flex>
   );
 };
 
-export default SidebarLink;
+export default DrawerItem;

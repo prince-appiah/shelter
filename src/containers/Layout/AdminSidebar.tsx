@@ -16,7 +16,7 @@ import SidebarLink, { SidebarLinkProps } from "./SidebarLink";
 
 type Props = {};
 
-const routes: SidebarLinkProps[] = [
+export const adminSidebarRoutes: SidebarLinkProps[] = [
   { text: "Dashboard", link: ADMIN_DASHBOARD, icon: MdSpaceDashboard },
   { text: "Users", link: ADMIN_USERS, icon: FaUsers },
   { text: "Bookings", link: ADMIN_BOOKINGS, icon: FaBook },
@@ -29,7 +29,7 @@ const routes: SidebarLinkProps[] = [
 const AdminSidebar = (props: Props) => {
   return (
     <>
-      {routes.map((route, index) => (
+      {adminSidebarRoutes.map((route, index) => (
         <div key={route.link}>
           <SidebarLink link={route.link} icon={route.icon} text={route.text} />
           <Spacer height={6} />

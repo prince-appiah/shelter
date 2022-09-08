@@ -29,3 +29,17 @@ export const addBookingAction = createAsyncThunk(
     }
   }
 );
+
+export const cancelBookingAction = createAsyncThunk(
+  "customer/cancelBooking",
+  async (property_id: string, thunk) => {
+    try {
+      const response = await CustomerApi.cancelBooking({ property_id });
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);

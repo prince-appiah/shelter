@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
 import { IBooking } from "typings";
-import { addBookingAction, fetchMyBookingsAction } from "./asyncActions";
+import {
+  addBookingAction,
+  cancelBookingAction,
+  fetchMyBookingsAction,
+} from "./asyncActions";
 
 export interface ICustomerState {
   status: "idle" | "loading" | "success" | "error";
@@ -47,10 +51,27 @@ export const customerSlice = createSlice({
       return {
         ...state,
         status: "success",
-        // bookings: [...state.bookings, action.payload.data],
+        bookings: [...state.bookings, action.payload.data],
       };
     });
     builder.addCase(addBookingAction.rejected, (state, action) => {
+      return { ...state, status: "error" };
+    });
+
+    // cancel booking
+    builder.addCase(cancelBookingAction.pending, (state, action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(cancelBookingAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        bookings: state.bookings.map((item) =>
+          item._id === action.payload.data._id ? action.payload.data : item
+        ),
+      };
+    });
+    builder.addCase(cancelBookingAction.rejected, (state, action) => {
       return { ...state, status: "error" };
     });
   },

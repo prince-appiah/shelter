@@ -1,4 +1,4 @@
-import { Spacer } from "@chakra-ui/react";
+import { Box, Spacer } from "@chakra-ui/react";
 import {
   CUSTOMER_BOOKINGS,
   CUSTOMER_DASHBOARD,
@@ -10,7 +10,7 @@ import SidebarLink, { SidebarLinkProps } from "./SidebarLink";
 
 type Props = {};
 
-const routes: SidebarLinkProps[] = [
+export const customerSidebarRoutes: SidebarLinkProps[] = [
   { text: "Home", link: CUSTOMER_DASHBOARD, icon: MdSpaceDashboard },
   { text: "Bookings", link: CUSTOMER_BOOKINGS, icon: FaUsers },
   { text: "Settings", link: CUSTOMER_SETTINGS, icon: FaCog },
@@ -19,15 +19,15 @@ const routes: SidebarLinkProps[] = [
 const CustomerSidebar = (props: Props) => {
   return (
     <>
-      {routes.map((route, idx) => (
-        <div key={route?.link}>
+      {customerSidebarRoutes.map((route, idx) => (
+        <Box key={route?.link}>
           <SidebarLink
             link={route?.link}
             icon={route?.icon}
             text={route?.text}
           />
           <Spacer height={6} />
-        </div>
+        </Box>
       ))}
     </>
   );

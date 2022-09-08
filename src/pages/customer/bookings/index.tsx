@@ -28,7 +28,7 @@ const headCells: TableHeadProps[] = [
   { id: "propertyName", title: "Property Name" },
   { id: "location", title: "Location" },
   { id: "status", title: "Status" },
-  { id: "date", title: "Date Booked" },
+  { id: "date", title: "Time Booked" },
 ];
 
 const CustomerBookings = () => {

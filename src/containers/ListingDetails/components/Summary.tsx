@@ -12,8 +12,11 @@ type SummaryProps = {
   handleApproveListing: ({ isApproved, id }) => void;
   handleDeleteListing: ({ id }) => void;
   handleBooking: ({ property_id }) => void;
+  handleBookCancellation: ({ property_id }) => void;
   approveLoading: boolean;
   bookLoading: boolean;
+  cancelLoading: boolean;
+  isBooked: boolean;
 };
 
 const Summary = ({
@@ -24,6 +27,9 @@ const Summary = ({
   bookLoading,
   handleDeleteListing,
   handleBooking,
+  handleBookCancellation,
+  isBooked,
+  cancelLoading,
 }: SummaryProps) => {
   return (
     <Flex
@@ -146,11 +152,23 @@ const Summary = ({
             </Text>
             <Button
               isFullWidth
-              sx={{ fontSize: 14 }}
-              isLoading={bookLoading}
-              onClick={() => handleBooking({ property_id: listing._id })}
+              fontSize={14}
+              isLoading={bookLoading || cancelLoading}
+              bgColor={isBooked ? "red" : "brand.primary"}
+              color={isBooked ? "white" : "white"}
+              border={isBooked ? "1px solid red" : "1px solid teal"}
+              onClick={
+                isBooked
+                  ? () => handleBookCancellation({ property_id: listing._id })
+                  : () => handleBooking({ property_id: listing._id })
+              }
+              sx={{
+                _hover: {
+                  bgColor: isBooked ? "red" : "brand.primary",
+                },
+              }}
             >
-              Book this space
+              {isBooked ? "Cancel Booking" : "Book this space"}
             </Button>
           </>
         )}

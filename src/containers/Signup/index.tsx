@@ -116,7 +116,7 @@ const Signup = () => {
     >
       {/* Left Image */}
       <Image
-        src="http://placehold.jp/1000x1024.png"
+        src="/images/auth-bg.jpeg"
         objectFit="cover"
         width={{ md: 500, lg: "50%" }}
         display={{ base: "none", lg: "unset" }}

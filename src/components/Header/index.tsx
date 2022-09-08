@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import Button from "components/Button";
 import { HOME_ROUTE } from "config/constants/routes";
+import { DrawerContext } from "contexts/DrawerContext";
 import { DropdownContext } from "contexts/DropdownContext";
 import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useAuthState } from "hooks/reduxHooks";
@@ -18,7 +19,7 @@ type Props = {};
 
 const Header = (props: Props) => {
   const navigate = useNavigate();
-  const { handleOpen, open } = useContext(ModalContext);
+  const { handleOpen, open } = useContext(DrawerContext);
   const dispatch = useAppDispatch();
   const { currentUser } = useAuthState();
   const {

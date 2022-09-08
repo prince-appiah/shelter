@@ -3,12 +3,16 @@ import Loader from "components/Loader";
 import { useAppDispatch, useAuthState, useGlobalState } from "hooks/reduxHooks";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addBookingAction } from "redux/customers/asyncActions";
+import {
+  addBookingAction,
+  cancelBookingAction,
+} from "redux/customers/asyncActions";
 import {
   approveListingAction,
   deleteListingAction,
   getPropertyDetailsAction,
 } from "redux/global/asyncActions";
+import CustomerApi from "services/customer.api";
 import Details from "./components/Details";
 import Summary from "./components/Summary";
 
@@ -19,6 +23,9 @@ const ListingDetails = () => {
   const { selectedListing: listing, status, listings } = useGlobalState();
   const [approveLoading, setApproveLoading] = useState(false);
   const [bookLoading, setBookLoading] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [isBooked, setIsBooked] = useState(false);
+  console.log("🚀 ~ isBooked", isBooked);
   const { currentUser } = useAuthState();
   const toast = useToast();
 
@@ -31,6 +38,26 @@ const ListingDetails = () => {
     // clear the selected property
     // }
   }, [params.id, dispatch, listings]);
+
+  useEffect(() => {
+    const checkBookedListing = async ({ property_id }) => {
+      if (currentUser) {
+        try {
+          const response = await CustomerApi.checkBookedProperty({
+            property_id,
+          });
+          if (response.data) {
+            setIsBooked(true);
+          }
+        } catch (error) {
+          console.log("🚀 ~ error", error);
+        }
+      }
+      return;
+    };
+
+    checkBookedListing({ property_id: params.id });
+  }, [params.id, currentUser]);
 
   const handleDeleteListing = async ({ id }) => {
     try {
@@ -98,6 +125,18 @@ const ListingDetails = () => {
     }
   };
 
+  const handleBookCancellation = async ({ property_id }) => {
+    setCancelLoading(true);
+    try {
+      await dispatch(cancelBookingAction(property_id));
+      window.location.reload();
+      setCancelLoading(false);
+    } catch (error) {
+      console.log("🚀 ~ error", error);
+      setCancelLoading(false);
+    }
+  };
+
   if (status === "loading") {
     return <Loader />;
   }
@@ -125,6 +164,9 @@ const ListingDetails = () => {
         approveLoading={approveLoading}
         handleBooking={handleBooking}
         bookLoading={bookLoading}
+        cancelLoading={cancelLoading}
+        isBooked={isBooked}
+        handleBookCancellation={handleBookCancellation}
       />
     </Flex>
   );

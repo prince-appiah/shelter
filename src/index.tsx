@@ -10,9 +10,9 @@ import { theme } from "config/theme";
 import DrawerProvider from "contexts/DrawerContext";
 import DropdownProvider from "contexts/DropdownContext";
 import ModalProvider from "contexts/ModalContext";
+import NetworkStatusProvider from "contexts/NetworkStatusContext";
 import { persistor, store } from "redux/store";
 import "./index.css";
-import NetworkStatusProvider from "contexts/NetworkStatusContext";
 
 render(
   <ChakraProvider resetCSS theme={theme}>
@@ -20,13 +20,13 @@ render(
       <NetworkStatusProvider>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <ModalProvider>
-            <DrawerProvider>
-              <DropdownProvider>
-                <BrowserRouter>
+            <DropdownProvider>
+              <BrowserRouter>
+                <DrawerProvider>
                   <AppRoutes />
-                </BrowserRouter>
-              </DropdownProvider>
-            </DrawerProvider>
+                </DrawerProvider>
+              </BrowserRouter>
+            </DropdownProvider>
           </ModalProvider>
         </PersistGate>
       </NetworkStatusProvider>
