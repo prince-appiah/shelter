@@ -166,9 +166,6 @@ const AdminListings = (props: Props) => {
                   cursor="pointer"
                   textColor="gray.500"
                   sx={{ _hover: { bgColor: "gray.50" } }}
-                  // onClick={() =>
-                  //   navigate(getAdminListingDetailsRoute(item._id))
-                  // }
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item?.name}</Td>

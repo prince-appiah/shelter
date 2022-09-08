@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Loadable from "components/Loadable";
 import {
   ADMIN_AMENITIES,
+  ADMIN_BOOKINGS,
   ADMIN_DASHBOARD,
   ADMIN_LISTINGS,
   ADMIN_LISTING_DETAILS,
@@ -31,6 +32,7 @@ import Signup from "containers/Signup";
 const Admin = Loadable(lazy(() => import("pages/admin/dashboard")));
 const AdminListings = Loadable(lazy(() => import("pages/admin/listings")));
 const Amenities = Loadable(lazy(() => import("pages/admin/amenities")));
+const Bookings = Loadable(lazy(() => import("pages/admin/bookings")));
 const Users = Loadable(lazy(() => import("pages/admin/users")));
 const RoomTypes = Loadable(lazy(() => import("pages/admin/property-types")));
 const AdminSettings = Loadable(lazy(() => import("pages/admin/settings")));
@@ -106,6 +108,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <Users />
+            </Layout>
+          }
+        />
+        <Route
+          path={ADMIN_BOOKINGS}
+          element={
+            <Layout>
+              <Bookings />
             </Layout>
           }
         />

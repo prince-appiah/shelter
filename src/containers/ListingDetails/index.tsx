@@ -1,8 +1,9 @@
-import { Box, Flex, Text, useToast } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import Loader from "components/Loader";
 import { useAppDispatch, useAuthState, useGlobalState } from "hooks/reduxHooks";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { addBookingAction } from "redux/customers/asyncActions";
 import {
   approveListingAction,
   deleteListingAction,
@@ -17,6 +18,7 @@ const ListingDetails = () => {
   const navigate = useNavigate();
   const { selectedListing: listing, status, listings } = useGlobalState();
   const [approveLoading, setApproveLoading] = useState(false);
+  const [bookLoading, setBookLoading] = useState(false);
   const { currentUser } = useAuthState();
   const toast = useToast();
 
@@ -84,6 +86,18 @@ const ListingDetails = () => {
     }
   };
 
+  const handleBooking = async ({ property_id }) => {
+    setBookLoading(true);
+    try {
+      const response = await dispatch(addBookingAction(property_id));
+      console.log("🚀 ~ response", response);
+      setBookLoading(false);
+    } catch (error) {
+      console.log("🚀 ~ error", error);
+      setBookLoading(false);
+    }
+  };
+
   if (status === "loading") {
     return <Loader />;
   }
@@ -98,7 +112,6 @@ const ListingDetails = () => {
       direction={{ base: "column", lg: "row" }}
       gridGap={3}
       py={8}
-      // px={{ base: 4, md: 6 }}
       justify="center"
     >
       {/* Left side  */}
@@ -110,6 +123,8 @@ const ListingDetails = () => {
         handleApproveListing={handleApproveListing}
         handleDeleteListing={handleDeleteListing}
         approveLoading={approveLoading}
+        handleBooking={handleBooking}
+        bookLoading={bookLoading}
       />
     </Flex>
   );

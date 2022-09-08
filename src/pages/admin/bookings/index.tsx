@@ -1,48 +1,46 @@
 import {
-  Box,
   Flex,
+  Box,
   Heading,
-  TableHeadProps,
-  Tag,
   Tbody,
-  Td,
   Tr,
+  Td,
+  Tag,
+  TableHeadProps,
 } from "@chakra-ui/react";
-import Button from "components/Button";
-import BookingModal from "components/Modal";
 import { roles } from "config/constants/vars";
-import { ModalContext } from "contexts/ModalContext";
-import { useAppDispatch, useCustomersState } from "hooks/reduxHooks";
+import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
-import React, { useContext, useEffect, useState } from "react";
-import { fetchMyBookingsAction } from "redux/customers/asyncActions";
-import { setStatus } from "redux/customers/customerSlice";
+import BookingDetail from "pages/customer/bookings/widgets/BookingDetail";
+import React, { useEffect } from "react";
+import { fetchBookingsAction } from "redux/global/asyncActions";
+import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { withProtected } from "shared/routes";
 import { calculateMomentAgo } from "shared/strings";
 import { IBooking } from "typings";
-import BookingDetail from "./widgets/BookingDetail";
+
+type Props = {};
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
   { id: "propertyName", title: "Property Name" },
-  { id: "location", title: "Location" },
+  { id: "customer", title: "Booked By" },
   { id: "status", title: "Status" },
   { id: "date", title: "Date Booked" },
 ];
 
-const CustomerBookings = () => {
-  const { bookings } = useCustomersState();
-  console.log("🚀 ~ bookings", bookings);
-  const { open, handleOpen, handleView, view } = useContext(ModalContext);
+const AdminBookings = (props: Props) => {
   const dispatch = useAppDispatch();
+  const { bookings } = useGlobalState();
   const { TContainer, TableHead, results } = useTable(bookings, headCells);
-  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  console.log("🚀 ~ bookings", bookings);
 
   useEffect(() => {
-    const fetchMyBookings = () => dispatch(fetchMyBookingsAction());
+    const fetchBookings = () => dispatch(fetchBookingsAction());
     const ac = new AbortController();
-    fetchMyBookings();
+    fetchBookings();
 
     return () => {
       store.dispatch(setStatus("idle"));
@@ -60,7 +58,7 @@ const CustomerBookings = () => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>My Bookings ({bookings.length})</Heading>
+          <Heading fontSize={20}>Bookings ({bookings.length})</Heading>
         </Flex>
 
         <TContainer>
@@ -74,14 +72,14 @@ const CustomerBookings = () => {
                   textColor="gray.500"
                   sx={{ _hover: { bgColor: "gray.50" } }}
                   onClick={() => {
-                    handleOpen(!open);
-                    handleView("view-booking");
-                    setSelectedBooking(item);
+                    // handleOpen(!open);
+                    // handleView("view-booking");
+                    // setSelectedBooking(item);
                   }}
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item?.property?.name}</Td>
-                  <Td>{item?.property?.location}</Td>
+                  <Td>{item?.customer?.firstname}</Td>
                   <Td>
                     <Tag
                       colorScheme={
@@ -103,11 +101,11 @@ const CustomerBookings = () => {
       </Box>
 
       {/* Booking modal */}
-      <BookingModal isOpen={open} onClose={() => handleOpen(!open)}>
-        {view === "view-booking" && <BookingDetail booking={selectedBooking} />}
-      </BookingModal>
+      {/* <BookingModal isOpen={open} onClose={() => handleOpen(!open)}> */}
+      {/* {view === "view-booking" && <BookingDetail booking={selectedBooking} />} */}
+      {/* </BookingModal> */}
     </Flex>
   );
 };
 
-export default withProtected(CustomerBookings, [roles.customer]);
+export default withProtected(AdminBookings, [roles.admin]);

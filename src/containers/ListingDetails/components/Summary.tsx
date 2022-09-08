@@ -11,7 +11,9 @@ type SummaryProps = {
   currentUser: IUser;
   handleApproveListing: ({ isApproved, id }) => void;
   handleDeleteListing: ({ id }) => void;
+  handleBooking: ({ property_id }) => void;
   approveLoading: boolean;
+  bookLoading: boolean;
 };
 
 const Summary = ({
@@ -19,7 +21,9 @@ const Summary = ({
   currentUser,
   handleApproveListing,
   approveLoading,
+  bookLoading,
   handleDeleteListing,
+  handleBooking,
 }: SummaryProps) => {
   return (
     <Flex
@@ -107,11 +111,7 @@ const Summary = ({
               {listing?.isApproved ? "Disable Listing" : "Approve Listing"}
             </Button>
             <Button
-              onClick={() =>
-                handleDeleteListing({
-                  id: listing?._id,
-                })
-              }
+              onClick={() => handleDeleteListing({ id: listing?._id })}
               loadingText="Please wait..."
               isFullWidth
               variant="outline"
@@ -147,7 +147,8 @@ const Summary = ({
             <Button
               isFullWidth
               sx={{ fontSize: 14 }}
-              onClick={() => alert("send book POST request to the server")}
+              isLoading={bookLoading}
+              onClick={() => handleBooking({ property_id: listing._id })}
             >
               Book this space
             </Button>

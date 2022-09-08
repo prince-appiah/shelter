@@ -70,6 +70,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(logoutAction.fulfilled, (state, _action) => {
       window.location.assign(LOGIN_ROUTE);
+      localStorage.removeItem("token");
       return { ...state, status: "success", currentUser: null };
     });
     builder.addCase(logoutAction.rejected, (state, _action) => {

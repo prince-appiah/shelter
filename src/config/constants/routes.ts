@@ -7,6 +7,7 @@ export const LISTING_DETAILS = "/s/listings/:id";
 // admin routes
 export const ADMIN_DASHBOARD = "/s/admin/dashboard";
 export const ADMIN_USERS = "/s/admin/users";
+export const ADMIN_BOOKINGS = "/s/admin/bookings";
 export const ADMIN_LISTINGS = "/s/admin/listings";
 export const ADMIN_LISTING_DETAILS = "/s/admin/listings/:id";
 export const ADMIN_ROOM_TYPES = "/s/admin/property-types";

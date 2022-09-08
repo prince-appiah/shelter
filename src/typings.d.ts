@@ -9,7 +9,7 @@ export interface IPropertyImage {
 
 export interface IBooking {
   readonly _id: string;
-  customer: string;
+  customer: ICustomer;
   property: IProperty;
   status: "pending" | "completed" | "cancelled";
   readonly createdAt?: string;
@@ -47,6 +47,12 @@ export interface IUser {
   profilePicture?: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
+}
+
+export interface ICustomer extends IUser {
+  readonly _id: string;
+  user_id: string;
+  bookings: IBooking[];
 }
 
 export interface IHost extends IUser {
