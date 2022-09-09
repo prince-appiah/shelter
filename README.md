@@ -28,23 +28,6 @@
     - [:scroll: Code of Conduct](#scroll-code-of-conduct)
   - [:warning: License](#warning-license)
   - [:handshake: Contact](#handshake-contact)
-    <!-- - [:book: API Endpoints](#book-api-endpoints)
-      - [Base Url - `{API_URL}/api`](#base-url---api_urlapi)
-      - [Users](#users)
-      - [Posts](#posts)
-      - [Answers](#answers)
-      - [Comments](#comments)
-      - [Tags](#tags) -->
-  - [:toolbox: Getting Started](#toolbox-getting-started)
-    - [:bangbang: Prerequisites](#bangbang-prerequisites)
-    - [:key: Environment Variables](#key-environment-variables)
-    - [:gear: Installation](#gear-installation)
-    - [:running: Run Locally](#running-run-locally)
-  - [:compass: Roadmap](#compass-roadmap)
-  - [:wave: Contributing](#wave-contributing)
-    - [:scroll: Code of Conduct](#scroll-code-of-conduct)
-  - [:warning: License](#warning-license)
-  - [:handshake: Contact](#handshake-contact)
 
 <!-- About the Project -->
 
