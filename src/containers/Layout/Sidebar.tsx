@@ -1,10 +1,15 @@
 import { Box } from "@chakra-ui/react";
+import { roles } from "config/constants/vars";
+import { useAuthState } from "hooks/reduxHooks";
 import React from "react";
 import AdminSidebar from "./AdminSidebar";
+import CustomerSidebar from "./CustomerSidebar";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
+  const { currentUser } = useAuthState();
+
   return (
     <Box
       py={8}
@@ -20,7 +25,8 @@ const Sidebar = (props: Props) => {
       boxShadow="sm"
     >
       {/* dynamically render content based on user role in global state */}
-      <AdminSidebar />
+      {currentUser?.userType === roles.admin && <AdminSidebar />}
+      {currentUser?.userType === roles.customer && <CustomerSidebar />}
     </Box>
   );
 };

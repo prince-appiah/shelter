@@ -7,6 +7,15 @@ export interface IPropertyImage {
   format: string;
 }
 
+export interface IBooking {
+  readonly _id: string;
+  customer: ICustomer;
+  property: IProperty;
+  status: "pending" | "completed" | "cancelled";
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+}
+
 export interface IProperty {
   readonly _id: string;
   owner: IHost<Pick<"_id">>;
@@ -31,10 +40,19 @@ export interface IUser {
   firstname: string;
   lastname: string;
   email: string;
-  userType: "admin" | "customer" | "host" | string;
+  userType?: "admin" | "customer" | "host" | string;
+  phone?: string;
+  location?: string;
+  isVerified?: boolean;
   profilePicture?: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
+}
+
+export interface ICustomer extends IUser {
+  readonly _id: string;
+  user_id: string;
+  bookings: IBooking[];
 }
 
 export interface IHost extends IUser {

@@ -13,6 +13,7 @@ interface ModalProviderProps {
     | "edit-amenity"
     | "add-property-type"
     | "edit-property-type"
+    | "view-booking"
     | null;
   handleView: (view: ModalProviderProps["view"]) => void;
   handleOpen: (open: ModalProviderProps["open"]) => void;

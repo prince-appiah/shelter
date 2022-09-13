@@ -45,8 +45,10 @@ class AuthApi {
     return response;
   }
 
-  static async logout(token: string) {
-    const response = await api.post("/logout", null, {
+  static async logout() {
+    const token = localStorage.getItem("token");
+
+    const response = await api.get("/logout", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -2,11 +2,12 @@ import { Box, Heading, TableHeadProps, Tbody, Td, Tr } from "@chakra-ui/react";
 import { getAdminListingDetailsRoute } from "config/constants/routes";
 import useTable from "hooks/useTable";
 import { useNavigate } from "react-router-dom";
+import { calculateMomentAgo } from "shared/strings";
 import { IProperty } from "typings";
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
-  { id: "owner", title: "Owner" },
+  { id: "name", title: "Name" },
   { id: "type", title: "Property Type" },
   { id: "date", title: "Created On" },
 ];
@@ -43,11 +44,10 @@ const ListingsTable = ({ listings }: ListingsTableProps) => {
               onClick={() => navigate(getAdminListingDetailsRoute(item._id))}
             >
               <Td>{idx + 1}</Td>
-              <Td>
-                {item?.owner?.firstname} {item?.owner?.lastname}
-              </Td>
+              <Td>{item?.name}</Td>
               <Td>{item?.roomType?.name}</Td>
-              <Td>{item?.createdAt.split("T")[0]}</Td>
+              <Td>{calculateMomentAgo(item?.createdAt)}</Td>
+              {/* <Td>{item?.createdAt.split("T")[0]}</Td> */}
             </Tr>
           ))}
         </Tbody>

@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import Loader from "components/Loader";
+import PropertyItem from "components/PropertyItem";
 import { getListingDetailsRoute } from "config/constants/routes";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import { useEffect } from "react";
@@ -59,35 +60,7 @@ const Listings = () => {
           gap={4}
         >
           {listings.map((item: IProperty) => (
-            <GridItem
-              onClick={() => navigate(getListingDetailsRoute(item._id))}
-              borderWidth={1}
-              rounded="sm"
-              sx={{
-                cursor: "pointer",
-                overflow: "hidden",
-                _hover: { shadow: "sm" },
-              }}
-              key={item._id}
-            >
-              <Image
-                src={item.images[0]["url"]}
-                alt={item.name}
-                height={225}
-                width={330}
-                objectFit="cover"
-                loading="lazy"
-              />
-              <Flex px={5} py={4} flexDirection="column">
-                <Text fontWeight={600}>{item.name}</Text>
-                <Text fontWeight={400} fontSize={14} color="GrayText">
-                  {item.location}
-                </Text>
-                <Text pt={3} color="brand.primary" fontWeight={600}>
-                  ${item.price}/{item.stayPeriod}
-                </Text>
-              </Flex>
-            </GridItem>
+            <PropertyItem key={item._id} property={item} />
           ))}
         </Grid>
       ) : (

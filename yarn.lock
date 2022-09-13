@@ -1656,6 +1656,11 @@
   dependencies:
     "@chakra-ui/utils" "1.10.0"
 
+"@choc-ui/paginator@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@choc-ui/paginator/-/paginator-3.4.0.tgz#3e542f995dfb13461825221f46d00b8d05e1b324"
+  integrity sha512-JZ9Ep5m2W5r9I9J2NKuKvNevKh8wyxieX/o8NdcOxiQUzcaiEHZh0I/+R3H+k6W7nu2v4ti72xHJb1PeiZFZNw==
+
 "@csstools/normalize.css@*":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-12.0.0.tgz#a9583a75c3f150667771f30b60d9f059473e62c4"

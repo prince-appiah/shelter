@@ -1,21 +1,7 @@
-// import Admin from "pages/Admin/dashboard";
-
-import { LOGIN_ROUTE, SIGNUP_ROUTE } from "config/constants/routes";
+import { LOGIN_ROUTE } from "config/constants/routes";
 import { useAuthState } from "hooks/reduxHooks";
-import { Component, FC, ReactNode, useEffect } from "react";
-import {
-  Navigate,
-  Outlet,
-  Route,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-
-// const redirect = {
-//   host: <Admin />,
-//   admin: <Admin />,
-//   customer: <Admin />,
-// };
+import { useEffect } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // wrap this with a component
 export function withPublic(Component) {
@@ -34,8 +20,8 @@ export function withPublic(Component) {
 export function withProtected(Component?: any, roles?: string[]) {
   return function WithProtected(props) {
     const { currentUser } = useAuthState();
+    console.log("🚀 ~ currentUser", currentUser);
     const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
       if (!currentUser) {
@@ -44,20 +30,11 @@ export function withProtected(Component?: any, roles?: string[]) {
       }
     }, [currentUser, navigate]);
 
-    if (currentUser && roles.includes(currentUser.userType)) {
+    if (currentUser && roles.includes(currentUser?.userType)) {
       return <Component {...props} />;
     }
 
-    // return (
-    //   <Navigate
-    //     to={{
-    //       pathname: `${LOGIN_ROUTE}?redirect=${location.pathname}${location.search}`,
-    //     }}
-    //     state={{ location }}
-    //     replace
-    //   />
-    // );
-    return <Navigate to={`/s/${currentUser.userType}/dashboard`} />;
+    return <Navigate to={`/s/${currentUser?.userType}/dashboard`} />;
   };
 }
 
@@ -66,10 +43,10 @@ export function ProtectedRoute({ roles, Component, ...props }) {
   const { currentUser } = useAuthState();
 
   if (currentUser) {
-    return roles.includes(currentUser.userType) ? (
+    return roles.includes(currentUser?.userType) ? (
       <Component {...props} />
     ) : (
-      <Navigate to={`/s/${currentUser.userType}/dashboard`} replace />
+      <Navigate to={`/s/${currentUser?.userType}/dashboard`} replace />
     );
   }
 

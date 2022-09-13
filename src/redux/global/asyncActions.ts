@@ -178,3 +178,17 @@ export const editPropertyTypeAction = createAsyncThunk(
     }
   }
 );
+
+export const fetchBookingsAction = createAsyncThunk(
+  "global/fetchBookings",
+  async (data, thunk) => {
+    try {
+      const response = await AdminApi.getAllBookings();
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);

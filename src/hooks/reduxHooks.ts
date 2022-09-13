@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authSelector } from "redux/auth/authSlice";
+import { customerSelector } from "redux/customers/customerSlice";
 import { globalSelector } from "redux/global/globalSlice";
 import { AppDispatch, RootState } from "redux/store";
 import { usersSelector } from "redux/users/usersSlice";
@@ -22,4 +23,10 @@ export const useAuthState = () => {
   const authState = useAppSelector(authSelector);
 
   return useMemo(() => authState, [authState]);
+};
+
+export const useCustomersState = () => {
+  const customersState = useAppSelector(customerSelector);
+
+  return useMemo(() => customersState, [customersState]);
 };

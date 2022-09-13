@@ -19,7 +19,8 @@ const ButtonStyles: ComponentStyleConfig = {
       bgColor: "white",
       color: "brand.primary",
       _hover: {
-        bgColor: "white",
+        bgColor: "brand.primary",
+        color: "white",
       },
     }),
     solid: (props) => ({

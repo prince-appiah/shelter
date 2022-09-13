@@ -347,6 +347,18 @@ class AdminApi {
       return error;
     }
   }
+
+  static async getAllBookings() {
+    const token = localStorage.getItem("token");
+    const response = await api.get("/bookings", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
 }
 
 export default AdminApi;

@@ -17,7 +17,7 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
       to={link}
       borderRadius={6}
       align="center"
-      justify={{ md: "center", lg: "left" }}
+      justify={{ base: "center", md: "center", lg: "left" }}
       bg={
         pathname === link || pathname.includes(link)
           ? "brand.primary"
@@ -27,19 +27,14 @@ const SidebarLink = ({ link, icon, text }: SidebarLinkProps) => {
         pathname === link || pathname.includes(link) ? "white" : "gray.600"
       }
       cursor="pointer"
-      py={{ md: 4, lg: 3 }}
-      px={{ md: 0, lg: 3 }}
+      py={{ base: 3, md: 4, lg: 3 }}
+      px={{ base: 0, md: 0, lg: 3 }}
       _hover={{
         bg:
           pathname === link || pathname.includes(link)
             ? "brand.primary"
             : "gray.100",
       }}
-      // _activeLink={{
-      //   bg: "brand.primary",
-      //   color: "white",
-      //   svg: { color: "white" },
-      // }}
       _focus={{ bg: "brand.primary", color: "white" }}
     >
       <Icon as={icon} fontSize={20} mr={{ lg: 4 }} />

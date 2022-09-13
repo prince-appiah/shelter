@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import Button from "components/Button";
 import Input from "components/Input";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch } from "hooks/reduxHooks";
 import { useApiError } from "hooks/useApiError";

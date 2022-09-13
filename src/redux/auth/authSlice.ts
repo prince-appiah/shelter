@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LOGIN_ROUTE } from "config/constants/routes";
 import { RootState } from "redux/store";
 import { IDecodedUser } from "typings";
-import { getOtpAction, loginAction, signupAction } from "./asyncActions";
+import {
+  getOtpAction,
+  loginAction,
+  logoutAction,
+  signupAction,
+} from "./asyncActions";
 
 export interface IAuthState {
   currentUser?: IDecodedUser;
@@ -56,6 +62,19 @@ export const authSlice = createSlice({
     });
     builder.addCase(getOtpAction.rejected, (state, action) => {
       state.status = "error";
+    });
+
+    // logout
+    builder.addCase(logoutAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(logoutAction.fulfilled, (state, _action) => {
+      window.location.assign(LOGIN_ROUTE);
+      localStorage.removeItem("token");
+      return { ...state, status: "success", currentUser: null };
+    });
+    builder.addCase(logoutAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
     });
   },
 });

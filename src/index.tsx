@@ -1,37 +1,35 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
-import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
-import { theme } from "config/theme";
-import { persistor, store } from "redux/store";
 import AppRoutes from "App";
-import ModalProvider from "contexts/modalContext";
-import DropdownProvider from "contexts/dropdownContext";
-import DrawerProvider from "contexts/drawerContext";
-import "./index.css";
-import { history } from "redux/rootReducer";
 import Loader from "components/Loader";
+import { theme } from "config/theme";
+import DrawerProvider from "contexts/DrawerContext";
+import DropdownProvider from "contexts/DropdownContext";
+import ModalProvider from "contexts/ModalContext";
+import NetworkStatusProvider from "contexts/NetworkStatusContext";
+import { persistor, store } from "redux/store";
+import "./index.css";
 
 render(
   <ChakraProvider resetCSS theme={theme}>
     <Provider store={store}>
-      {/* <ConnectedRouter history={history}> */}
-      <PersistGate loading={<Loader />} persistor={persistor}>
-        <ModalProvider>
-          <DrawerProvider>
+      <NetworkStatusProvider>
+        <PersistGate loading={<Loader />} persistor={persistor}>
+          <ModalProvider>
             <DropdownProvider>
               <BrowserRouter>
-                <AppRoutes />
+                <DrawerProvider>
+                  <AppRoutes />
+                </DrawerProvider>
               </BrowserRouter>
             </DropdownProvider>
-          </DrawerProvider>
-        </ModalProvider>
-      </PersistGate>
-      {/* </ConnectedRouter> */}
+          </ModalProvider>
+        </PersistGate>
+      </NetworkStatusProvider>
     </Provider>
   </ChakraProvider>,
   document.getElementById("root")

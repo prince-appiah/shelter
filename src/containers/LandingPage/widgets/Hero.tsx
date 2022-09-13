@@ -34,7 +34,7 @@ const Hero = () => {
         <Heading as="h5" color="black" fontSize={{ base: 28, lg: 40 }}>
           Sell or rent a room at the best price
         </Heading>
-        <Text color="gray">
+        <Text color="gray" fontWeight={700}>
           We will help you find the best residence you dream of and reach out to
           your potential customers easily
         </Text>

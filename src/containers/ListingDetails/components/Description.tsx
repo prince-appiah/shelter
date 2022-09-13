@@ -18,15 +18,14 @@ const Description = ({ listing }: DescriptionProps) => {
       px={6}
       mb={6}
     >
-      <Text fontSize={24} fontWeight={600} mb={4}>
+      <Text fontSize={24} fontWeight={600} mb={2}>
         Description
       </Text>
-      <Text color="gray" noOfLines={6} mb={6}>
-        {listing?.description}{" "}
-      </Text>
-
-      <Text fontWeight={600} color="gray" fontSize={14}>
+      <Text fontWeight={600} color="gray" fontSize={14} mb={4}>
         Ref: {listing?.referenceNo}
+      </Text>
+      <Text color="gray" noOfLines={6}>
+        {listing?.description}
       </Text>
     </Flex>
   );

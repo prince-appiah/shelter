@@ -11,7 +11,7 @@ import {
 import Button from "components/Button";
 import AmenityModal from "components/Modal";
 import { roles } from "config/constants/vars";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
 import React, { useContext, useEffect, useState } from "react";
@@ -57,7 +57,9 @@ const PropertyTypes = (props: Props) => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>Property Types</Heading>
+          <Heading fontSize={20}>
+            Property Types ({propertyTypes.length})
+          </Heading>
 
           <Button
             onClick={() => {

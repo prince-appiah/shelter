@@ -6,6 +6,7 @@ export const theme = extendTheme({
     global: (props) => ({
       body: {
         bg: "gray.100",
+        color: "text.primary",
       },
     }),
   },

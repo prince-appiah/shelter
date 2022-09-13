@@ -1,11 +1,8 @@
 import { Box, Divider, Flex, Text, VStack } from "@chakra-ui/react";
 import Button from "components/Button";
 import { roles } from "config/constants/vars";
-import { useAppDispatch } from "hooks/reduxHooks";
-import { Dispatch, SetStateAction, useState } from "react";
 import { BsCheckLg, BsPencilFill } from "react-icons/bs";
 import { MdCancel, MdDelete } from "react-icons/md";
-import { approveListingAction } from "redux/global/asyncActions";
 import { IProperty, IUser } from "typings";
 import ListingContact from "./Contact";
 
@@ -14,7 +11,12 @@ type SummaryProps = {
   currentUser: IUser;
   handleApproveListing: ({ isApproved, id }) => void;
   handleDeleteListing: ({ id }) => void;
+  handleBooking: ({ property_id }) => void;
+  handleBookCancellation: ({ property_id }) => void;
   approveLoading: boolean;
+  bookLoading: boolean;
+  cancelLoading: boolean;
+  isBooked: boolean;
 };
 
 const Summary = ({
@@ -22,7 +24,12 @@ const Summary = ({
   currentUser,
   handleApproveListing,
   approveLoading,
+  bookLoading,
   handleDeleteListing,
+  handleBooking,
+  handleBookCancellation,
+  isBooked,
+  cancelLoading,
 }: SummaryProps) => {
   return (
     <Flex
@@ -110,11 +117,7 @@ const Summary = ({
               {listing?.isApproved ? "Disable Listing" : "Approve Listing"}
             </Button>
             <Button
-              onClick={() =>
-                handleDeleteListing({
-                  id: listing?._id,
-                })
-              }
+              onClick={() => handleDeleteListing({ id: listing?._id })}
               loadingText="Please wait..."
               isFullWidth
               variant="outline"
@@ -142,14 +145,30 @@ const Summary = ({
           </Button>
         )}
 
-        {currentUser.userType === roles.host && (
+        {currentUser.userType === roles.customer && (
           <>
-            {" "}
             <Text fontSize={14} fontWeight={600} color="gray">
               Tour this property - it's free, with no obligation
             </Text>
-            <Button isFullWidth sx={{ fontSize: 14 }}>
-              Schedule a Tour
+            <Button
+              isFullWidth
+              fontSize={14}
+              isLoading={bookLoading || cancelLoading}
+              bgColor={isBooked ? "red" : "brand.primary"}
+              color={isBooked ? "white" : "white"}
+              border={isBooked ? "1px solid red" : "1px solid teal"}
+              onClick={
+                isBooked
+                  ? () => handleBookCancellation({ property_id: listing._id })
+                  : () => handleBooking({ property_id: listing._id })
+              }
+              sx={{
+                _hover: {
+                  bgColor: isBooked ? "red" : "brand.primary",
+                },
+              }}
+            >
+              {isBooked ? "Cancel Booking" : "Book this space"}
             </Button>
           </>
         )}

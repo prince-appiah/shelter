@@ -10,15 +10,13 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import AmenityModal from "components/Modal";
-import { roles } from "config/constants/vars";
-import { ModalContext } from "contexts/modalContext";
+import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
 import useTable from "hooks/useTable";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchAmenitiesAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
-import { withProtected } from "shared/routes";
 import { IAmenity } from "typings";
 import CreateAmenity from "./widgets/CreateAmenity";
 import EditAmenity from "./widgets/EditAmenity";
@@ -34,7 +32,10 @@ const headCells: TableHeadProps[] = [
 const Amenities = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const { amenities } = useGlobalState();
-  const { TContainer, TableHead, results } = useTable(amenities, headCells);
+  const { TContainer, TableHead, results, TPaginate } = useTable(
+    amenities,
+    headCells
+  );
   const [selectedAmenity, setSelectedAmenity] = useState(null);
   const dispatch = useAppDispatch();
 
@@ -57,7 +58,7 @@ const Amenities = (props: Props) => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>Amenities</Heading>
+          <Heading fontSize={20}>Amenities ({amenities.length})</Heading>
 
           <Button
             onClick={() => {
@@ -92,6 +93,7 @@ const Amenities = (props: Props) => {
                 </Tr>
               ))}
           </Tbody>
+          {/* <TPaginate /> */}
         </TContainer>
       </Box>
 

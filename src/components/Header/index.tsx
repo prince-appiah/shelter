@@ -1,15 +1,17 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Box, Flex, Icon, Image, MenuButton, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import Button from "components/Button";
 import { HOME_ROUTE } from "config/constants/routes";
-import { DropdownContext } from "contexts/dropdownContext";
-import { ModalContext } from "contexts/modalContext";
-import { useAuthState } from "hooks/reduxHooks";
-import React, { useContext } from "react";
+import { DrawerContext } from "contexts/DrawerContext";
+import { DropdownContext } from "contexts/DropdownContext";
+import { ModalContext } from "contexts/ModalContext";
+import { useAppDispatch, useAuthState } from "hooks/reduxHooks";
+import { useContext } from "react";
 import { BsFillHouseFill } from "react-icons/bs";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TiUser } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+import { logoutAction } from "redux/auth/asyncActions";
 import { capitalizeFirstLetter } from "shared/strings";
 import ProfileDropdown from "./ProfileDropdown";
 
@@ -17,7 +19,8 @@ type Props = {};
 
 const Header = (props: Props) => {
   const navigate = useNavigate();
-  const { handleOpen, open } = useContext(ModalContext);
+  const { handleOpen, open } = useContext(DrawerContext);
+  const dispatch = useAppDispatch();
   const { currentUser } = useAuthState();
   const {
     handleDropdownOpen,
@@ -25,6 +28,8 @@ const Header = (props: Props) => {
     dropdownView,
     open: dropdownOpen,
   } = useContext(DropdownContext);
+
+  const handleLogout = () => dispatch(logoutAction);
 
   return (
     <Flex justify="space-between" bg="white" py={2} px={6} shadow="sm">
