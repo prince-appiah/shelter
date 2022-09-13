@@ -33,7 +33,7 @@
 
 ## :star2: About the Project
 
-Shelter is full stack property management app that connects room hunters to rooms/spaces/apartments around them. Customers are able to book spaces/properties - property hosts are sent a booking email to confirm their availability for room inspection
+Shelter is a full stack property management app that connects room hunters to rooms/spaces/apartments around them. Customers are able to book spaces/properties - property hosts are sent a booking email to confirm their availability for room inspection
 
 <div align="center"> 
   <img src="https://res.cloudinary.com/ddnozuc0s/image/upload/v1662229561/portfolio/shelter-frontend_hqsxy9.png" alt="screenshot" />
