@@ -9,9 +9,23 @@ class UsersApi {
 
     return response;
   }
+
   static async fetchUsers() {
     const response = await api.get("/users", {
       headers: { "Content-Type": "application/json" },
+    });
+
+    return response;
+  }
+
+  static async getUserDetails({ user_id }) {
+    const token = localStorage.getItem("token");
+
+    const response = await api.get(`/users-info?user_id=${user_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return response;

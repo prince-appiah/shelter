@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import CustomerApi from "services/customer.api";
-import { IProperty } from "typings";
 
 export const fetchMyBookingsAction = createAsyncThunk(
   "customers/fetchMyBookings",

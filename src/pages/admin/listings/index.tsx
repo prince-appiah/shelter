@@ -141,6 +141,7 @@ const AdminListings = (props: Props) => {
         bg="white"
         borderColor="gray.100"
         rounded="md"
+        width="full"
       >
         <Flex align="center" justify="space-between" mb={8}>
           <Heading fontSize={20}>Listings ({listings.length})</Heading>

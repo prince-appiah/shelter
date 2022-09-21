@@ -11,6 +11,7 @@ export interface IBooking {
   readonly _id: string;
   customer: ICustomer;
   property: IProperty;
+
   status: "pending" | "completed" | "cancelled";
   readonly createdAt?: string;
   readonly updatedAt?: string;

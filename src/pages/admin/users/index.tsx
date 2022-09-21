@@ -13,11 +13,14 @@ import {
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
+import { ADMIN_USER_INFO, getUserInfoRoute } from "config/constants/routes";
 import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
+import useNavigateSearch from "hooks/useNavigateSearch";
 import useTable from "hooks/useTable";
 import { useContext, useEffect, useState } from "react";
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { AiFillEye, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";
@@ -39,8 +42,10 @@ const headCells: TableHeadProps[] = [
 
 const Users = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
-  const { users, status } = useUsersState();
+  const { users } = useUsersState();
   const [selectedUser, setSelectedUser] = useState(null);
+  const navigate = useNavigate();
+  const navigateSearch = useNavigateSearch();
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { TContainer, TableHead, results } = useTable(users, headCells);
@@ -87,11 +92,6 @@ const Users = (props: Props) => {
                   cursor="pointer"
                   textColor="gray.500"
                   sx={{ _hover: { bgColor: "gray.50" } }}
-                  // onClick={() => {
-                  //   handleOpen(!open);
-                  //   handleView("edit-user");
-                  //   setSelectedUser(item);
-                  // }}
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item.firstname}</Td>
@@ -100,6 +100,20 @@ const Users = (props: Props) => {
                   <Td>{capitalizeFirstLetter(item.userType)}</Td>
                   <Td>
                     <HStack spacing={3}>
+                      {item.userType !== "admin" && (
+                        <IconButton
+                          variant="outline"
+                          aria-label="View User"
+                          icon={<AiFillEye />}
+                          onClick={() => {
+                            // navigate to page that displays information aboout user (based on role)
+                            navigateSearch(ADMIN_USER_INFO, {
+                              user_id: item._id,
+                            });
+                          }}
+                          zIndex={999}
+                        />
+                      )}
                       <IconButton
                         variant="outline"
                         aria-label="Edit User"

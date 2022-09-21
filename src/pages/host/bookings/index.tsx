@@ -2,47 +2,47 @@ import {
   Box,
   Flex,
   Heading,
+  IconButton,
   TableHeadProps,
   Tag,
   Tbody,
   Td,
   Tr,
 } from "@chakra-ui/react";
-import Button from "components/Button";
-import BookingModal from "components/Modal";
 import { roles } from "config/constants/vars";
-import { ModalContext } from "contexts/ModalContext";
-import { useAppDispatch, useCustomersState } from "hooks/reduxHooks";
-import useTable from "hooks/useTable";
+import { useHostState, useAppDispatch } from "hooks/reduxHooks";
 import React, { useContext, useEffect, useState } from "react";
-import { fetchMyBookingsAction } from "redux/customers/asyncActions";
-import { setStatus } from "redux/customers/customerSlice";
+import { setStatus } from "redux/hosts/hostSlice";
+import { fetchHostBookingsAction } from "redux/hosts/asyncActions";
 import { store } from "redux/store";
 import { withProtected } from "shared/routes";
 import { calculateMomentAgo, checkBookStatus } from "shared/strings";
 import { IBooking } from "typings";
-import BookingDetail from "./widgets/BookingDetail";
+import useTable from "hooks/useTable";
+import BookingModal from "components/Modal";
+import { ModalContext } from "contexts/ModalContext";
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
-  { id: "propertyName", title: "Property Name" },
-  { id: "location", title: "Location" },
+  { id: "property", title: "Property" },
+  { id: "customer", title: "Customer Name" },
   { id: "status", title: "Status" },
   { id: "date", title: "Time Booked" },
+  { id: "actions", title: "Actions" },
 ];
 
-const CustomerBookings = () => {
-  const { bookings } = useCustomersState();
-  console.log("🚀 ~ bookings", bookings);
-  const { open, handleOpen, handleView, view } = useContext(ModalContext);
-  const dispatch = useAppDispatch();
+// todo navigate to new page or display modal with booking details
+const HostBookings = () => {
+  const { bookings } = useHostState();
   const { TContainer, TableHead, results } = useTable(bookings, headCells);
+  const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchMyBookings = () => dispatch(fetchMyBookingsAction());
+    const fetchBookings = () => dispatch(fetchHostBookingsAction());
     const ac = new AbortController();
-    fetchMyBookings();
+    fetchBookings();
 
     return () => {
       store.dispatch(setStatus("idle"));
@@ -51,7 +51,7 @@ const CustomerBookings = () => {
   }, [dispatch]);
 
   return (
-    <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
+    <Flex direction="column" my={6} px={{ base: 2 }}>
       <Box
         p={4}
         borderWidth="thin"
@@ -60,7 +60,7 @@ const CustomerBookings = () => {
         rounded="md"
       >
         <Flex align="center" justify="space-between" mb={8}>
-          <Heading fontSize={20}>My Bookings ({bookings.length})</Heading>
+          <Heading fontSize={20}>Bookings ({bookings.length})</Heading>
         </Flex>
 
         <TContainer>
@@ -81,13 +81,19 @@ const CustomerBookings = () => {
                 >
                   <Td>{idx + 1}</Td>
                   <Td>{item?.property?.name}</Td>
-                  <Td>{item?.property?.location}</Td>
+                  <Td>
+                    {item?.customer?.firstname} {item?.customer?.lastname}
+                  </Td>
                   <Td>
                     <Tag colorScheme={checkBookStatus(item)}>
                       {item?.status}
                     </Tag>
                   </Td>
                   <Td>{calculateMomentAgo(item?.createdAt)}</Td>
+                  <Td>
+                    <IconButton aria-label="Approve booking" />
+                    <IconButton aria-label="Cancel booking" />
+                  </Td>
                 </Tr>
               ))}
           </Tbody>
@@ -95,11 +101,11 @@ const CustomerBookings = () => {
       </Box>
 
       {/* Booking modal */}
-      <BookingModal isOpen={open} onClose={() => handleOpen(!open)}>
+      {/* <BookingModal isOpen={open} onClose={() => handleOpen(!open)}>
         {view === "view-booking" && <BookingDetail booking={selectedBooking} />}
-      </BookingModal>
+      </BookingModal> */}
     </Flex>
   );
 };
 
-export default withProtected(CustomerBookings, [roles.customer]);
+export default withProtected(HostBookings, [roles.host]);

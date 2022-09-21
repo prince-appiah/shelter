@@ -25,7 +25,6 @@ const ListingDetails = () => {
   const [bookLoading, setBookLoading] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
-  console.log("🚀 ~ isBooked", isBooked);
   const { currentUser } = useAuthState();
   const toast = useToast();
 
@@ -118,6 +117,7 @@ const ListingDetails = () => {
     try {
       const response = await dispatch(addBookingAction(property_id));
       console.log("🚀 ~ response", response);
+      window.location.reload();
       setBookLoading(false);
     } catch (error) {
       console.log("🚀 ~ error", error);

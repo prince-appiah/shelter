@@ -4,6 +4,7 @@ import { useAuthState } from "hooks/reduxHooks";
 import React from "react";
 import AdminSidebar from "./AdminSidebar";
 import CustomerSidebar from "./CustomerSidebar";
+import HostSidebar from "./HostSidebar";
 
 type Props = {};
 
@@ -24,9 +25,9 @@ const Sidebar = (props: Props) => {
       bg="white"
       boxShadow="sm"
     >
-      {/* dynamically render content based on user role in global state */}
       {currentUser?.userType === roles.admin && <AdminSidebar />}
       {currentUser?.userType === roles.customer && <CustomerSidebar />}
+      {currentUser?.userType === roles.host && <HostSidebar />}
     </Box>
   );
 };

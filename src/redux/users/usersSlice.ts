@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import { IUser } from "typings";
+import { ICustomer, IHost, IUser } from "typings";
 import {
   createUserAction,
   deleteUserAction,
   fetchUsersAction,
+  getUserDetailsAction,
   updateUserAction,
 } from "./asyncActions";
 
@@ -12,18 +13,28 @@ export interface IUsersState {
   status: "idle" | "loading" | "success" | "error";
   error: any;
   users: IUser[];
+  selectedUser: { user: IUser; profile: IHost | ICustomer };
+  // selectedUser: IHost | ICustomer | (IUser & {});
 }
 
 const initialState: IUsersState = {
   status: "idle",
   error: null,
   users: [],
+  selectedUser: null,
 };
 
 export const userSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
+    setSelectedUser: (state) => {
+      return { ...state, status: "idle", selectedUser: null };
+    },
+  },
   extraReducers: (builder) => {
     //   fetch users
     builder.addCase(fetchUsersAction.pending, (state, action) => {
@@ -37,6 +48,21 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(fetchUsersAction.rejected, (state, _action) => {
+      return { ...state, status: "error" };
+    });
+
+    //  get user details
+    builder.addCase(getUserDetailsAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(getUserDetailsAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        selectedUser: action.payload.data,
+      };
+    });
+    builder.addCase(getUserDetailsAction.rejected, (state, action) => {
       return { ...state, status: "error" };
     });
 
@@ -95,5 +121,5 @@ export const userSlice = createSlice({
 });
 
 export const usersSelector = (state: RootState) => state.users;
-// export const {} = userSlice.actions;
+export const { setStatus, setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;

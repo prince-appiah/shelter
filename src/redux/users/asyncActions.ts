@@ -16,6 +16,21 @@ export const fetchUsersAction = createAsyncThunk(
   }
 );
 
+export const getUserDetailsAction = createAsyncThunk(
+  "users/getUserDetails",
+  async ({ user_id }: { user_id: string }, thunk) => {
+    try {
+      const response = await UsersApi.getUserDetails({ user_id });
+      console.log("🚀 ~ response", response);
+
+      return response;
+    } catch (error) {
+      console.log("🚀 ~ error", error);
+      return thunk.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const createUserAction = createAsyncThunk(
   "users/createUser",
   async (data: Omit<IUser, "_id">, thunk) => {

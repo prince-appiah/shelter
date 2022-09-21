@@ -44,9 +44,12 @@ export type AmenityFields = {
 
 class AdminApi {
   static async getDashboardReport() {
+    const token = localStorage.getItem("token");
+
     const response = await api.get("/dashboard-reports", {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -351,6 +354,18 @@ class AdminApi {
   static async getAllBookings() {
     const token = localStorage.getItem("token");
     const response = await api.get("/bookings", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
+  static async getUserInfo({ user_id }) {
+    const token = localStorage.getItem("token");
+    const response = await api.get(`/users/${user_id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
