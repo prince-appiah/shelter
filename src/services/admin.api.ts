@@ -99,9 +99,11 @@ class AdminApi {
 
   static async getAllHosts() {
     try {
+      const token = localStorage.getItem("token");
       const response = await api.get("/hosts", {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -284,13 +286,7 @@ class AdminApi {
     return response;
   }
 
-  static async approveListing({
-    property_id,
-    isApproved,
-  }: {
-    property_id: string;
-    isApproved: string;
-  }) {
+  static async approveListing({ property_id, isApproved }: { property_id: string; isApproved: string }) {
     const token = localStorage.getItem("token");
 
     const response = await api.patch(
@@ -301,7 +297,7 @@ class AdminApi {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return response;

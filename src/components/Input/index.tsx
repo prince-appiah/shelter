@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input as ChakraInput,
-  InputProps,
-} from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, Input as ChakraInput, InputProps } from "@chakra-ui/react";
 import { useField } from "formik";
 
 // type Props = FieldHookConfig<string> & { label: string,inputProps:InputProps };
@@ -16,28 +10,20 @@ const Input = (props: Props) => {
   const [field, meta] = useField(props.name);
 
   return (
-    <FormControl
-      sx={{ width: "100%", mb: 2 }}
-      isInvalid={meta.touched && !!meta.error}
-    >
-      <FormLabel
-        htmlFor={name}
-        color="gray.500"
-        id={`${props.id}-${props.name}-label`}
-      >
+    <FormControl sx={{ width: "100%", mb: 2 }} isInvalid={meta.touched && !!meta.error}>
+      <FormLabel htmlFor={name} color="gray.500" id={`${props.id}-${props.name}-label`}>
         {label}
       </FormLabel>
 
       <ChakraInput
         _focus={{ borderColor: "brand.primary" }}
+        _hover={{ border: "1px solid #219798" }}
         value={value}
         onChange={onChange}
         {...field}
         {...rest}
       />
-      {meta.touched && meta.error && (
-        <FormErrorMessage>{meta.error}</FormErrorMessage>
-      )}
+      {meta.touched && meta.error && <FormErrorMessage>{meta.error}</FormErrorMessage>}
     </FormControl>
   );
 };

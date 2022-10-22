@@ -13,7 +13,7 @@ export interface IUsersState {
   status: "idle" | "loading" | "success" | "error";
   error: any;
   users: IUser[];
-  selectedUser: { user: IUser; profile: IHost | ICustomer };
+  selectedUser: { role: string; profile: IHost & ICustomer };
   // selectedUser: IHost | ICustomer | (IUser & {});
 }
 
@@ -71,11 +71,10 @@ export const userSlice = createSlice({
       return { ...state, status: "loading" };
     });
     builder.addCase(createUserAction.fulfilled, (state, action) => {
-      console.log("🚀 ~ action", action.payload.data);
       return {
         ...state,
         status: "success",
-        users: [...state.users, action.payload.data.user],
+        users: [...state.users, action.payload.data],
       };
     });
     builder.addCase(createUserAction.rejected, (state, _action) => {
@@ -90,11 +89,7 @@ export const userSlice = createSlice({
       return {
         ...state,
         status: "success",
-        users: state.users.map((item) =>
-          item._id === action.payload.data.data._id
-            ? action.payload.data.data
-            : item
-        ),
+        users: state.users.map((item) => (item._id === action.payload.data.data._id ? action.payload.data.data : item)),
       };
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
@@ -109,9 +104,7 @@ export const userSlice = createSlice({
       return {
         ...state,
         status: "success",
-        users: state.users.filter(
-          (item) => item._id !== action.payload.data.deletedUserId
-        ),
+        users: state.users.filter((item) => item._id !== action.payload.data.deletedUserId),
       };
     });
     builder.addCase(deleteUserAction.rejected, (state, action) => {

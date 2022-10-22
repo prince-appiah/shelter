@@ -1,12 +1,15 @@
-import { Flex, Heading, Text } from "@chakra-ui/layout";
+import { Flex, Text } from "@chakra-ui/layout";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import PersonalDetails from "components/SettingsPanels/PersonalDetails";
+import ProfileDetails from "components/SettingsPanels/ProfileDetails";
+import SocialProfiles from "components/SettingsPanels/SocialProfiles";
 import { roles } from "config/constants/vars";
+import { useAuthState } from "hooks/reduxHooks";
 import { withProtected } from "shared/routes";
-import PersonalDetails from "./panels/PersonalDetails";
-import Security from "./panels/Security";
-import SocialProfiles from "./panels/SocialProfiles";
 
 const AdminSettings = () => {
+  const { currentUser: user } = useAuthState();
+
   return (
     <Flex direction="column" my={6} px={{ base: 2 }}>
       <Text fontWeight={600} fontSize={18}>
@@ -20,19 +23,19 @@ const AdminSettings = () => {
       <Tabs>
         <TabList>
           <Tab>Personal Details</Tab>
-          <Tab>Security</Tab>
-          <Tab>Social Profiles</Tab>
+          {/* <Tab>My Profile</Tab> */}
+          {/* <Tab>Social Profiles</Tab> */}
         </TabList>
         <TabPanels>
           <TabPanel>
-            <PersonalDetails />
+            <PersonalDetails user={user} />
           </TabPanel>
-          <TabPanel>
-            <Security />
-          </TabPanel>
-          <TabPanel>
+          {/* <TabPanel>
+            <ProfileDetails user={user} />
+          </TabPanel> */}
+          {/* <TabPanel>
             <SocialProfiles />
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
     </Flex>

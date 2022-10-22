@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { LOGIN_ROUTE } from "config/constants/routes";
 import jwtDecode from "jwt-decode";
 import AuthApi, {
   LoginFields,
@@ -7,7 +6,7 @@ import AuthApi, {
   SignupFields,
 } from "services/auth.api";
 import { IDecodedUser } from "typings";
-import { logoutUser, setCurrentUser } from "./authSlice";
+import { setCurrentUser } from "./authSlice";
 
 export const signupAction = createAsyncThunk(
   "auth/signup",

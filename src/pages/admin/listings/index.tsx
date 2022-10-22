@@ -50,8 +50,7 @@ const headCells: TableHeadProps[] = [
 
 const AdminListings = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
-  const { listings, status, hosts, amenities, propertyTypes } =
-    useGlobalState();
+  const { listings, status, hosts, amenities, propertyTypes } = useGlobalState();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const toast = useToast();
@@ -70,9 +69,9 @@ const AdminListings = (props: Props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    const fetchUsers = () => dispatch(fetchHostsAction());
+    const fetchHosts = () => dispatch(fetchHostsAction());
     const ac = new AbortController();
-    fetchUsers();
+    fetchHosts();
 
     return () => {
       store.dispatch(setStatus("idle"));
@@ -103,9 +102,7 @@ const AdminListings = (props: Props) => {
   }, [dispatch]);
 
   const handleDeleteListing = async (id) => {
-    const res = await dispatch(
-      deleteListingAction({ property_id: id })
-    ).unwrap();
+    const res = await dispatch(deleteListingAction({ property_id: id })).unwrap();
 
     if (res.status === 200) {
       toast({
@@ -135,14 +132,7 @@ const AdminListings = (props: Props) => {
 
   return (
     <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
-      <Box
-        p={4}
-        borderWidth="thin"
-        bg="white"
-        borderColor="gray.100"
-        rounded="md"
-        width="full"
-      >
+      <Box p={4} borderWidth="thin" bg="white" borderColor="gray.100" rounded="md" width="full">
         <Flex align="center" justify="space-between" mb={8}>
           <Heading fontSize={20}>Listings ({listings.length})</Heading>
 
@@ -162,12 +152,7 @@ const AdminListings = (props: Props) => {
           <Tbody>
             {results?.length > 0 &&
               results?.map((item: IProperty, idx: number) => (
-                <Tr
-                  key={item._id}
-                  cursor="pointer"
-                  textColor="gray.500"
-                  sx={{ _hover: { bgColor: "gray.50" } }}
-                >
+                <Tr key={item._id} cursor="pointer" textColor="gray.500" sx={{ _hover: { bgColor: "gray.50" } }}>
                   <Td>{idx + 1}</Td>
                   <Td>{item?.name}</Td>
                   <Td>
@@ -190,9 +175,7 @@ const AdminListings = (props: Props) => {
                         variant="outline"
                         aria-label="View Listing"
                         icon={<AiFillEye />}
-                        onClick={() =>
-                          navigate(getAdminListingDetailsRoute(item._id))
-                        }
+                        onClick={() => navigate(getAdminListingDetailsRoute(item._id))}
                       />
                       <IconButton
                         variant="outline"
@@ -223,11 +206,7 @@ const AdminListings = (props: Props) => {
       {/* Create/Edit Listing Modal */}
       <ListingModal size="xl" isOpen={open} onClose={() => handleOpen(!open)}>
         {view === "create-listing" && (
-          <CreateListingModal
-            hosts={hosts}
-            amenities={amenities}
-            roomTypes={propertyTypes}
-          />
+          <CreateListingModal hosts={hosts} amenities={amenities} roomTypes={propertyTypes} />
         )}
       </ListingModal>
     </Flex>

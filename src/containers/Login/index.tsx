@@ -12,6 +12,7 @@ import Input from "components/Input";
 import { SIGNUP_ROUTE } from "config/constants/routes";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch, useAuthState } from "hooks/reduxHooks";
+import { useApiError } from "hooks/useApiError";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getOtpAction, loginAction } from "redux/auth/asyncActions";
@@ -29,6 +30,7 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useAuthState();
+  const { handleApiError, Notify, error } = useApiError();
 
   const symbolsArr = ["e", "E", "+", "-", "."];
   const initialValues = { email: "", otp: "" };
@@ -68,8 +70,6 @@ const Login = () => {
       const res = await dispatch(
         loginAction({ email, otp: otp.toString() })
       ).unwrap();
-      console.log("🚀 ~ res", res);
-
       if (res && res.status === 200) {
         setIsOtpComplete(false);
 
@@ -82,7 +82,6 @@ const Login = () => {
         //   position: "top-right",
         //   duration: 10000,
         // });
-        console.log("🚀 ~ currentUser", currentUser);
 
         // redirect users to their dashboard using their userType
         if (currentUser && currentUser.userType) {

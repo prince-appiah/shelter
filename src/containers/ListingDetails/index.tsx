@@ -40,11 +40,12 @@ const ListingDetails = () => {
 
   useEffect(() => {
     const checkBookedListing = async ({ property_id }) => {
-      if (currentUser) {
+      if (currentUser && currentUser.userType === "customer") {
         try {
           const response = await CustomerApi.checkBookedProperty({
             property_id,
           });
+
           if (response.data) {
             setIsBooked(true);
           }

@@ -1,9 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { logoutUser } from "redux/auth/authSlice";
-import { store } from "redux/store";
 import { LOGIN_ROUTE } from "config/constants/routes";
 import { BASE_URL, LOCAL_BACKEND } from "config/constants/vars";
-import { logoutAction } from "redux/auth/asyncActions";
 
 const token = localStorage.getItem("token");
 const baseURL =
@@ -44,7 +41,7 @@ export const onRejectedResponse = (error: any): any => {
   if (status === 401 || status === 403) {
     const { location } = window;
     // store.dispatch(logoutUser());
-    // localStorage.removeItem("token");
+    localStorage.removeItem("token");
     location.pathname = LOGIN_ROUTE;
     return;
   }

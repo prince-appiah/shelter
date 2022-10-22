@@ -3,8 +3,12 @@ import { IUser } from "typings";
 
 class UsersApi {
   static async fetchHosts() {
+    // const token = localStorage.getItem("token");
     const response = await api.get("/hosts", {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`
+      },
     });
 
     return response;

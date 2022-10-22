@@ -4,7 +4,7 @@ import Input from "components/Input";
 import { ModalContext } from "contexts/ModalContext";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch } from "hooks/reduxHooks";
-import React, { useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import { editAmenitiesAction } from "redux/global/asyncActions";
 import { IAmenity } from "typings";
 import * as Yup from "yup";

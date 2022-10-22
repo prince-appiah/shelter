@@ -1,13 +1,12 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Button from "components/Button";
-import Loader from "components/Loader";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { store } from "redux/store";
 import { getUserDetailsAction } from "redux/users/asyncActions";
-import { setSelectedUser, setStatus } from "redux/users/usersSlice";
+import { setSelectedUser } from "redux/users/usersSlice";
 import CustomerProfile from "./CustomerProfile";
 import HostProfile from "./HostProfile";
 
@@ -22,8 +21,8 @@ const UserDetails = (props: Props) => {
   const navigate = useNavigate();
 
   console.log("🚀 ~ selectedUser", selectedUser);
-  const isACustomer = selectedUser?.user?.userType === "customer";
-  const isAHost = selectedUser?.user?.userType === "host";
+  const isACustomer = selectedUser?.role === "customer";
+  const isAHost = selectedUser?.role === "host";
 
   useEffect(() => {
     const getUserDetails = ({ user_id }) =>
@@ -62,7 +61,7 @@ const UserDetails = (props: Props) => {
 
         <Flex mt={5} direction="column" width="full">
           {isACustomer && <CustomerProfile />}
-          {isAHost && <HostProfile />}
+          {isAHost && <HostProfile profile={selectedUser.profile} />}
         </Flex>
       </Box>
     </Flex>

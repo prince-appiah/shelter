@@ -16,3 +16,7 @@ export const checkBookStatus = (item: IBooking): string => {
     ? "red"
     : "blue";
 };
+
+export const randomizeNumber = (items: any[]) => {
+  return items[Math.floor(Math.random() * items.length)];
+};

@@ -24,6 +24,18 @@ class HostApi {
 
     return response;
   }
+
+  static async editHostProfile(data) {
+    const token = localStorage.getItem("token");
+    const response = await api.patch("/hosts-profile", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
 }
 
 export default HostApi;
