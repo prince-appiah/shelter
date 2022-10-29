@@ -10,7 +10,7 @@ import { store } from "redux/store";
 import { withProtected } from "shared/routes";
 import { getDashboardReport } from "./helpers";
 import ApprovalTable from "./widgets/ApprovalTable";
-import DashboardCard from "./widgets/DashboardCard";
+import DashboardCard from "../../../components/DashboardCard/DashboardCard";
 import ListingsTable from "./widgets/ListingsTable";
 
 const Admin = () => {
@@ -24,9 +24,12 @@ const Admin = () => {
     listings.length > 0 ? listings.filter((item) => !item.isApproved) : [];
 
   useEffect(() => {
-    const fetchListings = () => dispatch(fetchListingsAction());
-    fetchListings();
+    (async () => dispatch(fetchListingsAction()))();
 
+    // const fetchListings = () => dispatch(fetchListingsAction());
+    // fetchListings();
+    // const fetchListings = () => dispatch(fetchListingsAction());
+    // fetchListings();
     return () => {
       store.dispatch(setStatus("idle"));
     };
@@ -78,8 +81,6 @@ const Admin = () => {
             data={item}
           />
         ))}
-        {/* <DashboardCard loading={dashboardLoading} />
-        <DashboardCard loading={dashboardLoading} /> */}
       </Grid>
 
       <Grid

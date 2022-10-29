@@ -1,20 +1,12 @@
 import { AddIcon } from "@chakra-ui/icons";
-import {
-  Center,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Center, Flex, Grid, Heading, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Button from "components/Button";
 import Loader from "components/Loader";
 import PropertyItem from "components/PropertyItem";
-import { getListingDetailsRoute } from "config/constants/routes";
 import { useAppDispatch, useGlobalState } from "hooks/reduxHooks";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { fetchListingsAction } from "redux/global/asyncActions";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";

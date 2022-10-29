@@ -1,5 +1,4 @@
-import { Flex, Text } from "@chakra-ui/layout";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/tabs";
+import { Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import PersonalDetails from "components/SettingsPanels/PersonalDetails";
 import ProfileDetails from "components/SettingsPanels/ProfileDetails";
 import SocialProfiles from "components/SettingsPanels/SocialProfiles";
@@ -7,8 +6,10 @@ import { roles } from "config/constants/vars";
 import { useAuthState } from "hooks/reduxHooks";
 import { withProtected } from "shared/routes";
 
-const AdminSettings = () => {
+const HostSettings = () => {
   const { currentUser: user } = useAuthState();
+
+  console.log("new host settings rendering");
 
   return (
     <Flex direction="column" my={6} px={{ base: 2 }}>
@@ -23,16 +24,20 @@ const AdminSettings = () => {
       <Tabs>
         <TabList>
           <Tab>Personal Details</Tab>
-          {/* <Tab>My Profile</Tab> */}
+          {/* TODO: Remove customer when building out profile section for customer  */}
+          {user.userType !== roles.admin && user.userType !== roles.customer && <Tab>Profile</Tab>}
           {/* <Tab>Social Profiles</Tab> */}
         </TabList>
         <TabPanels>
           <TabPanel>
             <PersonalDetails user={user} />
           </TabPanel>
-          {/* <TabPanel>
-            <ProfileDetails user={user} />
-          </TabPanel> */}
+          {/* TODO: Remove customer when building out profile section for customer  */}
+          {user.userType !== roles.admin && user.userType !== roles.customer && (
+            <TabPanel>
+              <ProfileDetails user={user} />
+            </TabPanel>
+          )}
           {/* <TabPanel>
             <SocialProfiles />
           </TabPanel> */}
@@ -42,4 +47,4 @@ const AdminSettings = () => {
   );
 };
 
-export default withProtected(AdminSettings, [roles.admin]);
+export default withProtected(HostSettings, [roles.host]);

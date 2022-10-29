@@ -1,36 +1,31 @@
 import { Avatar } from "@chakra-ui/avatar";
 import Icon from "@chakra-ui/icon";
-import {
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/layout";
+import { Divider, Flex, Grid, GridItem, Heading, HStack, Stack, Text, VStack } from "@chakra-ui/layout";
 import Button from "components/Button";
 import Input from "components/Input";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useAuthState } from "hooks/reduxHooks";
 import { BsTelephone } from "react-icons/bs";
 import { FaLocationArrow } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { MdVerifiedUser } from "react-icons/md";
-import { IUser } from "typings";
+import { IDecodedUser, IUser } from "typings";
 import * as Yup from "yup";
 
-interface Props {}
+interface Props {
+  user: IDecodedUser;
+}
 
-const PersonalDetails = (props: Props) => {
-  const { currentUser: user } = useAuthState();
+const PersonalDetails = ({ user }: Props) => {
+  console.log("new personal dettings renderinh ");
 
   const details = [
     { icon: FiMail, title: "Email", body: user?.email },
     { icon: FaLocationArrow, title: "Location", body: "Accra, Ghana" },
-    { icon: BsTelephone, title: "Phone", body: "+1 444 555 7778" },
+    {
+      icon: BsTelephone,
+      title: "Phone",
+      body: user?.phone ?? "No phone set",
+    },
     {
       icon: MdVerifiedUser,
       title: "Account Status",
@@ -55,6 +50,7 @@ const PersonalDetails = (props: Props) => {
 
   const handleEditProfile = (values: IUser, helper: FormikHelpers<IUser>) => {
     try {
+      // todo check user role before updating profile
     } catch (error) {}
   };
 
@@ -92,11 +88,7 @@ const PersonalDetails = (props: Props) => {
         <Divider my={6} />
         {/* fields showing names, phone, email */}
         <Flex direction="column">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleEditProfile}
-          >
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleEditProfile}>
             {({ handleChange, values, handleBlur, dirty, isSubmitting }) => (
               <Form>
                 <Stack direction={{ md: "row" }}>
@@ -121,24 +113,19 @@ const PersonalDetails = (props: Props) => {
                     name="email"
                     value={values.email}
                     isReadOnly
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
                   />
                   <Input
                     label="Phone"
                     name="phone"
                     value={values.phone}
-                    placeholder="+1 414 1414 1414"
+                    placeholder="+233 23 456 7890"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                 </Stack>
-                <Button
-                  type="submit"
-                  isLoading={isSubmitting}
-                  disabled={!dirty}
-                  mt={3}
-                >
+                <Button type="submit" isLoading={isSubmitting} disabled={!dirty} mt={3}>
                   Save changes
                 </Button>
               </Form>
@@ -154,15 +141,7 @@ const DetailItem = ({ item }) => {
   return (
     <GridItem px={5} py={3} border="1px solid gray" rounded="lg">
       <HStack>
-        <Flex
-          align="center"
-          justify="center"
-          bg="brand.primary"
-          p={4}
-          rounded="xl"
-          w={12}
-          h={12}
-        >
+        <Flex align="center" justify="center" bg="brand.primary" p={4} rounded="xl" w={12} h={12}>
           <Icon as={item.icon} fontSize={20} color="white" />
         </Flex>
 

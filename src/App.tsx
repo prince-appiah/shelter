@@ -11,13 +11,16 @@ import {
   ADMIN_ROOM_TYPES,
   ADMIN_SETTINGS,
   ADMIN_USERS,
+  ADMIN_USER_INFO,
   CUSTOMER_BOOKINGS,
   CUSTOMER_DASHBOARD,
   CUSTOMER_LISTING_DETAILS,
   CUSTOMER_SETTINGS,
   HOME_ROUTE,
+  HOST_BOOKINGS,
   HOST_DASHBOARD,
   HOST_LISTINGS,
+  HOST_SETTINGS,
   LISTINGS_ROUTE,
   LISTING_DETAILS,
   LOGIN_ROUTE,
@@ -34,6 +37,7 @@ const AdminListings = Loadable(lazy(() => import("pages/admin/listings")));
 const Amenities = Loadable(lazy(() => import("pages/admin/amenities")));
 const Bookings = Loadable(lazy(() => import("pages/admin/bookings")));
 const Users = Loadable(lazy(() => import("pages/admin/users")));
+const UserDetails = Loadable(lazy(() => import("pages/admin/users/[id]")));
 const RoomTypes = Loadable(lazy(() => import("pages/admin/property-types")));
 const AdminSettings = Loadable(lazy(() => import("pages/admin/settings")));
 
@@ -49,6 +53,8 @@ const CustomerSettings = Loadable(
 // HOST IMPORTS
 const Host = Loadable(lazy(() => import("pages/host/dashboard")));
 const HostListings = Loadable(lazy(() => import("pages/host/listings")));
+const HostBookings = Loadable(lazy(() => import("pages/host/bookings")));
+const HostSettings = Loadable(lazy(() => import("pages/host/settings")));
 
 // OTHER COMPONENT IMPORTS
 const LandingPage = Loadable(lazy(() => import("containers/LandingPage")));
@@ -108,6 +114,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <Users />
+            </Layout>
+          }
+        />
+        <Route
+          path={ADMIN_USER_INFO}
+          element={
+            <Layout>
+              <UserDetails />
             </Layout>
           }
         />
@@ -174,6 +188,22 @@ const AppRoutes = () => {
           element={
             <Layout>
               <HostListings />
+            </Layout>
+          }
+        />
+        <Route
+          path={HOST_BOOKINGS}
+          element={
+            <Layout>
+              <HostBookings />
+            </Layout>
+          }
+        />
+        <Route
+          path={HOST_SETTINGS}
+          element={
+            <Layout>
+              <HostSettings />
             </Layout>
           }
         />

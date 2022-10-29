@@ -11,6 +11,7 @@ export interface IBooking {
   readonly _id: string;
   customer: ICustomer;
   property: IProperty;
+
   status: "pending" | "completed" | "cancelled";
   readonly createdAt?: string;
   readonly updatedAt?: string;
@@ -51,13 +52,16 @@ export interface IUser {
 
 export interface ICustomer extends IUser {
   readonly _id: string;
-  user_id: string;
+  user_id: IUser | string;
   bookings: IBooking[];
 }
 
 export interface IHost extends IUser {
   readonly _id: string;
-  user_id: string;
+  user_id: IUser | string;
+  about: string;
+  companyName: string;
+  website: string;
   isVerified: boolean;
   phone: string;
   properties: IProperty[];

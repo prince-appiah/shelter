@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import { IUser } from "typings";
+import { ICustomer, IHost, IUser } from "typings";
 import {
   createUserAction,
   deleteUserAction,
   fetchUsersAction,
+  getUserDetailsAction,
   updateUserAction,
 } from "./asyncActions";
 
@@ -12,18 +13,28 @@ export interface IUsersState {
   status: "idle" | "loading" | "success" | "error";
   error: any;
   users: IUser[];
+  selectedUser: { role: string; profile: IHost & ICustomer };
+  // selectedUser: IHost | ICustomer | (IUser & {});
 }
 
 const initialState: IUsersState = {
   status: "idle",
   error: null,
   users: [],
+  selectedUser: null,
 };
 
 export const userSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    setStatus: (state, action) => {
+      state.status = action.payload;
+    },
+    setSelectedUser: (state) => {
+      return { ...state, status: "idle", selectedUser: null };
+    },
+  },
   extraReducers: (builder) => {
     //   fetch users
     builder.addCase(fetchUsersAction.pending, (state, action) => {
@@ -40,16 +51,30 @@ export const userSlice = createSlice({
       return { ...state, status: "error" };
     });
 
+    //  get user details
+    builder.addCase(getUserDetailsAction.pending, (state, _action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(getUserDetailsAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        selectedUser: action.payload.data,
+      };
+    });
+    builder.addCase(getUserDetailsAction.rejected, (state, action) => {
+      return { ...state, status: "error" };
+    });
+
     //   create user
     builder.addCase(createUserAction.pending, (state, action) => {
       return { ...state, status: "loading" };
     });
     builder.addCase(createUserAction.fulfilled, (state, action) => {
-      console.log("🚀 ~ action", action.payload.data);
       return {
         ...state,
         status: "success",
-        users: [...state.users, action.payload.data.user],
+        users: [...state.users, action.payload.data],
       };
     });
     builder.addCase(createUserAction.rejected, (state, _action) => {
@@ -64,11 +89,7 @@ export const userSlice = createSlice({
       return {
         ...state,
         status: "success",
-        users: state.users.map((item) =>
-          item._id === action.payload.data.data._id
-            ? action.payload.data.data
-            : item
-        ),
+        users: state.users.map((item) => (item._id === action.payload.data.data._id ? action.payload.data.data : item)),
       };
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
@@ -83,9 +104,7 @@ export const userSlice = createSlice({
       return {
         ...state,
         status: "success",
-        users: state.users.filter(
-          (item) => item._id !== action.payload.data.deletedUserId
-        ),
+        users: state.users.filter((item) => item._id !== action.payload.data.deletedUserId),
       };
     });
     builder.addCase(deleteUserAction.rejected, (state, action) => {
@@ -95,5 +114,5 @@ export const userSlice = createSlice({
 });
 
 export const usersSelector = (state: RootState) => state.users;
-// export const {} = userSlice.actions;
+export const { setStatus, setSelectedUser } = userSlice.actions;
 export default userSlice.reducer;

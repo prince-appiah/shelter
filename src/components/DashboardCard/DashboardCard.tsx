@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
-import LoadingSkeleton from "./LoadingSkeleton";
+import LoadingSkeleton from "pages/admin/dashboard/widgets/LoadingSkeleton";
 
-interface DashboardCardProps {
+export interface DashboardCardProps {
   loading: boolean;
   data: { title: string; value: number };
 }

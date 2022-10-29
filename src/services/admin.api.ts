@@ -44,9 +44,12 @@ export type AmenityFields = {
 
 class AdminApi {
   static async getDashboardReport() {
+    const token = localStorage.getItem("token");
+
     const response = await api.get("/dashboard-reports", {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -96,9 +99,11 @@ class AdminApi {
 
   static async getAllHosts() {
     try {
+      const token = localStorage.getItem("token");
       const response = await api.get("/hosts", {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -281,13 +286,7 @@ class AdminApi {
     return response;
   }
 
-  static async approveListing({
-    property_id,
-    isApproved,
-  }: {
-    property_id: string;
-    isApproved: string;
-  }) {
+  static async approveListing({ property_id, isApproved }: { property_id: string; isApproved: string }) {
     const token = localStorage.getItem("token");
 
     const response = await api.patch(
@@ -298,7 +297,7 @@ class AdminApi {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return response;
@@ -351,6 +350,18 @@ class AdminApi {
   static async getAllBookings() {
     const token = localStorage.getItem("token");
     const response = await api.get("/bookings", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
+  static async getUserInfo({ user_id }) {
+    const token = localStorage.getItem("token");
+    const response = await api.get(`/users/${user_id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

@@ -25,7 +25,6 @@ const ListingDetails = () => {
   const [bookLoading, setBookLoading] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
-  console.log("🚀 ~ isBooked", isBooked);
   const { currentUser } = useAuthState();
   const toast = useToast();
 
@@ -41,11 +40,12 @@ const ListingDetails = () => {
 
   useEffect(() => {
     const checkBookedListing = async ({ property_id }) => {
-      if (currentUser) {
+      if (currentUser && currentUser.userType === "customer") {
         try {
           const response = await CustomerApi.checkBookedProperty({
             property_id,
           });
+
           if (response.data) {
             setIsBooked(true);
           }
@@ -118,6 +118,7 @@ const ListingDetails = () => {
     try {
       const response = await dispatch(addBookingAction(property_id));
       console.log("🚀 ~ response", response);
+      window.location.reload();
       setBookLoading(false);
     } catch (error) {
       console.log("🚀 ~ error", error);

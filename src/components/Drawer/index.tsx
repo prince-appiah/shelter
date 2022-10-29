@@ -10,6 +10,7 @@ import { useAuthState } from "hooks/reduxHooks";
 import { useContext } from "react";
 import AdminDrawer from "./widgets/AdminDrawer";
 import CustomerDrawer from "./widgets/CustomerDrawer";
+import HostDrawer from "./widgets/HostDrawer";
 
 type Props = {};
 
@@ -30,6 +31,7 @@ const Drawer = (props: Props) => {
         <DrawerBody>
           {currentUser?.userType === roles.admin && <AdminDrawer />}
           {currentUser?.userType === roles.customer && <CustomerDrawer />}
+          {currentUser?.userType === roles.host && <HostDrawer />}
         </DrawerBody>
       </DrawerContent>
     </ChakraDrawer>
