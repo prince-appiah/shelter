@@ -20,6 +20,7 @@ export const ADMIN_SETTINGS = "/s/admin/settings";
 export const HOST_DASHBOARD = "/s/host/dashboard";
 export const HOST_LISTINGS = "/s/host/listings";
 export const HOST_BOOKINGS = "/s/host/bookings";
+export const HOST_BOOKING_DETAILS = "/s/host/bookings/:id";
 export const HOST_SETTINGS = "/s/host/settings";
 
 // customer routes
@@ -29,14 +30,12 @@ export const CUSTOMER_LISTING_DETAILS = "/s/customer/dashboard/listings/:id";
 export const CUSTOMER_SETTINGS = "/s/customer/settings";
 
 // routes with parameters
-export const getListingDetailsRoute = (id: string) =>
-  `${LISTING_DETAILS.replace(":id", id)}`;
+export const getListingDetailsRoute = (id: string) => `${LISTING_DETAILS.replace(":id", id)}`;
 
-export const getAdminListingDetailsRoute = (id: string) =>
-  `${ADMIN_LISTING_DETAILS.replace(":id", id)}`;
+export const getAdminListingDetailsRoute = (id: string) => `${ADMIN_LISTING_DETAILS.replace(":id", id)}`;
 
-export const getUserInfoRoute = (id: string) =>
-  `${ADMIN_USER_INFO.replace(":id", id)}`;
+export const getUserInfoRoute = (id: string) => `${ADMIN_USER_INFO.replace(":id", id)}`;
 
-export const getCustomerListingDetailsRoute = (id: string) =>
-  `${CUSTOMER_LISTING_DETAILS.replace(":id", id)}`;
+export const getCustomerListingDetailsRoute = (id: string) => `${CUSTOMER_LISTING_DETAILS.replace(":id", id)}`;
+
+export const getHostBookingDetailsRoute = (id: string) => `${HOST_BOOKING_DETAILS.replace(":id", id)}`;

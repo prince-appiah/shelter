@@ -1,14 +1,4 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  TableHeadProps,
-  Tag,
-  Tbody,
-  Td,
-  Tr,
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, TableHeadProps, Tag, Tbody, Td, Tr } from "@chakra-ui/react";
 import { roles } from "config/constants/vars";
 import { useHostState, useAppDispatch } from "hooks/reduxHooks";
 import React, { useContext, useEffect, useState } from "react";
@@ -21,6 +11,10 @@ import { IBooking } from "typings";
 import useTable from "hooks/useTable";
 import BookingModal from "components/Modal";
 import { ModalContext } from "contexts/ModalContext";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { BsEyeFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { getHostBookingDetailsRoute } from "config/constants/routes";
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
@@ -31,13 +25,13 @@ const headCells: TableHeadProps[] = [
   { id: "actions", title: "Actions" },
 ];
 
-// todo navigate to new page or display modal with booking details
 const HostBookings = () => {
   const { bookings } = useHostState();
   const { TContainer, TableHead, results } = useTable(bookings, headCells);
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = () => dispatch(fetchHostBookingsAction());
@@ -52,13 +46,7 @@ const HostBookings = () => {
 
   return (
     <Flex direction="column" my={6} px={{ base: 2 }}>
-      <Box
-        p={4}
-        borderWidth="thin"
-        bg="white"
-        borderColor="gray.100"
-        rounded="md"
-      >
+      <Box p={4} borderWidth="thin" bg="white" borderColor="gray.100" rounded="md">
         <Flex align="center" justify="space-between" mb={8}>
           <Heading fontSize={20}>Bookings ({bookings.length})</Heading>
         </Flex>
@@ -85,14 +73,22 @@ const HostBookings = () => {
                     {item?.customer?.firstname} {item?.customer?.lastname}
                   </Td>
                   <Td>
-                    <Tag colorScheme={checkBookStatus(item)}>
-                      {item?.status}
-                    </Tag>
+                    <Tag colorScheme={checkBookStatus(item)}>{item?.status}</Tag>
                   </Td>
                   <Td>{calculateMomentAgo(item?.createdAt)}</Td>
                   <Td>
-                    <IconButton aria-label="Approve booking" />
-                    <IconButton aria-label="Cancel booking" />
+                    <IconButton
+                      aria-label="View booking"
+                      variant="outline"
+                      icon={<BsEyeFill />}
+                      onClick={() => navigate(getHostBookingDetailsRoute(item._id))}
+                    />
+                    <IconButton
+                      aria-label="Cancel booking"
+                      variant="outline"
+                      icon={<DeleteIcon />}
+                      onClick={() => null}
+                    />
                   </Td>
                 </Tr>
               ))}

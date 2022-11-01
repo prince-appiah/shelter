@@ -3,15 +3,8 @@ import Loader from "components/Loader";
 import { useAppDispatch, useAuthState, useGlobalState } from "hooks/reduxHooks";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  addBookingAction,
-  cancelBookingAction,
-} from "redux/customers/asyncActions";
-import {
-  approveListingAction,
-  deleteListingAction,
-  getPropertyDetailsAction,
-} from "redux/global/asyncActions";
+import { addBookingAction, cancelBookingAction } from "redux/customers/asyncActions";
+import { approveListingAction, deleteListingAction, getPropertyDetailsAction } from "redux/global/asyncActions";
 import CustomerApi from "services/customer.api";
 import Details from "./components/Details";
 import Summary from "./components/Summary";
@@ -29,8 +22,7 @@ const ListingDetails = () => {
   const toast = useToast();
 
   useEffect(() => {
-    const getListingDetails = () =>
-      dispatch(getPropertyDetailsAction({ id: params.id }));
+    const getListingDetails = () => dispatch(getPropertyDetailsAction({ id: params.id }));
     getListingDetails();
 
     // return () => {
@@ -61,9 +53,7 @@ const ListingDetails = () => {
 
   const handleDeleteListing = async ({ id }) => {
     try {
-      const res = await dispatch(
-        deleteListingAction({ property_id: id })
-      ).unwrap();
+      const res = await dispatch(deleteListingAction({ property_id: id })).unwrap();
 
       if (res.status === 200) {
         // go back
@@ -92,18 +82,14 @@ const ListingDetails = () => {
     try {
       setApproveLoading(true);
       if (isApproved) {
-        const response = await dispatch(
-          approveListingAction({ property_id, isApproved })
-        ).unwrap();
+        const response = await dispatch(approveListingAction({ property_id, isApproved })).unwrap();
         console.log("🚀 ~ response", response);
 
         setApproveLoading(false);
         return;
       }
 
-      const response = await dispatch(
-        approveListingAction({ property_id, isApproved })
-      ).unwrap();
+      const response = await dispatch(approveListingAction({ property_id, isApproved })).unwrap();
       console.log("🚀 ~ response", response);
       setApproveLoading(false);
       return;
@@ -148,12 +134,7 @@ const ListingDetails = () => {
   }
 
   return (
-    <Flex
-      direction={{ base: "column", lg: "row" }}
-      gridGap={3}
-      py={8}
-      justify="center"
-    >
+    <Flex direction={{ base: "column", lg: "row" }} gridGap={3} py={8} justify="center">
       {/* Left side  */}
       <Details listing={listing} />
       {/* Right side  */}

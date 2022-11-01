@@ -18,6 +18,7 @@ import {
   CUSTOMER_SETTINGS,
   HOME_ROUTE,
   HOST_BOOKINGS,
+  HOST_BOOKING_DETAILS,
   HOST_DASHBOARD,
   HOST_LISTINGS,
   HOST_SETTINGS,
@@ -43,24 +44,19 @@ const AdminSettings = Loadable(lazy(() => import("pages/admin/settings")));
 
 // CUSTOMER IMPORTS
 const Customer = Loadable(lazy(() => import("pages/customer/dashboard")));
-const CustomerBookings = Loadable(
-  lazy(() => import("pages/customer/bookings"))
-);
-const CustomerSettings = Loadable(
-  lazy(() => import("pages/customer/settings"))
-);
+const CustomerBookings = Loadable(lazy(() => import("pages/customer/bookings")));
+const CustomerSettings = Loadable(lazy(() => import("pages/customer/settings")));
 
 // HOST IMPORTS
 const Host = Loadable(lazy(() => import("pages/host/dashboard")));
 const HostListings = Loadable(lazy(() => import("pages/host/listings")));
 const HostBookings = Loadable(lazy(() => import("pages/host/bookings")));
+const HostBookingDetails = Loadable(lazy(() => import("pages/host/bookings/[id]")));
 const HostSettings = Loadable(lazy(() => import("pages/host/settings")));
 
 // OTHER COMPONENT IMPORTS
 const LandingPage = Loadable(lazy(() => import("containers/LandingPage")));
-const ListingDetails = Loadable(
-  lazy(() => import("containers/ListingDetails"))
-);
+const ListingDetails = Loadable(lazy(() => import("containers/ListingDetails")));
 const Listings = Loadable(lazy(() => import("containers/Listings")));
 
 const AppRoutes = () => {
@@ -196,6 +192,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <HostBookings />
+            </Layout>
+          }
+        />
+        <Route
+          path={HOST_BOOKING_DETAILS}
+          element={
+            <Layout>
+              <HostBookingDetails />
             </Layout>
           }
         />
