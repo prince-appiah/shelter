@@ -25,6 +25,18 @@ class HostApi {
     return response;
   }
 
+  static async getHostBookingDetails({ booking_id }) {
+    const token = localStorage.getItem("token");
+    const response = await api.get(`/host-bookings/${booking_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
   static async editHostProfile(data) {
     const token = localStorage.getItem("token");
     const response = await api.patch("/hosts-profile", data, {

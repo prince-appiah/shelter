@@ -20,13 +20,11 @@ const UserDetails = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log("🚀 ~ selectedUser", selectedUser);
   const isACustomer = selectedUser?.role === "customer";
   const isAHost = selectedUser?.role === "host";
 
   useEffect(() => {
-    const getUserDetails = ({ user_id }) =>
-      dispatch(getUserDetailsAction({ user_id }));
+    const getUserDetails = ({ user_id }) => dispatch(getUserDetailsAction({ user_id }));
     const ac = new AbortController();
 
     getUserDetails({ user_id });
@@ -43,19 +41,8 @@ const UserDetails = (props: Props) => {
 
   return (
     <Flex my={6} px={{ base: 2, md: 4 }}>
-      <Box
-        p={4}
-        borderWidth="thin"
-        bg="white"
-        borderColor="gray.100"
-        rounded="md"
-        width="full"
-      >
-        <Button
-          variant="ghost"
-          leftIcon={<AiOutlineArrowLeft />}
-          onClick={() => navigate(-1)}
-        >
+      <Box p={4} borderWidth="thin" bg="white" borderColor="gray.100" rounded="md" width="full">
+        <Button variant="ghost" leftIcon={<AiOutlineArrowLeft />} onClick={() => navigate(-1)}>
           Go back
         </Button>
 

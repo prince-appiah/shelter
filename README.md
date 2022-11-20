@@ -4,7 +4,7 @@
 
 ### API Hosted On
 
-- **[room-finder-api.herokuapp.com](https://room-finder-api.herokuapp.com/docs/) (Primary)**
+- **[shelter-api.cyclic.app](https://shelter-api.cyclic.app/docs/) (Primary)**
 
 ### Frontend Hosted On
 
@@ -157,6 +157,10 @@ Start the server
 
 ## :compass: Roadmap
 
+- [x] Authentication (Sign/Log in, Logout)
+- [x] Admin - create listings
+- [ ] Host - view dashboard information
+- [ ] Host - view dashboard information
 - [ ] Verify hosts accounts with identity verification
 - [ ] Allow customers to rate properties
 - [ ] Display properties based on user's location
