@@ -9,18 +9,18 @@ import {
   Tbody,
   Td,
   Tr,
-  useToast,
+  useToast
 } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
-import { ADMIN_USER_INFO, getUserInfoRoute } from "config/constants/routes";
+import { ADMIN_USER_INFO } from "config/constants/routes";
 import { ModalContext } from "contexts/ModalContext";
 import { useAppDispatch, useUsersState } from "hooks/reduxHooks";
 import useNavigateSearch from "hooks/useNavigateSearch";
 import useTable from "hooks/useTable";
 import { useContext, useEffect, useState } from "react";
 import { AiFillEye, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";

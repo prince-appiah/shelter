@@ -74,7 +74,7 @@ export const userSlice = createSlice({
       return {
         ...state,
         status: "success",
-        users: [...state.users, action.payload.data],
+        users: [...state.users, action.payload.data.user],
       };
     });
     builder.addCase(createUserAction.rejected, (state, _action) => {

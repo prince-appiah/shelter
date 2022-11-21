@@ -36,8 +36,10 @@ class UsersApi {
   }
 
   static async createUser(data: Omit<IUser, "_id">) {
+    const token = localStorage.getItem("token");
+
     const response = await api.post("/users", data, {
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     });
 
     return response;
@@ -52,8 +54,13 @@ class UsersApi {
   }
 
   static async deleteUser(_id: string) {
+    const token = localStorage.getItem("token");
+
     const response = await api.delete(`/users/${_id}`, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     return response;

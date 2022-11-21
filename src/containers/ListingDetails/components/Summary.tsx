@@ -79,6 +79,7 @@ const Summary = ({
                   bgColor: "brand.primary",
                 },
               }}
+              // onClick={handleAdminUpdateListing}
             >
               Update Listing
             </Button>
@@ -108,9 +109,7 @@ const Summary = ({
                 _hover: {
                   bgColor: listing?.isApproved ? "red" : "brand.primary",
                   color: "white",
-                  border: listing?.isApproved
-                    ? "1px solid red"
-                    : "1px solid teal",
+                  border: listing?.isApproved ? "1px solid red" : "1px solid teal",
                 },
               }}
             >
