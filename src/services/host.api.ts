@@ -13,6 +13,18 @@ class HostApi {
     return response;
   }
 
+  static async getHostProperties() {
+    const token = localStorage.getItem("token");
+    const response = await api.get("/host-properties", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
   static async getHostBookings() {
     const token = localStorage.getItem("token");
     const response = await api.get("/host-bookings", {

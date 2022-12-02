@@ -1,18 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "redux/store";
-import { IBooking } from "typings";
-import { fetchHostBookingDetailsAction, fetchHostBookingsAction } from "./asyncActions";
+import { IBooking, IProperty } from "typings";
+import { fetchHostBookingDetailsAction, fetchHostBookingsAction, fetchHostListingsAction } from "./asyncActions";
 
 export interface IHostState {
   status: "idle" | "loading" | "success" | "error";
+  listings: IProperty[];
   bookings: IBooking[];
   selectedBooking: IBooking;
+  selectedListing: IProperty;
 }
 
 const initialState: IHostState = {
   status: "idle",
+  listings: [],
   bookings: [],
   selectedBooking: null,
+  selectedListing: null,
 };
 
 export const hostSlice = createSlice({
@@ -25,8 +29,25 @@ export const hostSlice = createSlice({
     setSelectedBooking: (state) => {
       return { ...state, status: "idle", selectedBooking: null };
     },
+    setSelectedListing: (state) => {
+      return { ...state, status: "idle", selectedListing: null };
+    },
   },
   extraReducers: (builder) => {
+    // fetch host properties
+    builder.addCase(fetchHostListingsAction.pending, (state, action) => {
+      return { ...state, status: "loading" };
+    });
+    builder.addCase(fetchHostListingsAction.fulfilled, (state, action) => {
+      return {
+        ...state,
+        status: "success",
+        listings: action.payload.data,
+      };
+    });
+    builder.addCase(fetchHostListingsAction.rejected, (state, action) => {
+      return { ...state, status: "error" };
+    });
     // fetch bookings
     builder.addCase(fetchHostBookingsAction.pending, (state, action) => {
       return { ...state, status: "loading" };
@@ -60,5 +81,5 @@ export const hostSlice = createSlice({
 });
 
 export const hostSelector = (state: RootState) => state.hosts;
-export const { setStatus, setSelectedBooking } = hostSlice.actions;
+export const { setStatus, setSelectedBooking, setSelectedListing } = hostSlice.actions;
 export default hostSlice.reducer;

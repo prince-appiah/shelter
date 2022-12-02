@@ -15,6 +15,7 @@ import {
   fetchListingsAction,
   fetchPropertyTypesAction,
   getPropertyDetailsAction,
+  removePropertyTypeAction,
 } from "./asyncActions";
 
 export interface IGlobalState {
@@ -109,10 +110,25 @@ export const globalSlice = createSlice({
     builder.addCase(editPropertyTypeAction.fulfilled, (state, action) => {
       state.status = "success";
       state.propertyTypes = state.propertyTypes.map((item) =>
-        item._id === action.payload.data._id ? action.payload.data : item
+        item._id === action.payload.data._id ? action.payload.data : item,
       );
     });
     builder.addCase(editPropertyTypeAction.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.payload;
+    });
+
+    //  edit property type
+    builder.addCase(removePropertyTypeAction.pending, (state, _action) => {
+      state.status = "loading";
+    });
+    builder.addCase(removePropertyTypeAction.fulfilled, (state, action) => {
+      state.status = "success";
+      state.propertyTypes = state.propertyTypes.filter(
+        (item) => item._id !== action.payload.data.deleted_property_type_id,
+      );
+    });
+    builder.addCase(removePropertyTypeAction.rejected, (state, action) => {
       state.status = "error";
       state.error = action.payload;
     });
@@ -148,7 +164,7 @@ export const globalSlice = createSlice({
     builder.addCase(editAmenitiesAction.fulfilled, (state, action) => {
       state.status = "success";
       state.amenities = state.amenities.map((item) =>
-        item._id === action.payload.data._id ? action.payload.data : item
+        item._id === action.payload.data._id ? action.payload.data : item,
       );
     });
     builder.addCase(editAmenitiesAction.rejected, (state, _action) => {
@@ -164,9 +180,7 @@ export const globalSlice = createSlice({
         ...state,
         status: "success",
         listings: state.listings.map((item) =>
-          item._id === action.payload.data.data._id
-            ? action.payload.data.data
-            : item
+          item._id === action.payload.data.data._id ? action.payload.data.data : item,
         ),
       };
     });
@@ -182,9 +196,7 @@ export const globalSlice = createSlice({
       return {
         ...state,
         status: "success",
-        listings: state.listings.filter(
-          (item) => item._id !== action.payload.data.deleted_property_id
-        ),
+        listings: state.listings.filter((item) => item._id !== action.payload.data.deleted_property_id),
       };
     });
     builder.addCase(deleteListingAction.rejected, (state, action) => {
