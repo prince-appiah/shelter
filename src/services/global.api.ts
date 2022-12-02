@@ -44,6 +44,19 @@ class GlobalApi {
     }
   }
 
+  static async deletePropertyType(id: string) {
+    const token = localStorage.getItem("token");
+
+    const response = await api.delete(`/room-types/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response;
+  }
+
   static async deleteProperty(id: string) {
     const token = localStorage.getItem("token");
 

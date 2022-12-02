@@ -15,15 +15,12 @@ export const createListingAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const approveListingAction = createAsyncThunk(
   "global/approveListing",
-  async (
-    { property_id, isApproved }: { property_id: string; isApproved: string },
-    thunk
-  ) => {
+  async ({ property_id, isApproved }: { property_id: string; isApproved: string }, thunk) => {
     try {
       const response = await AdminApi.approveListing({
         property_id,
@@ -35,7 +32,7 @@ export const approveListingAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const deleteListingAction = createAsyncThunk(
@@ -49,36 +46,30 @@ export const deleteListingAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
-export const fetchHostsAction = createAsyncThunk(
-  "global/fetchHosts",
-  async (data, thunk) => {
-    try {
-      const response = await UsersApi.fetchHosts();
-      console.log("🚀 ~ response", response);
+export const fetchHostsAction = createAsyncThunk("global/fetchHosts", async (data, thunk) => {
+  try {
+    const response = await UsersApi.fetchHosts();
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
   }
-);
+});
 
-export const fetchListingsAction = createAsyncThunk(
-  "global/fetchListings",
-  async (data, thunk) => {
-    try {
-      const response = await GlobalApi.fetchListings();
-      console.log("🚀 ~ response", response);
+export const fetchListingsAction = createAsyncThunk("global/fetchListings", async (data, thunk) => {
+  try {
+    const response = await GlobalApi.fetchListings();
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
   }
-);
+});
 
 export const getPropertyDetailsAction = createAsyncThunk(
   "global/propertyDetails",
@@ -92,22 +83,19 @@ export const getPropertyDetailsAction = createAsyncThunk(
       console.log("🚀 ~ error", error);
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
-export const fetchAmenitiesAction = createAsyncThunk(
-  "global/fetchAmenities",
-  async (_data, thunk) => {
-    try {
-      const response = await GlobalApi.getAllAmenities();
-      console.log("🚀 ~ response", response);
+export const fetchAmenitiesAction = createAsyncThunk("global/fetchAmenities", async (_data, thunk) => {
+  try {
+    const response = await GlobalApi.getAllAmenities();
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
   }
-);
+});
 
 export const addAmenitiesAction = createAsyncThunk(
   "global/createAmenity",
@@ -120,36 +108,30 @@ export const addAmenitiesAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
-export const editAmenitiesAction = createAsyncThunk(
-  "global/editAmenity",
-  async (data: IAmenity, thunk) => {
-    try {
-      const response = await AdminApi.editAmenity(data._id, data);
-      console.log("🚀 ~ response", response);
+export const editAmenitiesAction = createAsyncThunk("global/editAmenity", async (data: IAmenity, thunk) => {
+  try {
+    const response = await AdminApi.editAmenity(data._id, data);
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
   }
-);
+});
 
-export const fetchPropertyTypesAction = createAsyncThunk(
-  "global/fetchPropertyTypes",
-  async (data, thunk) => {
-    try {
-      const response = await GlobalApi.getAllPropertyTypes();
-      console.log("🚀 ~ response", response);
+export const fetchPropertyTypesAction = createAsyncThunk("global/fetchPropertyTypes", async (data, thunk) => {
+  try {
+    const response = await GlobalApi.getAllPropertyTypes();
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
   }
-);
+});
 
 export const addPropertyTypeAction = createAsyncThunk(
   "global/createPropertyType",
@@ -162,7 +144,7 @@ export const addPropertyTypeAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const editPropertyTypeAction = createAsyncThunk(
@@ -176,19 +158,27 @@ export const editPropertyTypeAction = createAsyncThunk(
     } catch (error) {
       return thunk.rejectWithValue(error.response);
     }
-  }
+  },
 );
 
-export const fetchBookingsAction = createAsyncThunk(
-  "global/fetchBookings",
-  async (data, thunk) => {
-    try {
-      const response = await AdminApi.getAllBookings();
-      console.log("🚀 ~ response", response);
+export const removePropertyTypeAction = createAsyncThunk("global/removePropertyType", async (id: string, thunk) => {
+  try {
+    const response = await GlobalApi.deletePropertyType(id);
+    console.log("🚀 ~ response", response);
 
-      return response;
-    } catch (error) {
-      return thunk.rejectWithValue(error.response.data);
-    }
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response);
   }
-);
+});
+
+export const fetchBookingsAction = createAsyncThunk("global/fetchBookings", async (data, thunk) => {
+  try {
+    const response = await AdminApi.getAllBookings();
+    console.log("🚀 ~ response", response);
+
+    return response;
+  } catch (error) {
+    return thunk.rejectWithValue(error.response.data);
+  }
+});
