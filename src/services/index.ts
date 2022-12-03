@@ -3,8 +3,7 @@ import { LOGIN_ROUTE } from "config/constants/routes";
 import { BASE_URL, LOCAL_BACKEND } from "config/constants/vars";
 
 const token = localStorage.getItem("token");
-const baseURL =
-  process.env.NODE_ENV === "development" ? LOCAL_BACKEND : BASE_URL;
+const baseURL = process.env.NODE_ENV === "development" ? LOCAL_BACKEND : BASE_URL;
 
 export enum APIStatus {
   IDLE,
@@ -29,7 +28,7 @@ const signal = new AbortController().signal;
 const api = axios.create({
   baseURL: baseURL,
   headers: {
-    Authorization: token ? `Bearer ${token}` : "",
+    Authorization: token ? `Bearer ${token}` : null,
   },
   signal,
 });

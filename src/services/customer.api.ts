@@ -39,7 +39,7 @@ class CustomerApi {
 
   static async addBooking({ property_id }: { property_id: string }) {
     const token = localStorage.getItem("token");
-    const response = await api.post(`/bookings?property=${property_id}`, {
+    const response = await api.post(`/bookings?property=${property_id}`, null, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
