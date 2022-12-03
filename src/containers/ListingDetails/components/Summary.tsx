@@ -67,7 +67,7 @@ const Summary = ({
       <Divider my={4} />
       <VStack align="start" width="full">
         {/* render button sbased on user type  */}
-        {currentUser.userType === roles.admin && (
+        {currentUser?.userType === roles.admin && (
           <>
             <Button
               isFullWidth
