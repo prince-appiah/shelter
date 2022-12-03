@@ -138,13 +138,13 @@ const Summary = ({
           </>
         )}
 
-        {currentUser.userType === roles.host && (
+        {currentUser?.userType === roles.host && (
           <Button isFullWidth sx={{ fontSize: 14 }}>
             Edit Listing
           </Button>
         )}
 
-        {currentUser.userType === roles.customer && (
+        {currentUser?.userType === roles.customer && (
           <>
             <Text fontSize={14} fontWeight={600} color="gray">
               Tour this property - it's free, with no obligation
