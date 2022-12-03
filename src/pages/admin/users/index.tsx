@@ -1,16 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Flex,
-  Heading,
-  HStack,
-  IconButton,
-  TableHeadProps,
-  Tbody,
-  Td,
-  Tr,
-  useToast
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, HStack, IconButton, TableHeadProps, Tbody, Td, Tr, useToast } from "@chakra-ui/react";
 import Button from "components/Button";
 import UserModal from "components/Modal";
 import { ADMIN_USER_INFO } from "config/constants/routes";
@@ -20,7 +9,6 @@ import useNavigateSearch from "hooks/useNavigateSearch";
 import useTable from "hooks/useTable";
 import { useContext, useEffect, useState } from "react";
 import { AiFillEye, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { setStatus } from "redux/global/globalSlice";
 import { store } from "redux/store";
 import { deleteUserAction, fetchUsersAction } from "redux/users/asyncActions";
@@ -44,7 +32,7 @@ const Users = (props: Props) => {
   const { open, handleOpen, handleView, view } = useContext(ModalContext);
   const { users } = useUsersState();
   const [selectedUser, setSelectedUser] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const navigateSearch = useNavigateSearch();
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -61,13 +49,7 @@ const Users = (props: Props) => {
 
   return (
     <Flex direction="column" my={6} px={{ base: 2, md: 4 }}>
-      <Box
-        p={4}
-        borderWidth="thin"
-        bg="white"
-        borderColor="gray.100"
-        rounded="md"
-      >
+      <Box p={4} borderWidth="thin" bg="white" borderColor="gray.100" rounded="md">
         <Flex align="center" justify="space-between" mb={8}>
           <Heading fontSize={20}>Users ({users.length})</Heading>
 
@@ -87,12 +69,7 @@ const Users = (props: Props) => {
           <Tbody>
             {results?.length > 0 &&
               results?.map((item: IUser, idx: number) => (
-                <Tr
-                  key={item._id}
-                  cursor="pointer"
-                  textColor="gray.500"
-                  sx={{ _hover: { bgColor: "gray.50" } }}
-                >
+                <Tr key={item._id} cursor="pointer" textColor="gray.500" sx={{ _hover: { bgColor: "gray.50" } }}>
                   <Td>{idx + 1}</Td>
                   <Td>{item.firstname}</Td>
                   <Td>{item.lastname}</Td>

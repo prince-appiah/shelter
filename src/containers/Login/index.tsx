@@ -1,18 +1,9 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  Image,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Image, Text, useToast } from "@chakra-ui/react";
 import Button from "components/Button";
 import Input from "components/Input";
 import { SIGNUP_ROUTE } from "config/constants/routes";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import { useAppDispatch, useAuthState } from "hooks/reduxHooks";
-import { useApiError } from "hooks/useApiError";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getOtpAction, loginAction } from "redux/auth/asyncActions";
@@ -25,30 +16,32 @@ type LoginForm = {
 
 const Login = () => {
   const [otpReady, setOtpReady] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
   const [isOtpComplete, setIsOtpComplete] = useState(false);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const navigate = useNavigate();
   const { currentUser } = useAuthState();
-  const { handleApiError, Notify, error } = useApiError();
+  // const { handleApiError, Notify, error } = useApiError();
 
   const symbolsArr = ["e", "E", "+", "-", "."];
   const initialValues = { email: "", otp: "" };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Enter a valid email")
-      .required("Email is required"),
+    email: Yup.string().email("Enter a valid email").required("Email is required"),
     otp: Yup.string().required("OTP is required"),
   });
 
   const handleGetOtp = async (email: string) => {
+    setOtpLoading(true);
     try {
       const res = await dispatch(getOtpAction({ email })).unwrap();
       if (res.status === 200) {
         setOtpReady(true);
+        setOtpLoading(false);
       }
     } catch (error) {
+      setOtpLoading(false);
       toast({
         title: "OTP Error",
         description: error?.msg || "Could not get OTP code",
@@ -59,17 +52,13 @@ const Login = () => {
         duration: 10000,
       });
     }
+    setOtpLoading(false);
   };
 
-  const handleLogin = async (
-    { email, otp }: LoginForm,
-    helpers?: FormikHelpers<LoginForm>
-  ) => {
+  const handleLogin = async ({ email, otp }: LoginForm, helpers?: FormikHelpers<LoginForm>) => {
     try {
       setIsOtpComplete(true);
-      const res = await dispatch(
-        loginAction({ email, otp: otp.toString() })
-      ).unwrap();
+      const res = await dispatch(loginAction({ email, otp: otp.toString() })).unwrap();
       if (res && res.status === 200) {
         setIsOtpComplete(false);
 
@@ -104,11 +93,7 @@ const Login = () => {
   };
 
   return (
-    <Flex
-      direction={{ base: "column", md: "row" }}
-      width="100vw"
-      height="100vh"
-    >
+    <Flex direction={{ base: "column", md: "row" }} width="100vw" height="100vh">
       {/* Left Image */}
       <Image
         src="/images/auth-bg.jpeg"
@@ -117,19 +102,12 @@ const Login = () => {
         display={{ base: "none", lg: "unset" }}
       />
       {/* Form */}
-      <Box
-        mx="auto"
-        my="auto"
-        width={{ base: "100%", md: "75%", lg: "40%" }}
-        py={10}
-        px={16}
-      >
+      <Box mx="auto" my="auto" width={{ base: "100%", md: "75%", lg: "40%" }} py={10} px={16}>
         <Heading fontSize={24} mb={3} textAlign="center">
           Log In To Shelter
         </Heading>
         <Text color="gray.400" fontWeight="medium" mb={2}>
-          Please enter your email, a code will be sent to your email to continue
-          with login
+          Please enter your email, a code will be sent to your email to continue with login
         </Text>
         <Formik
           initialValues={initialValues}
@@ -137,14 +115,7 @@ const Login = () => {
           onSubmit={handleLogin}
           // onSubmit={isOtpComplete ? handleLogin : null}
         >
-          {({
-            handleSubmit,
-            handleChange,
-            handleBlur,
-            values,
-            dirty,
-            isSubmitting,
-          }: FormikProps<LoginForm>) => (
+          {({ handleSubmit, handleChange, handleBlur, values, dirty, isSubmitting }: FormikProps<LoginForm>) => (
             <Form onSubmit={handleSubmit}>
               <Input
                 label="Email Address"
@@ -167,9 +138,7 @@ const Login = () => {
                     value={values.otp}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    onKeyDown={(e) =>
-                      symbolsArr.includes(e.key) && e.preventDefault()
-                    }
+                    onKeyDown={(e) => symbolsArr.includes(e.key) && e.preventDefault()}
                   />
                   <Box my={4} display="flex" justifyContent="center">
                     <Text fontWeight="medium">
@@ -192,13 +161,9 @@ const Login = () => {
               )}
 
               <Button
-                onClick={
-                  otpReady
-                    ? () => handleLogin(values, null)
-                    : () => handleGetOtp(values.email)
-                }
+                onClick={otpReady ? () => handleLogin(values, null) : () => handleGetOtp(values.email)}
                 disabled={!dirty}
-                isLoading={isSubmitting || isOtpComplete}
+                isLoading={isSubmitting || isOtpComplete || otpLoading}
                 size="lg"
                 isFullWidth
               >
