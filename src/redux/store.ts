@@ -7,7 +7,7 @@ import storage from "redux-persist/lib/storage";
 import rootReducer, { history } from "./rootReducer";
 
 const persistConfig = {
-  key: "shelter",
+  key: process.env.NODE_ENV === "production" ? "shelter-web" : "shelter",
   version: 1,
   storage,
   blacklist: ["router"],

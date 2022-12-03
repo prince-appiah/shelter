@@ -21,6 +21,7 @@ import {
   HOST_BOOKING_DETAILS,
   HOST_DASHBOARD,
   HOST_LISTINGS,
+  HOST_LISTING_DETAILS,
   HOST_SETTINGS,
   LISTINGS_ROUTE,
   LISTING_DETAILS,
@@ -184,6 +185,14 @@ const AppRoutes = () => {
           element={
             <Layout>
               <HostListings />
+            </Layout>
+          }
+        />
+        <Route
+          path={HOST_LISTING_DETAILS}
+          element={
+            <Layout>
+              <ListingDetails />
             </Layout>
           }
         />

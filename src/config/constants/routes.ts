@@ -19,6 +19,7 @@ export const ADMIN_SETTINGS = "/s/admin/settings";
 // host routes
 export const HOST_DASHBOARD = "/s/host/dashboard";
 export const HOST_LISTINGS = "/s/host/listings";
+export const HOST_LISTING_DETAILS = "/s/host/listings/:id";
 export const HOST_BOOKINGS = "/s/host/bookings";
 export const HOST_BOOKING_DETAILS = "/s/host/bookings/:id";
 export const HOST_SETTINGS = "/s/host/settings";
@@ -33,6 +34,8 @@ export const CUSTOMER_SETTINGS = "/s/customer/settings";
 export const getListingDetailsRoute = (id: string) => `${LISTING_DETAILS.replace(":id", id)}`;
 
 export const getAdminListingDetailsRoute = (id: string) => `${ADMIN_LISTING_DETAILS.replace(":id", id)}`;
+
+export const getHostListingDetailsRoute = (id: string) => `${HOST_LISTING_DETAILS.replace(":id", id)}`;
 
 export const getUserInfoRoute = (id: string) => `${ADMIN_USER_INFO.replace(":id", id)}`;
 

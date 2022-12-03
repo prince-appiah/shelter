@@ -28,11 +28,11 @@ const ListingDetails = () => {
     // return () => {
     // clear the selected property
     // }
-  }, [params.id, dispatch, listings]);
+  }, [params?.id, dispatch, listings]);
 
   useEffect(() => {
     const checkBookedListing = async ({ property_id }) => {
-      if (currentUser && currentUser.userType === "customer") {
+      if (currentUser && currentUser?.userType === "customer") {
         try {
           const response = await CustomerApi.checkBookedProperty({
             property_id,
@@ -48,8 +48,8 @@ const ListingDetails = () => {
       return;
     };
 
-    checkBookedListing({ property_id: params.id });
-  }, [params.id, currentUser]);
+    checkBookedListing({ property_id: params?.id });
+  }, [params?.id, currentUser]);
 
   const handleDeleteListing = async ({ id }) => {
     try {

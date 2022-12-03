@@ -1,20 +1,20 @@
-import { Box, Flex, Heading, IconButton, TableHeadProps, Tag, Tbody, Td, Tr } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { Box, Center, Flex, Heading, IconButton, TableHeadProps, Tag, Tbody, Td, Tr } from "@chakra-ui/react";
+import Loader from "components/Loader";
+import { getHostBookingDetailsRoute } from "config/constants/routes";
 import { roles } from "config/constants/vars";
-import { useHostState, useAppDispatch } from "hooks/reduxHooks";
-import React, { useContext, useEffect, useState } from "react";
-import { setStatus } from "redux/hosts/hostSlice";
+import { ModalContext } from "contexts/ModalContext";
+import { useAppDispatch, useHostState } from "hooks/reduxHooks";
+import useTable from "hooks/useTable";
+import { useContext, useEffect, useState } from "react";
+import { BsEyeFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import { fetchHostBookingsAction } from "redux/hosts/asyncActions";
+import { setStatus } from "redux/hosts/hostSlice";
 import { store } from "redux/store";
 import { withProtected } from "shared/routes";
 import { calculateMomentAgo, checkBookStatus } from "shared/strings";
 import { IBooking } from "typings";
-import useTable from "hooks/useTable";
-import BookingModal from "components/Modal";
-import { ModalContext } from "contexts/ModalContext";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { BsEyeFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-import { getHostBookingDetailsRoute } from "config/constants/routes";
 
 const headCells: TableHeadProps[] = [
   { id: "s/n", title: "S/N" },
@@ -26,9 +26,9 @@ const headCells: TableHeadProps[] = [
 ];
 
 const HostBookings = () => {
-  const { bookings } = useHostState();
+  const { bookings, status } = useHostState();
   const { TContainer, TableHead, results } = useTable(bookings, headCells);
-  const { open, handleOpen, handleView, view } = useContext(ModalContext);
+  const { open, handleOpen, handleView } = useContext(ModalContext);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -43,6 +43,14 @@ const HostBookings = () => {
       ac.abort();
     };
   }, [dispatch]);
+
+  if (status === "loading") {
+    return (
+      <Center height="100vh">
+        <Loader />
+      </Center>
+    );
+  }
 
   return (
     <Flex direction="column" my={6} px={{ base: 2 }}>
