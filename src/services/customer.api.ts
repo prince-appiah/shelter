@@ -27,12 +27,16 @@ class CustomerApi {
 
   static async cancelBooking({ property_id }) {
     const token = localStorage.getItem("token");
-    const response = await api.patch(`/customer-bookings/${property_id}`, null, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+    const response = await api.patch(
+      "/booking-property/cancel",
+      { property_id },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     return response;
   }
