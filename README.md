@@ -15,9 +15,9 @@
 
 # :notebook_with_decorative_cover: Table of Contents
 
-- [:notebook_with_decorative_cover: Table of Contents](#notebook_with_decorative_cover-table-of-contents)
+- [:notebook\_with\_decorative\_cover: Table of Contents](#notebook_with_decorative_cover-table-of-contents)
   - [:star2: About the Project](#star2-about-the-project)
-    - [:space_invader: Tech Stack](#space_invader-tech-stack)
+    - [:space\_invader: Tech Stack](#space_invader-tech-stack)
     - [:dart: Features](#dart-features)
   - [:toolbox: Getting Started](#toolbox-getting-started)
     - [:bangbang: Prerequisites](#bangbang-prerequisites)
@@ -33,7 +33,9 @@
 
 ## :star2: About the Project
 
-Shelter is a full stack property management app that connects room hunters to rooms/spaces/apartments around them. Customers are able to book spaces/properties - property hosts are sent a booking email to confirm their availability for room inspection
+Shelter is a full stack property management app that connects room hunters to rooms/spaces/apartments around them.
+
+**PLEASE NOTE**: This project is still under development, hence minor features are being developed.
 
 <div align="center"> 
   <img src="https://res.cloudinary.com/ddnozuc0s/image/upload/v1662229561/portfolio/shelter-frontend_hqsxy9.png" alt="screenshot" />
@@ -83,7 +85,7 @@ Shelter is a full stack property management app that connects room hunters to ro
 <details>
 <summary>DevOps</summary>
   <ul>
-    <li><a href="https://www.heroku.com/">Heroku</a></li>
+    <li><a href="https://www.cyclic.sh/">Cyclic</a></li>
   </ul>
 </details>
 
@@ -94,12 +96,20 @@ Shelter is a full stack property management app that connects room hunters to ro
 - [x] Users are able to book and cancel property
 - [x] Admin can upload property on behalf of hosts
 - [x] Admin can approve or disable properties posted by hosts
-- [ ] Admin can view all bookings
+- [x] Admin can view all bookings
 - [ ] Hosts are able to upload their properties on the platform
 
 <!-- Getting Started -->
 
 ## :toolbox: Getting Started
+
+You may test the live application with the following credentials:
+
+**Admin**: admin@shelter.com
+
+**Customer**: baqomuq@mailinator.com
+
+**PLEASE NOTE:** OTP codes are sent to your emails after signup and login. In the case where you use any of the emails provided above, kindly check your browser console/network tab for the otp in the server response. PS: OTP codes will NOT be sent (for security reasons), when the app is fully ready for all users (actual production environment)
 
 <!-- Prerequisites -->
 
