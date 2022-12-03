@@ -20,8 +20,8 @@ const ProfileDetails = ({ user }: Props) => {
 
       <Flex direction="column" bg="white" p={5} mt={6} rounded="lg">
         {/* check user roles and render their profiles */}
-        {user.userType === roles.host && <HostProfile />}
-        {user.userType === roles.customer && <CustomerProfile />}
+        {user?.userType === roles.host && <HostProfile />}
+        {user?.userType === roles.customer && <CustomerProfile />}
       </Flex>
     </Flex>
   );

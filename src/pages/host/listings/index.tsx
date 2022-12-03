@@ -1,6 +1,7 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Flex, Heading, HStack, IconButton, TableHeadProps, Tag, Tbody, Td, Tr } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, HStack, IconButton, TableHeadProps, Tag, Tbody, Td, Tr } from "@chakra-ui/react";
 import Button from "components/Button";
+import Loader from "components/Loader";
 import { getHostListingDetailsRoute } from "config/constants/routes";
 import { roles } from "config/constants/vars";
 import { ModalContext } from "contexts/ModalContext";
@@ -28,7 +29,7 @@ const HostListings = () => {
   const { open, handleOpen, handleView } = useContext(ModalContext);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { listings } = useHostState();
+  const { listings, status } = useHostState();
   const { TContainer, TableHead, results } = useTable(listings, headCells);
 
   useEffect(() => {
@@ -41,6 +42,14 @@ const HostListings = () => {
       ac.abort();
     };
   }, [dispatch]);
+
+  if (status === "loading") {
+    return (
+      <Center height="100vh">
+        <Loader />
+      </Center>
+    );
+  }
 
   return (
     <Flex direction="column" my={6} px={{ base: 2 }}>

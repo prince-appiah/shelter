@@ -20,7 +20,7 @@ const PersonalDetails = ({ user }: Props) => {
 
   const details = [
     { icon: FiMail, title: "Email", body: user?.email },
-    { icon: FaLocationArrow, title: "Location", body: "Accra, Ghana" },
+    { icon: FaLocationArrow, title: "Location", body: user?.location ?? "-" },
     {
       icon: BsTelephone,
       title: "Phone",
@@ -81,7 +81,7 @@ const PersonalDetails = ({ user }: Props) => {
 
         {/* grid showing email, location, phone, website */}
         <Grid gap={6} templateColumns={{ base: "repeat(2,1fr)" }}>
-          {details.map((item, idx) => (
+          {details?.map((item, idx) => (
             <DetailItem key={idx} item={item} />
           ))}
         </Grid>

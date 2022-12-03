@@ -1,5 +1,4 @@
-import { Flex, Heading, Text } from "@chakra-ui/layout";
-import { TabList } from "@chakra-ui/tabs";
+import { Flex, Text } from "@chakra-ui/layout";
 import { roles } from "config/constants/vars";
 import { withProtected } from "shared/routes";
 
