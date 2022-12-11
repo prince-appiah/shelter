@@ -76,7 +76,7 @@ const HostListings = () => {
                 <Tr key={item._id} cursor="pointer" textColor="gray.500" sx={{ _hover: { bgColor: "gray.50" } }}>
                   <Td>{idx + 1}</Td>
                   <Td>{item?.name}</Td>
-                  <Td>{item?.interestedParties ?? 0}</Td>
+                  <Td>{item?.interestedParties?.length ?? 0}</Td>
                   <Td>{item?.location}</Td>
                   <Td>
                     <Tag colorScheme={item?.isApproved ? "green" : "red"}>

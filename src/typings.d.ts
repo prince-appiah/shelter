@@ -30,7 +30,7 @@ export interface IProperty {
   stayPeriod: "night" | "week" | "month" | "year" | string;
   images: IPropertyImage[];
   amenities: IAmenity<Pick<"_id">>[];
-  interestedParties?: string;
+  interestedParties?: ICustomer[];
   isApproved?: boolean;
   readonly createdAt?: string;
   readonly updatedAt?: string;
